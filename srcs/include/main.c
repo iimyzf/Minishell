@@ -12,18 +12,29 @@
 
 #include "lexer.h"
 
-int main(int ac, char **av)
+int main(int ac, char **av, char **env)
 {
 	t_lexer	*lexer;
 	t_token	*token;
+	char	*cmd;
 
-	ac = 0;
-	lexer = lexer_init(av[1]);
-	while ((token = lexer_get_next_token(lexer)) != NULL)
+	if (ac != 1)
+		return (1);
+	//just to mute the unsed parametrs warning 
+	env = NULL;
+	av[0] = "minishell> ";
+	while (1)
 	{
-		printf("TOKEN ---> [id: %d,    value: %s]\n", token->type, token->value);
-		free(token->value);
-		free(token);
+		// cmd is your input
+		cmd = readline(av[0]);
+		lexer = lexer_init(cmd);
+		add_history(cmd);
+		while ((token = lexer_get_next_token(lexer)) != NULL)
+		{
+			printf("TOKEN ---> [id: %d,    value: %s]\n", token->type, token->value);
+			free(token->value);
+			free(token);
+		}
 	}
 	//system("leaks minishell");
 	return (0);
