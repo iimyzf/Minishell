@@ -25,6 +25,6 @@ int main(int ac, char **av)
 		free(token->value);
 		free(token);
 	}
-	system("leaks minishell");
+	//system("leaks minishell");
 	return (0);
 }
