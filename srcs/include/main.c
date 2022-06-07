@@ -29,6 +29,8 @@ int main(int ac, char **av, char **env)
 		cmd = readline(av[0]);
 		lexer = lexer_init(cmd);
 		add_history(cmd);
+		if (!ft_strcmp(cmd, "exit"))
+			break;
 		while ((token = lexer_get_next_token(lexer)) != NULL)
 		{
 			printf("TOKEN ---> [id: %d,    value: %s]\n", token->type, token->value);
