@@ -22,12 +22,17 @@ OBJS = $(SRCS:.c=.o)
 all : $(NAME)
 
 $(NAME) : $(SRCS)
-	gcc $(CFLAGS) $(SRCS) -o $(NAME)
+	@echo Compaling...
+	@gcc $(CFLAGS) $(SRCS) -o $(NAME)
+	@echo "Done!"
 
 clean :
-	rm -rf $(OBJS)
+	@rm -rf $(OBJS)
+	@echo "Clean"
 
-fclean : clean
-	rm -rf $(NAME)
+fclean :
+	@rm -rf $(OBJS)
+	@rm -rf $(NAME)
+	@echo "Full Clean"
 
 re : fclean all

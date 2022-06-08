@@ -1,28 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.h                                           :+:      :+:    :+:   */
+/*   ft_lstnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yagnaou <yagnaou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: azabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/29 11:24:46 by yagnaou           #+#    #+#             */
-/*   Updated: 2022/06/04 17:01:42 by yagnaou          ###   ########.fr       */
+/*   Created: 2022/06/07 17:58:00 by azabir            #+#    #+#             */
+/*   Updated: 2022/06/07 17:58:02 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSER_H
-# define PARSER_H
+#include "../include/parser.h"
 
-# include "lexer.h"
-
-
-typedef struct s_parser
+t_cmd	*ft_lstnew(char	*value, int id)
 {
-	char	**infiles;
-	char 	**heredoc;
-	char	**outfiles;
-	char	*commands;
-	t_cmd	*cmd;
-}	t_parser;
+	t_cmd	*head;
 
-#endif
+	head = malloc(sizeof(t_cmd));
+	if (!head)
+		return (0);
+	head->cmd = value;
+	head->id = id;
+	head -> next = NULL;
+	return (head);
+}

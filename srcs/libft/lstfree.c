@@ -1,28 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.h                                           :+:      :+:    :+:   */
+/*   lstfree.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yagnaou <yagnaou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: azabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/29 11:24:46 by yagnaou           #+#    #+#             */
-/*   Updated: 2022/06/04 17:01:42 by yagnaou          ###   ########.fr       */
+/*   Created: 2022/06/07 19:04:28 by azabir            #+#    #+#             */
+/*   Updated: 2022/06/07 19:04:33 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSER_H
-# define PARSER_H
+#include "../include/parser.h"
 
-# include "lexer.h"
-
-
-typedef struct s_parser
+void	lstfree(t_cmd **lst)
 {
-	char	**infiles;
-	char 	**heredoc;
-	char	**outfiles;
-	char	*commands;
-	t_cmd	*cmd;
-}	t_parser;
+	t_cmd	*p;
 
-#endif
+	while (*lst != NULL)
+	{
+		p = (*lst)-> next;
+		free((*lst)->cmd);
+		free(*lst);
+		*lst = p;
+	}
+}

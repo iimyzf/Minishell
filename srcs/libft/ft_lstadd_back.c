@@ -1,28 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.h                                           :+:      :+:    :+:   */
+/*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yagnaou <yagnaou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: azabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/29 11:24:46 by yagnaou           #+#    #+#             */
-/*   Updated: 2022/06/04 17:01:42 by yagnaou          ###   ########.fr       */
+/*   Created: 2022/06/07 17:58:40 by azabir            #+#    #+#             */
+/*   Updated: 2022/06/07 17:58:42 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSER_H
-# define PARSER_H
+#include "../include/parser.h"
 
-# include "lexer.h"
-
-
-typedef struct s_parser
+void	lstadd_back(t_cmd **cmd_list, t_cmd *cmd)
 {
-	char	**infiles;
-	char 	**heredoc;
-	char	**outfiles;
-	char	*commands;
-	t_cmd	*cmd;
-}	t_parser;
+	t_cmd	*temp;
 
-#endif
+	temp = *cmd_list;
+	while (temp->next != NULL)
+		temp = temp->next;
+	temp->next = cmd;
+}

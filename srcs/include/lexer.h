@@ -19,6 +19,14 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
+typedef	struct s_cmd
+{
+	int				id;
+	char			*cmd;
+	struct s_cmd	*next;
+}	t_cmd;
+
+
 typedef struct s_lexer
 {
 	char			c;
@@ -37,5 +45,8 @@ void	lexer_advance(t_lexer *lexer, int count);
 void	lexer_skip_white_spaces(t_lexer *lexer);
 void	free_all(t_lexer *lexer);
 char	*ft_strjoin(char const *s1, char const *s2);
+t_cmd	*ft_lstnew(char *value, int id);
+void	lstadd_back(t_cmd **cmd_list, t_cmd *cmd);
+void	lstfree(t_cmd **lst);
 
 #endif

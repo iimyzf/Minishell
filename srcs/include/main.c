@@ -11,12 +11,29 @@
 /* ************************************************************************** */
 
 #include "lexer.h"
+#include "parser.h"
+
+
+
+void	lstprint(t_cmd	*cmd_list)
+{
+	t_cmd *temp;
+
+	temp = cmd_list;
+	while (temp)
+	{
+		printf("id = %d | cmd = %s\n", temp->id, temp->cmd);
+		temp = temp->next;
+	}
+}
+
 
 int main(int ac, char **av, char **env)
 {
 	t_lexer	*lexer;
 	t_token	*token;
-	char	*cmd;
+	t_cmd	*cmd_list;
+	char	*input;
 
 	if (ac != 1)
 		return (1);
@@ -25,19 +42,29 @@ int main(int ac, char **av, char **env)
 	av[0] = "minishell> ";
 	while (1)
 	{
-		// cmd is your input
-		cmd = readline(av[0]);
-		lexer = lexer_init(cmd);
-		add_history(cmd);
-		if (!ft_strcmp(cmd, "exit"))
+		// input is your input
+		cmd_list = NULL;
+		input = readline(av[0]);
+		lexer = lexer_init(input);
+		add_history(input);
+		if (!ft_strcmp(input, "exit"))
 			break;
 		while ((token = lexer_get_next_token(lexer)) != NULL)
 		{
-			printf("TOKEN ---> [id: %d,    value: %s]\n", token->type, token->value);
-			free(token->value);
+			//printf("TOKEN ---> [id: %d,    value: %s]\n", token->type, token->value);
+			if (!(cmd_list))
+				cmd_list = ft_lstnew(token->value, token->type);
+			else
+				lstadd_back(&cmd_list, ft_lstnew(token->value, token->type));
 			free(token);
 		}
+		free(input);
+		lstprint(cmd_list);
+		lstfree(&cmd_list);
+		free(lexer);
 	}
-	//system("leaks minishell");
+	free(input);
+	free(lexer);
+//	system("leaks minishell");
 	return (0);
 }
