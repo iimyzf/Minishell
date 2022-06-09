@@ -15,7 +15,8 @@ NAME = minishell
 CFLAGS = -Wall -Werror -Wextra -lreadline #-fsanitize=address -g3
 
 SRCS =	srcs/include/*.c\
-		srcs/libft/*.c
+		srcs/libft/*.c\
+		srcs/execution/*.c
 
 OBJS = $(SRCS:.c=.o)
 

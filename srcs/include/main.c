@@ -22,7 +22,11 @@ void	lstprint(t_cmd	*cmd_list)
 	temp = cmd_list;
 	while (temp)
 	{
-		printf("id = %d | cmd = %s\n", temp->id, temp->cmd);
+		printf("id = %d | cmd = %s", temp->id, temp->cmd);
+		if (temp->id == 0 && check_path(temp->cmd))
+			printf(" | Valid\n");
+		else
+			printf(" | Invalid\n");
 		temp = temp->next;
 	}
 }
@@ -65,6 +69,6 @@ int main(int ac, char **av, char **env)
 	}
 	free(input);
 	free(lexer);
-//	system("leaks minishell");
+	system("leaks minishell");
 	return (0);
 }
