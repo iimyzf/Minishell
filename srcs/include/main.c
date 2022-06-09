@@ -24,9 +24,11 @@ void	lstprint(t_cmd	*cmd_list)
 	{
 		printf("id = %d | cmd = %s", temp->id, temp->cmd);
 		if (temp->id == 0 && check_path(temp->cmd))
-			printf(" | Valid\n");
+			printf(" | Valid cmd\n");
+		else if(temp->id == 0)
+			printf(" | Invalid cmd\n");
 		else
-			printf(" | Invalid\n");
+			printf (" | id != 0\n");
 		temp = temp->next;
 	}
 }
