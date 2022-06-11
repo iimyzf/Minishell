@@ -29,17 +29,17 @@ char	*check_path(char	*cmd)
 {
 	char	*path;
 
-	if(path = make_path("/bin/", cmd), path)
+	if (path = make_path("/bin/", cmd), path)
 		return (path);
-	if(path = make_path("/usr/bin/", cmd), path)
+	if (path = make_path("/usr/bin/", cmd), path)
 		return (path);
-	if(path = make_path("/usr/local/bin/", cmd), path)
+	if (path = make_path("/usr/local/bin/", cmd), path)
 		return (path);
-	if(path = make_path("/sbin/", cmd), path)
+	if (path = make_path("/sbin/", cmd), path)
 		return (path);
-	if(path = make_path("/usr/sbin", cmd), path)
+	if (path = make_path("/usr/sbin", cmd), path)
 		return (path);
-	if(path = make_path("/usr/local/munki/", cmd), path)
+	if (path = make_path("/usr/local/munki/", cmd), path)
 		return (path);
 	return (NULL);
 }

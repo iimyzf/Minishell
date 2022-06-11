@@ -34,7 +34,9 @@ void	lstprint(t_cmd	*cmd_list)
 		else
 			printf (" | id != 0\n");
 		temp = temp->next;
+		free(path);
 	}
+	exit(1);
 }
 
 
