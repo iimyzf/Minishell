@@ -17,14 +17,18 @@
 
 void	lstprint(t_cmd	*cmd_list)
 {
-	t_cmd *temp;
+	t_cmd 	*temp;
+	char	*path;
 
 	temp = cmd_list;
 	while (temp)
 	{
 		printf("id = %d | cmd = %s", temp->id, temp->cmd);
-		if (temp->id == 0 && check_path(temp->cmd))
+		if (temp->id == 0 && (path = check_path(temp->cmd), path))
+		{
 			printf(" | Valid cmd\n");
+			execve(path, &(temp->cmd), NULL);
+		}
 		else if(temp->id == 0)
 			printf(" | Invalid cmd\n");
 		else
@@ -40,6 +44,7 @@ int main(int ac, char **av, char **env)
 	t_token	*token;
 	t_cmd	*cmd_list;
 	char	*input;
+	int		id;
 
 	if (ac != 1)
 		return (1);
@@ -65,9 +70,12 @@ int main(int ac, char **av, char **env)
 			free(token);
 		}
 		free(input);
-		lstprint(cmd_list);
+		id = fork();
+		if(id == 0)
+			lstprint(cmd_list);
 		lstfree(&cmd_list);
 		free(lexer);
+		waitpid(id, NULL, 0);
 	}
 	free(input);
 	free(lexer);

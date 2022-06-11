@@ -49,6 +49,6 @@ char	*ft_strjoin(char const *s1, char const *s2);
 t_cmd	*ft_lstnew(char *value, int id);
 void	lstadd_back(t_cmd **cmd_list, t_cmd *cmd);
 void	lstfree(t_cmd **lst);
-int		check_path(char	*cmd);
+char	*check_path(char	*cmd);
 
 #endif
