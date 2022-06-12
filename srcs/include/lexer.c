@@ -34,7 +34,7 @@ void	lexer_advance(t_lexer *lexer, int count)
 
 void	lexer_skip_white_spaces(t_lexer *lexer)
 {
-	while (lexer->c == ' ' || lexer->c == '\t')
+	while ((lexer->c == ' ' || lexer->c == '\t') && lexer->c != '-')
 		lexer_advance(lexer, 1);
 }
 
@@ -45,8 +45,8 @@ t_token	*lexer_get_next_token(t_lexer *lexer)
 		if (lexer->c == ' ' || lexer->c == '\t')
 			lexer_skip_white_spaces(lexer);
 
-		if (lexer->c == '"')
-			return (lexer_collect_string(lexer));
+		if (lexer->c == '"' || lexer->c == '\'')
+			return (lexer_collect_string(lexer, lexer->c));
 
 		else if (ft_isalnum(lexer->c))
 			return (lexer_collect_id(lexer));
@@ -92,7 +92,7 @@ t_token	*lexer_get_next_token(t_lexer *lexer)
 	return (NULL);
 }
 
-t_token	*lexer_collect_string(t_lexer *lexer)
+t_token	*lexer_collect_string(t_lexer *lexer, char c)
 {
 	char	*value;
 	char	*tmp;
@@ -101,7 +101,7 @@ t_token	*lexer_collect_string(t_lexer *lexer)
 	lexer_advance(lexer, 1);
 	value = calloc(1, sizeof(char));
 	value[0] = '\0';
-	while (lexer->c != '"' && lexer->c != '\0')
+	while (lexer->c != c && lexer->c != '\0')
 	{
 		str = lexer_get_current_char_as_string(lexer);
 		tmp = ft_strjoin(value, str);

@@ -37,7 +37,7 @@ typedef struct s_lexer
 
 t_lexer	*lexer_init(char *data);
 t_token	*lexer_get_next_token(t_lexer *lexer);
-t_token	*lexer_collect_string(t_lexer *lexer);
+t_token	*lexer_collect_string(t_lexer *lexer, char c);
 t_token	*lexer_collect_id(t_lexer *lexer);
 t_token	*lexer_advance_with_token(t_lexer *lexer, t_token *token, int count);
 char	*lexer_get_current_char_as_string(t_lexer *lexer);

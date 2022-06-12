@@ -27,6 +27,7 @@ void	lstprint(t_cmd	*cmd_list)
 		if (temp->id == 0 && (path = check_path(temp->cmd), path))
 		{
 			printf(" | Valid cmd\n");
+			//cmd chould br a double ptr
 			execve(path, &(temp->cmd), NULL);
 		}
 		else if(temp->id == 0)
