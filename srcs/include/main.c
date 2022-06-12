@@ -6,7 +6,7 @@
 /*   By: yagnaou <yagnaou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 09:46:02 by yagnaou           #+#    #+#             */
-/*   Updated: 2022/06/05 18:28:49 by yagnaou          ###   ########.fr       */
+/*   Updated: 2022/06/12 10:37:23 by yagnaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,11 @@ void	lstprint(t_cmd	*cmd_list)
 			execve(path, &(temp->cmd), NULL);
 		}
 		else if(temp->id == 0)
-			printf(" | Invalid cmd\n");
+			printf (" | Invalid cmd\n");
 		else
 			printf (" | id != 0\n");
 		temp = temp->next;
-		free(path);
+		//free(path);
 	}
 	exit(1);
 }

@@ -6,7 +6,7 @@
 #    By: yagnaou <yagnaou@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/27 11:27:39 by yagnaou           #+#    #+#              #
-#    Updated: 2022/06/05 17:14:30 by yagnaou          ###   ########.fr        #
+#    Updated: 2022/06/12 10:50:40 by yagnaou          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ OBJS = $(SRCS:.c=.o)
 all : $(NAME)
 
 $(NAME) : $(SRCS)
-	@echo Compaling...
+	@echo Compiling...
 	@gcc $(CFLAGS) $(SRCS) -o $(NAME)
 	@echo "Done!"
 
