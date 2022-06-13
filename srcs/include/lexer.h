@@ -50,5 +50,6 @@ t_cmd	*ft_lstnew(char *value, int id);
 void	lstadd_back(t_cmd **cmd_list, t_cmd *cmd);
 void	lstfree(t_cmd **lst);
 char	*check_path(char	*cmd);
+char	**ft_split(char const *s, char c);
 
 #endif

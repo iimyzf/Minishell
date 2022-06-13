@@ -23,17 +23,17 @@ void	lstprint(t_cmd	*cmd_list)
 	temp = cmd_list;
 	while (temp)
 	{
-		printf("id = %d | cmd = %s", temp->id, temp->cmd);
+		printf("id = %d | cmd = %s\n", temp->id, temp->cmd);
 		if (temp->id == 0 && (path = check_path(temp->cmd), path))
 		{
-			printf(" | Valid cmd\n");
+			//printf(" | Valid cmd\n");
 			//cmd chould br a double ptr
-			execve(path, &(temp->cmd), NULL);
+			//execve(path, &(temp->cmd), NULL);
 		}
-		else if(temp->id == 0)
+		/*else if(temp->id == 0)
 			printf (" | Invalid cmd\n");
 		else
-			printf (" | id != 0\n");
+			printf (" | id != 0\n");*/
 		temp = temp->next;
 		//free(path);
 	}
