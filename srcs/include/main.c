@@ -19,24 +19,39 @@ void	lstprint(t_cmd	*cmd_list)
 {
 	t_cmd 	*temp;
 	char	*path;
+	char	**cmd;
+	char	*tmp;
 
 	temp = cmd_list;
-	while (temp)
+	tmp = malloc(1);
+	while (temp && (temp->id != 1))
 	{
+		tmp = ft_strjoin(tmp, temp->cmd);
+		tmp = ft_strjoin(tmp, " ");
+		temp = temp->next;
+	}
+	//printf("tmp : [ %s ]\n", tmp );
+	temp = cmd_list;
+	cmd = ft_split(tmp, ' ');
+	if (path = check_path(cmd[0]), path)
+	{
+		execve(path, cmd, NULL);
+	}
+	/*while (temp)
 		printf("id = %d | cmd = %s\n", temp->id, temp->cmd);
 		if (temp->id == 0 && (path = check_path(temp->cmd), path))
 		{
 			//printf(" | Valid cmd\n");
-			//cmd chould br a double ptr
+			//cmd chould be a double ptr
 			//execve(path, &(temp->cmd), NULL);
 		}
-		/*else if(temp->id == 0)
+		else if(temp->id == 0)
 			printf (" | Invalid cmd\n");
 		else
-			printf (" | id != 0\n");*/
+			printf (" | id != 0\n");
 		temp = temp->next;
-		//free(path);
-	}
+		free(path);
+	}*/
 	exit(1);
 }
 
@@ -82,6 +97,6 @@ int main(int ac, char **av, char **env)
 	}
 	free(input);
 	free(lexer);
-	system("leaks minishell");
+	//system("leaks minishell");
 	return (0);
 }
