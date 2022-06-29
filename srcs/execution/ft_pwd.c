@@ -14,14 +14,13 @@
 
 int	ft_pwd()
 {
-	// char	*path;
-	// char	*buf;
+	char	*path;
+	char	*buf;
 
-	// path = NULL;
-	// while (path == NULL) {
-	// 	//path = getcwd(buf, 1);
-	// }
-	// printf("%s\n", path);
-	// //system("leaks pwd");
+	path = NULL;
+	while (path == NULL) {
+		path = getcwd(buf, 1);
+	}
+	printf("%s\n", path);
 	return(0);
 }
