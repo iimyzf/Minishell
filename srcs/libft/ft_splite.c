@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/parser.h"
+#include "../include/minishell.h"
 
 static int	ft_strcount(char const *l, char c)
 {

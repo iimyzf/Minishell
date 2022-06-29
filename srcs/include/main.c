@@ -10,10 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lexer.h"
-#include "parser.h"
-
-
+#include "minishell.h"
 
 void	lstprint(t_cmd	*cmd_list)
 {
@@ -37,21 +34,10 @@ void	lstprint(t_cmd	*cmd_list)
 	{
 		execve(path, cmd, NULL);
 	}
-	/*while (temp)
-		printf("id = %d | cmd = %s\n", temp->id, temp->cmd);
-		if (temp->id == 0 && (path = check_path(temp->cmd), path))
-		{
-			//printf(" | Valid cmd\n");
-			//cmd chould be a double ptr
-			//execve(path, &(temp->cmd), NULL);
-		}
-		else if(temp->id == 0)
-			printf (" | Invalid cmd\n");
-		else
-			printf (" | id != 0\n");
-		temp = temp->next;
-		free(path);
-	}*/
+	else 
+	{
+		printf("minishell: %s: command not found\n", cmd[0]);
+	}
 	exit(1);
 }
 

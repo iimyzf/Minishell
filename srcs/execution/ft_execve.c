@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../include/minishell.h"
 /*
 int	is_builtin(char	*cmd)
 {
@@ -33,7 +33,7 @@ int	is_builtin(char	*cmd)
 	return (0);
 }
 
-void	ft_exucve(char **cmd, char **env, char *path)
+void	ft_execve(char **cmd, char **env, char *path)
 {
 	if (is_builtin(cmd[0]) == 1)
 		ft_echo(cmd, env);

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/parser.h"
+#include "../include/minishell.h"
 
 t_cmd	*ft_lstnew(char	*value, int id)
 {

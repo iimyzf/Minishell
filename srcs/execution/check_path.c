@@ -10,8 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
-
+#include "../include/minishell.h"
 char	*make_path(char *path, char *cmd)
 {
 	char		*cmd_path;

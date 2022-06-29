@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/parser.h"
+#include "../include/minishell.h"
 
 void	lstfree(t_cmd **lst)
 {

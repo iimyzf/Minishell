@@ -1,24 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer.h                                            :+:      :+:    :+:   */
+/*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yagnaou <yagnaou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: azabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/27 16:07:54 by yagnaou           #+#    #+#             */
-/*   Updated: 2022/06/05 18:23:28 by yagnaou          ###   ########.fr       */
+/*   Created: 2022/06/09 10:38:45 by azabir            #+#    #+#             */
+/*   Updated: 2022/06/09 10:40:45 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LEXER_H
-# define LEXER_H
+#ifndef MINISHELL_H
+# define MINISHELL_H
 
 # include "token.h"
+# include "../libft/libft.h"
 # include "../libft/libft.h"
 # include <stdio.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <sys/stat.h>
+
 
 typedef	struct s_cmd
 {
@@ -27,6 +29,14 @@ typedef	struct s_cmd
 	struct s_cmd	*next;
 }	t_cmd;
 
+typedef struct s_parser
+{
+	char	**infiles;
+	char 	**heredoc;
+	char	**outfiles;
+	char	*commands;
+	t_cmd	*cmd;
+}	t_parser;
 
 typedef struct s_lexer
 {
@@ -51,5 +61,9 @@ void	lstadd_back(t_cmd **cmd_list, t_cmd *cmd);
 void	lstfree(t_cmd **lst);
 char	*check_path(char	*cmd);
 char	**ft_split(char const *s, char c);
+void	ft_execve(char **cmd, char **env, char *path);
+
+
 
 #endif
+

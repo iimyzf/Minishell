@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/parser.h"
+#include "../include/minishell.h"
 
 void	lstadd_back(t_cmd **cmd_list, t_cmd *cmd)
 {
