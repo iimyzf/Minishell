@@ -17,6 +17,7 @@ int	ft_pwd()
 	char	*path;
 	char	*buf;
 
+	buf = NULL;
 	path = NULL;
 	while (path == NULL) {
 		path = getcwd(buf, 1);

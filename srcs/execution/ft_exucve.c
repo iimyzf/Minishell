@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
+/*
 int	is_builtin(char	*cmd)
 {
 	if (!ft_strcmp(cmd, "echo"))
@@ -54,3 +54,4 @@ void	ft_exucve(char **cmd, char **env, char *path)
 	else
 		sys_exuc(cmd, path);
 }
+*/
