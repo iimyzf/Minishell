@@ -12,33 +12,47 @@
 
 #include "minishell.h"
 
+void	free_array(char **arr)
+{
+	int		i;
+
+	i = 0;
+	while (arr[i])
+	{
+		free(arr[i]);
+		i++;
+	}
+	free(arr);
+}
+
 void	lstprint(t_cmd	*cmd_list)
 {
 	t_cmd 	*temp;
 	char	*path;
-	char	**cmd;
 	char	*tmp;
+	int		id;
 
 	temp = cmd_list;
-	tmp = malloc(1);
 	while (temp && (temp->id != 1))
 	{
-		tmp = ft_strjoin(tmp, temp->cmd);
-		tmp = ft_strjoin(tmp, " ");
+		tmp = ft_strjoin2(tmp, temp->cmd);
 		temp = temp->next;
 	}
-	//printf("tmp : [ %s ]\n", tmp );
 	temp = cmd_list;
-	cmd = ft_split(tmp, ' ');
-	if (path = check_path(cmd[0]), path)
+	cmd_list->full_cmd = ft_split(tmp, ' ');
+	free (tmp);
+	if (path = check_path(cmd_list->full_cmd[0]), !path)
 	{
-		execve(path, cmd, NULL);
+		printf("minishell: %s: command not found\n", cmd_list->full_cmd[0]);
+		return;
 	}
-	else 
-	{
-		printf("minishell: %s: command not found\n", cmd[0]);
-	}
-	exit(1);
+	id = fork();
+	if (id == 0)
+		execve(path, cmd_list->full_cmd, NULL);
+	else
+		waitpid(id, NULL, 0);
+	free(path);
+	free_array(cmd_list->full_cmd);
 }
 
 
@@ -48,7 +62,6 @@ int main(int ac, char **av, char **env)
 	t_token	*token;
 	t_cmd	*cmd_list;
 	char	*input;
-	int		id;
 
 	if (ac != 1)
 		return (1);
@@ -73,16 +86,13 @@ int main(int ac, char **av, char **env)
 				lstadd_back(&cmd_list, ft_lstnew(token->value, token->type));
 			free(token);
 		}
+		lstprint(cmd_list);
 		free(input);
-		id = fork();
-		if(id == 0)
-			lstprint(cmd_list);
-		lstfree(&cmd_list);
 		free(lexer);
-		waitpid(id, NULL, 0);
+		lstfree(cmd_list);
 	}
 	free(input);
 	free(lexer);
-	//system("leaks minishell");
+	system("leaks minishell");
 	return (0);
 }

@@ -26,6 +26,7 @@ typedef	struct s_cmd
 {
 	int				id;
 	char			*cmd;
+	char			**full_cmd;
 	struct s_cmd	*next;
 }	t_cmd;
 
@@ -58,10 +59,11 @@ void	free_all(t_lexer *lexer);
 char	*ft_strjoin(char const *s1, char const *s2);
 t_cmd	*ft_lstnew(char *value, int id);
 void	lstadd_back(t_cmd **cmd_list, t_cmd *cmd);
-void	lstfree(t_cmd **lst);
+void	lstfree(t_cmd *lst);
 char	*check_path(char	*cmd);
 char	**ft_split(char const *s, char c);
 void	ft_execve(char **cmd, char **env, char *path);
+char	*ft_strjoin2(char *s1, char *s2);
 
 
 

@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strjoin.c                                       :+:      :+:    :+:   */
+/*   strjoin2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yagnaou <yagnaou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: azabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/05 18:22:04 by yagnaou           #+#    #+#             */
-/*   Updated: 2022/06/05 18:22:13 by yagnaou          ###   ########.fr       */
+/*   Created: 2022/06/30 19:43:57 by azabir            #+#    #+#             */
+/*   Updated: 2022/06/30 19:43:59 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strjoin(char *s1, char *s2)
+char	*ft_strjoin2(char *s1, char *s2)
 {
 	char	*ptr;
 	size_t	j;
@@ -34,9 +34,10 @@ char	*ft_strjoin(char *s1, char *s2)
 		ptr[j] = s1[j];
 		j++;
 	}
+	ptr[j++] = ' ';
 	while (*s2)
 		ptr[j++] = *s2++;
 	ptr [j] = 0;
-	//free (s1);
+	free (s1);
 	return (ptr);
 }

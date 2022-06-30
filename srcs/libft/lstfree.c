@@ -12,15 +12,15 @@
 
 #include "../include/minishell.h"
 
-void	lstfree(t_cmd **lst)
+void	lstfree(t_cmd *lst)
 {
 	t_cmd	*p;
 
-	while (*lst != NULL)
+	while (lst != NULL)
 	{
-		p = (*lst)-> next;
-		free((*lst)->cmd);
-		free(*lst);
-		*lst = p;
+		p = (lst)-> next;
+		free((lst)->cmd);
+		free(lst);
+		lst = p;
 	}
 }
