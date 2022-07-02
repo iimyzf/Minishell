@@ -17,7 +17,7 @@ char	*ft_strjoin2(char *s1, char *s2)
 	char	*ptr;
 	size_t	j;
 
-	if (!s1)
+	if (!s1 || *s1 == 0)
 	{
 		s1 = malloc(sizeof(char) * 1);
 		s1[0] = 0;

@@ -26,9 +26,20 @@ typedef	struct s_cmd
 {
 	int				id;
 	char			*cmd;
-	char			**full_cmd;
 	struct s_cmd	*next;
 }	t_cmd;
+
+typedef struct s_data
+{
+	int				in;
+	int				out;
+	int				fd[2];
+	char			*input;
+	char			**full_cmd;
+	char			**env;
+	t_cmd			*cmd_list;
+}	t_data;
+
 
 typedef struct s_parser
 {

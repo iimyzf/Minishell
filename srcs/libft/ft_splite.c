@@ -12,6 +12,21 @@
 
 #include "../include/minishell.h"
 
+
+/*void	skip_spaces(int	*i, char c, const char *str)
+{
+	int	j;
+
+	j = *i;
+	if (str[j] != c)
+	{
+		while (str[j] == ' ' || str[j] == '\t')
+			j++;
+		if (j - *i >= 2)
+			*i = j - 1;
+	}
+}*/
+
 static int	ft_strcount(char const *l, char c)
 {
 	int	i;
@@ -49,11 +64,15 @@ static char	**ft_mkstr(char **h, char const *s, char c)
 	{
 		while (s[i] != c && s[i])
 		{
+			/*if (s[i] == ' ')
+				skip_spaces(&i, c, s);*/
 			k++;
 			i++;
 		}
 		while (s[i] == c && c)
 			i++;
+	/*while (s[i] == ' ' || s[i] == '\t')
+			i++;*/
 		h[j] = malloc(sizeof(char) * (k + 1));
 		if (!h[j])
 			return (NULL);
@@ -76,6 +95,8 @@ char	**ft_copy(char **h, char const *s, char c)
 	{
 		while (s[i] != c && s[i])
 		{
+			/*if (s[i] == ' ')
+				skip_spaces(&i, c, s);*/
 			h[k][j] = s[i];
 			j++;
 			i++;
@@ -83,6 +104,8 @@ char	**ft_copy(char **h, char const *s, char c)
 		h[k][j] = '\0';
 		while (s[i] == c && c)
 			i++;
+		/*while (s[i] == ' ' || s[i] == '\t')
+			i++;*/
 		k++;
 		j = 0;
 	}
