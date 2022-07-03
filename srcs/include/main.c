@@ -25,29 +25,32 @@ void	free_array(char **arr)
 	free(arr);
 }
 
-void	process(char **cmd, char *path, t_data *data)
+void	process(char **cmd, char *path, t_data *data, int status)
 {
 	pid_t	pid;
 	//int		fd[2];
 
+	pipe(data->fd);
 	pid = fork();
 	if (pid == 0)
 	{
 		close(data->fd[0]);
-		dup2(data->fd[1], STDOUT_FILENO); //dup2 copies the content of its arg 2 to its arg 1!
+		if (status == 0)
+			dup2(data->fd[1], STDOUT_FILENO); //dup2 copies the content of its arg 2 to its arg 1!
+		else	
+			dup2(1, STDOUT_FILENO);
 		//dup2(fd[1], STDOUT_FILENO); //dup2 copies the content of its arg 2 to its arg 1!
 		execve(path, cmd, NULL);
-		exit(1);
 	}
-	waitpid(pid, NULL, 0);
-	/*else
+	//waitpid(pid, NULL, 0);
+	else
 	{
 		dup2(data->fd[0], STDIN_FILENO);
 		// write (1, "here1\n", 6);
 		close(data->fd[1]);
 		waitpid(pid, NULL, 0);
 		// write (1, "here2\n", 6);
-	}*/
+	}
 }
 
 void	ft_parce(t_data *data)
@@ -58,10 +61,11 @@ void	ft_parce(t_data *data)
 	t_cmd	*temp;
 	char	*tmp;
 	char	*path;
+	int 	status;
 
 	i = 0;
+	status = 0;
 	tmp = "";
-	pipe(data->fd);
 	lexer = lexer_init(data->input);
 	(data)->cmd_list = NULL;
 	while ((token = lexer_get_next_token(lexer)) != NULL)
@@ -87,20 +91,22 @@ void	ft_parce(t_data *data)
 		tmp = "";
 		path = check_path(data->full_cmd[0]);
 		if (temp && temp->id == -1)
-			break;
-		process(data->full_cmd, path, data);
-		//free(path);
+			status = 1;
+		process(data->full_cmd, path, data, status);
+		free(path);
 		free_array(data->full_cmd);
 	}
-	close(data->fd[1]);
+	exit (0);
+	/*close(data->fd[1]);
 	dup2(data->fd[0], STDIN_FILENO);
 	dup2(1, STDOUT_FILENO);
 	//path = check_path(data->full_cmd[0]);
+	write(1, "here\n", 5);
 	execve(path, data->full_cmd, NULL);
 	waitpid(i, NULL, 0);
 	close(data->fd[0]);
 	free_array(data->full_cmd);
-	free (path);
+	free (path);*/
 }
 
 
