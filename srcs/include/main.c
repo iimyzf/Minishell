@@ -39,12 +39,12 @@ void	process(char **cmd, char *path, t_data *data, int status)
 		else	
 			dup2(1, STDOUT_FILENO);
 		execve(path, cmd, NULL);
+		exit(1);
 	}
 	else
 	{
 		dup2(data->fd[0], STDIN_FILENO);
 		close(data->fd[1]);
-		waitpid(pid, NULL, 0);
 	}
 }
 
@@ -87,11 +87,20 @@ void	ft_parce(t_data *data)
 			temp = temp->next;
 		data->full_cmd = ft_split(tmp, ' ');
 		path = check_path(data->full_cmd[0]);
+		if (!path)
+			printf("hhhh\n");
 		if (temp && temp->id == -1)
 			status = 1;
 		process(data->full_cmd, path, data, status);
 		free(path);
 		free_array(data->full_cmd);
+	}
+	t_cmd	*temp1;
+	temp1 = data->cmd_list;
+	while(temp1->id != -1)
+	{
+		waitpid(-1, NULL, 0);
+		temp1 = temp1->next;
 	}
 	exit (0);
 }
