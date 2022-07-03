@@ -28,7 +28,6 @@ void	free_array(char **arr)
 void	process(char **cmd, char *path, t_data *data, int status)
 {
 	pid_t	pid;
-	//int		fd[2];
 
 	pipe(data->fd);
 	pid = fork();
@@ -36,20 +35,16 @@ void	process(char **cmd, char *path, t_data *data, int status)
 	{
 		close(data->fd[0]);
 		if (status == 0)
-			dup2(data->fd[1], STDOUT_FILENO); //dup2 copies the content of its arg 2 to its arg 1!
+			dup2(data->fd[1], STDOUT_FILENO);
 		else	
 			dup2(1, STDOUT_FILENO);
-		//dup2(fd[1], STDOUT_FILENO); //dup2 copies the content of its arg 2 to its arg 1!
 		execve(path, cmd, NULL);
 	}
-	//waitpid(pid, NULL, 0);
 	else
 	{
 		dup2(data->fd[0], STDIN_FILENO);
-		// write (1, "here1\n", 6);
 		close(data->fd[1]);
 		waitpid(pid, NULL, 0);
-		// write (1, "here2\n", 6);
 	}
 }
 
@@ -77,9 +72,12 @@ void	ft_parce(t_data *data)
 		free(token);
 	}
 	lstadd_back(&(data)->cmd_list, ft_lstnew("", -1));
+	free(lexer);
+	free (token);
 	temp = (data)->cmd_list;
 	while (temp && (temp->id != -1))
 	{
+		tmp = "";
 		while (temp->id != -1 && (temp->id != 8))
 		{
 			tmp = ft_strjoin2(tmp, temp->cmd);
@@ -88,7 +86,6 @@ void	ft_parce(t_data *data)
 		if (temp && temp->id != -1)
 			temp = temp->next;
 		data->full_cmd = ft_split(tmp, ' ');
-		tmp = "";
 		path = check_path(data->full_cmd[0]);
 		if (temp && temp->id == -1)
 			status = 1;
@@ -97,16 +94,6 @@ void	ft_parce(t_data *data)
 		free_array(data->full_cmd);
 	}
 	exit (0);
-	/*close(data->fd[1]);
-	dup2(data->fd[0], STDIN_FILENO);
-	dup2(1, STDOUT_FILENO);
-	//path = check_path(data->full_cmd[0]);
-	write(1, "here\n", 5);
-	execve(path, data->full_cmd, NULL);
-	waitpid(i, NULL, 0);
-	close(data->fd[0]);
-	free_array(data->full_cmd);
-	free (path);*/
 }
 
 
@@ -134,7 +121,8 @@ int main(int ac, char **av, char **env)
 				ft_parce(&data);
 		}
 		waitpid(pid, NULL, 0);
+		free (data.input);
 	}
-	//system("leaks minishell");
+	system("leaks minishell");
 	return (0);
 }
