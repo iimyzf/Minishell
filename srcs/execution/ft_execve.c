@@ -11,10 +11,9 @@
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-/*
 int	is_builtin(char	*cmd)
 {
-	if (!ft_strcmp(cmd, "echo"))
+	/*if (!ft_strcmp(cmd, "echo"))
 		return (1);
 	else if (!ft_strcmp(cmd, "cd"))
 		return (2);
@@ -27,15 +26,18 @@ int	is_builtin(char	*cmd)
 	else if (!ft_strcmp(cmd, "env"))
 		return (6);
 	else if (!ft_strcmp(cmd, "exit"))
-		return (7);
-	else if (!ft_strcmp(cmd, "<<"))
+		return (7);*/
+	if (!ft_strcmp(cmd, "<<"))
 		return (8);
 	return (0);
 }
 
 void	ft_execve(char **cmd, char **env, char *path)
 {
-	if (is_builtin(cmd[0]) == 1)
+	char **ok;
+
+	ok = env;
+	/*if (is_builtin(cmd[0]) == 1)
 		ft_echo(cmd, env);
 	else if (is_builtin(cmd[0]) == 2)
 		ft_cd(cmd, env);
@@ -48,10 +50,9 @@ void	ft_execve(char **cmd, char **env, char *path)
 	else if (is_builtin(cmd[0]) == 6)
 		ft_env(cmd, env);
 	else if (is_builtin(cmd[0]) == 7)
-		ft_exit(cmd, env);
-	else if (is_builtin(cmd[0]) == 8)
-		ft_herd(cmd, env);
+		ft_exit(cmd, env);*/
+	if (is_builtin(cmd[0]) == 8)
+		heredoc(cmd[1]);
 	else
-		sys_exuc(cmd, path);
+		execve(path, cmd, NULL);
 }
-*/

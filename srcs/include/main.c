@@ -38,7 +38,8 @@ void	process(char **cmd, char *path, t_data *data, int status)
 			dup2(data->fd[1], STDOUT_FILENO);
 		else	
 			dup2(1, STDOUT_FILENO);
-		execve(path, cmd, NULL);
+		ft_execve(cmd, NULL, path);
+		//printf("%d")
 		exit(1);
 	}
 	else
@@ -81,6 +82,14 @@ void	ft_parce(t_data *data)
 		while (temp->id != -1 && (temp->id != 8))
 		{
 			tmp = ft_strjoin2(tmp, temp->cmd);
+			if (temp->id == 4 && temp->next->id != -1 && temp->next->id != 8)
+			{
+				temp = temp->next;
+				tmp = ft_strjoin2(tmp, temp->cmd);
+				temp = temp->next;
+				break;
+			}
+			//printf("cmd = %s && id = %d\n", temp->cmd, temp->id);
 			temp = temp->next;
 		}
 		if (temp && temp->id != -1)
