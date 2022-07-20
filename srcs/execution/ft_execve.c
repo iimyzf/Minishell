@@ -51,8 +51,7 @@ void	ft_execve(char **cmd, char **env, char *path)
 		ft_env(cmd, env);
 	else if (is_builtin(cmd[0]) == 7)
 		ft_exit(cmd, env);*/
-	if (is_builtin(cmd[0]) == 8)
-		heredoc(cmd[1]);
-	else
+	/*if (is_builtin(cmd[0]) == 8)
+		heredoc(cmd[1]);*/
 		execve(path, cmd, NULL);
 }

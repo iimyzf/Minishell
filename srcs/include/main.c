@@ -29,7 +29,6 @@ void	process(char **cmd, char *path, t_data *data, int status)
 {
 	pid_t	pid;
 
-	pipe(data->fd);
 	pid = fork();
 	if (pid == 0)
 	{
@@ -79,25 +78,25 @@ void	ft_parce(t_data *data)
 	while (temp && (temp->id != -1))
 	{
 		tmp = "";
+		pipe(data->fd);
 		while (temp->id != -1 && (temp->id != 8))
 		{
-			tmp = ft_strjoin2(tmp, temp->cmd);
-			if (temp->id == 4 && temp->next->id != -1 && temp->next->id != 8)
+			if (temp->id == 4)
 			{
+				heredoc(temp->next->cmd, data);
 				temp = temp->next;
-				tmp = ft_strjoin2(tmp, temp->cmd);
-				temp = temp->next;
-				break;
 			}
-			//printf("cmd = %s && id = %d\n", temp->cmd, temp->id);
+			else
+				tmp = ft_strjoin2(tmp, temp->cmd);
 			temp = temp->next;
 		}
+		printf("tmp = %s\n", tmp);
 		if (temp && temp->id != -1)
 			temp = temp->next;
 		data->full_cmd = ft_split(tmp, ' ');
 		path = check_path(data->full_cmd[0]);
-		if (!path)
-			printf("hhhh\n");
+		if (!path && ft_strcmp(data->full_cmd[0], "<<"))
+			printf("HA HA HA HA HA HA! d3iiiif !!\n");
 		if (temp && temp->id == -1)
 			status = 1;
 		process(data->full_cmd, path, data, status);

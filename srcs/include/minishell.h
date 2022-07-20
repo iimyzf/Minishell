@@ -75,7 +75,7 @@ char	*check_path(char	*cmd);
 char	**ft_split(char const *s, char c);
 void	ft_execve(char **cmd, char **env, char *path);
 char	*ft_strjoin2(char *s1, char *s2);
-void	heredoc(char	*cmd);
+void	heredoc(char	*cmd, t_data *data);
 
 
 
