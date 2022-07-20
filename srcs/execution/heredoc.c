@@ -13,7 +13,7 @@
 #include "../include/minishell.h"
 
 
-void ft_putchar(int *fd, char *input)
+void ft_putchar(t_data *data, char *input)
 {
 	int	i;
 	int	pid;
@@ -21,37 +21,38 @@ void ft_putchar(int *fd, char *input)
 	pid = fork();
 	i = 0;
 	if (pid == 0)
-	{ 
-		close(fd[0]);
-		dup2(fd[1], STDOUT_FILENO);
+	{
+		close(data->here_fd[0]);
+		dup2(data->here_fd[1], STDOUT_FILENO);
 		while (input[i])
 		{
-			write(fd[1], &input[i], 1);
+			write(data->here_fd[1], &input[i], 1);
 			i++;
 		}
+		write(data->here_fd[1], "\n", 1);
 		exit(1);
 	}
-	else
-	{
-		dup2(fd[0], STDIN_FILENO);
-		close(fd[1]);
-	}
-
 }
 
 void	heredoc(char	*cmd, t_data *data)
 {
 	char	*input;
 
-	pipe(data->fd);
 	while (1)
 	{
+		//write (1, "HERE0\n", 6);
 		input = readline("heredoc> ");
 		if (!ft_strcmp(cmd, input))
+		{
+			close (data->here_fd[1]);
 			break;
+		}
 		else
 		{
-			ft_putchar(data->fd, input);
+			//write (1, "HERE0\n", 6);
+			ft_putchar(data, input);
 		}
+		waitpid(-1, NULL, 0);
+		free(input);
 	}
 }

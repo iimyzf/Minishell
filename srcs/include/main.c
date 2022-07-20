@@ -32,19 +32,29 @@ void	process(char **cmd, char *path, t_data *data, int status)
 	pid = fork();
 	if (pid == 0)
 	{
+		if (status == 2)
+		{
+			dup2(data->here_fd[0], STDIN_FILENO);
+			//close(data->here_fd[1]);
+		}
 		close(data->fd[0]);
 		if (status == 0)
 			dup2(data->fd[1], STDOUT_FILENO);
-		else	
+		else
+		{
 			dup2(1, STDOUT_FILENO);
+		}
 		ft_execve(cmd, NULL, path);
 		//printf("%d")
 		exit(1);
 	}
 	else
 	{
-		dup2(data->fd[0], STDIN_FILENO);
-		close(data->fd[1]);
+		if(status != 2)
+		{
+			dup2(data->fd[0], STDIN_FILENO);
+			close(data->fd[1]);
+		}
 	}
 }
 
@@ -59,7 +69,6 @@ void	ft_parce(t_data *data)
 	int 	status;
 
 	i = 0;
-	status = 0;
 	tmp = "";
 	lexer = lexer_init(data->input);
 	(data)->cmd_list = NULL;
@@ -77,12 +86,15 @@ void	ft_parce(t_data *data)
 	temp = (data)->cmd_list;
 	while (temp && (temp->id != -1))
 	{
+		status = 0;
 		tmp = "";
 		pipe(data->fd);
 		while (temp->id != -1 && (temp->id != 8))
 		{
 			if (temp->id == 4)
 			{
+				status = 2;
+				pipe(data->here_fd);
 				heredoc(temp->next->cmd, data);
 				temp = temp->next;
 			}
@@ -90,14 +102,14 @@ void	ft_parce(t_data *data)
 				tmp = ft_strjoin2(tmp, temp->cmd);
 			temp = temp->next;
 		}
-		printf("tmp = %s\n", tmp);
+		//printf("tmp = %s\n", tmp);
 		if (temp && temp->id != -1)
 			temp = temp->next;
 		data->full_cmd = ft_split(tmp, ' ');
 		path = check_path(data->full_cmd[0]);
 		if (!path && ft_strcmp(data->full_cmd[0], "<<"))
 			printf("HA HA HA HA HA HA! d3iiiif !!\n");
-		if (temp && temp->id == -1)
+		if (temp && temp->id == -1 && status != 2)
 			status = 1;
 		process(data->full_cmd, path, data, status);
 		free(path);

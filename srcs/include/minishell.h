@@ -22,6 +22,7 @@
 # include <sys/stat.h>
 
 
+
 typedef	struct s_cmd
 {
 	int				id;
@@ -34,10 +35,12 @@ typedef struct s_data
 	int				in;
 	int				out;
 	int				fd[2];
+	int				here_fd[2];
 	char			*input;
 	char			**full_cmd;
 	char			**env;
 	t_cmd			*cmd_list;
+	int				p;
 }	t_data;
 
 
