@@ -40,7 +40,6 @@ void	heredoc(char	*cmd, t_data *data)
 
 	while (1)
 	{
-		//write (1, "HERE0\n", 6);
 		input = readline("heredoc> ");
 		if (!ft_strcmp(cmd, input))
 		{
@@ -48,10 +47,7 @@ void	heredoc(char	*cmd, t_data *data)
 			break;
 		}
 		else
-		{
-			//write (1, "HERE0\n", 6);
 			ft_putchar(data, input);
-		}
 		waitpid(-1, NULL, 0);
 		free(input);
 	}

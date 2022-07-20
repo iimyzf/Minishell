@@ -33,19 +33,13 @@ void	process(char **cmd, char *path, t_data *data, int status)
 	if (pid == 0)
 	{
 		if (status == 2)
-		{
 			dup2(data->here_fd[0], STDIN_FILENO);
-			//close(data->here_fd[1]);
-		}
 		close(data->fd[0]);
 		if (status == 0)
 			dup2(data->fd[1], STDOUT_FILENO);
 		else
-		{
 			dup2(1, STDOUT_FILENO);
-		}
 		ft_execve(cmd, NULL, path);
-		//printf("%d")
 		exit(1);
 	}
 	else
