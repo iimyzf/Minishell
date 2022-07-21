@@ -30,25 +30,29 @@ void ft_putchar(t_data *data, char *input)
 			i++;
 		}
 		write(data->here_fd[1], "\n", 1);
-		exit(1);
+		exit(0);
 	}
 }
 
-void	heredoc(char	*cmd, t_data *data)
+void	heredoc(char	*cmd, t_data *data, int	is_last_here)
 {
 	char	*input;
 
+	printf("last = %d\n", is_last_here);
 	while (1)
 	{
 		input = readline("heredoc> ");
 		if (!ft_strcmp(cmd, input))
 		{
-			close (data->here_fd[1]);
+			if (is_last_here)
+				close (data->here_fd[1]);
 			break;
 		}
-		else
+		else if (is_last_here)
+		{
 			ft_putchar(data, input);
-		waitpid(-1, NULL, 0);
+			waitpid(-1, NULL, 0);
+		}
 		free(input);
 	}
 }

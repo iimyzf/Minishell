@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   is_heredoc.c                                       :+:      :+:    :+:   */
+/*   is_last_heredoc.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: azabir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,4 +12,16 @@
 
 #include "../include/minishell.h"
 
+int	is_last_heredoc(t_cmd	*cmd)
+{
+	t_cmd	*temp;
 
+	temp = cmd;
+	while (temp && temp->id != -1)
+	{	
+		temp = temp->next;
+		if (temp->id == 4)
+			return(0);
+	}
+	return(1);
+}

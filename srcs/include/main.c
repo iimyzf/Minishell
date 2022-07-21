@@ -32,8 +32,6 @@ void	process(char **cmd, char *path, t_data *data, int status)
 	pid = fork();
 	if (pid == 0)
 	{
-		if (status == 2)
-			dup2(data->here_fd[0], STDIN_FILENO);
 		close(data->fd[0]);
 		if (status == 0)
 			dup2(data->fd[1], STDOUT_FILENO);
@@ -44,7 +42,7 @@ void	process(char **cmd, char *path, t_data *data, int status)
 	}
 	else
 	{
-		if(status != 2)
+		if (status != 2)
 		{
 			dup2(data->fd[0], STDIN_FILENO);
 			close(data->fd[1]);
@@ -87,16 +85,16 @@ void	ft_parce(t_data *data)
 		{
 			if (temp->id == 4)
 			{
-				status = 2;
-				pipe(data->here_fd);
-				heredoc(temp->next->cmd, data);
+				if (is_last_heredoc(temp))
+					pipe(data->here_fd);
+				heredoc(temp->next->cmd, data, is_last_heredoc(temp));
+				dup2(data->here_fd[0], STDIN_FILENO);
 				temp = temp->next;
 			}
 			else
 				tmp = ft_strjoin2(tmp, temp->cmd);
 			temp = temp->next;
 		}
-		//printf("tmp = %s\n", tmp);
 		if (temp && temp->id != -1)
 			temp = temp->next;
 		data->full_cmd = ft_split(tmp, ' ');
@@ -104,8 +102,11 @@ void	ft_parce(t_data *data)
 		if (!path && ft_strcmp(data->full_cmd[0], "<<"))
 			printf("HA HA HA HA HA HA! d3iiiif !!\n");
 		if (temp && temp->id == -1 && status != 2)
+		{
 			status = 1;
+		}
 		process(data->full_cmd, path, data, status);
+		//status = 0;
 		free(path);
 		free_array(data->full_cmd);
 	}
