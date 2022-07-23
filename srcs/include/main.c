@@ -117,11 +117,17 @@ void	ft_parce(t_data *data)
 			temp = temp->next;
 		data->full_cmd = ft_split(tmp, ' ');
 		path = check_path(data->full_cmd[0]);
-		if (!path && ft_strcmp(data->full_cmd[0], "<<"))
+		if (data->full_cmd[0] && !path && ft_strcmp(data->full_cmd[0], "<<"))
 			printf("HA HA HA HA HA HA! d3iiiif !!\n");
 		if (temp && temp->id == -1 && status != 2)
 			status = 1;
-		process(data->full_cmd, path, data, status);
+		if (data->full_cmd[0] != NULL)
+			process(data->full_cmd, path, data, status);
+		else
+		{
+			close(data->fd[0]);
+			close(data->fd[1]);
+		}
 		free(path);
 		free_array(data->full_cmd);
 	}
