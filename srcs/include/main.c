@@ -37,6 +37,7 @@ void	process(char **cmd, char *path, t_data *data, int status)
 		else
 			dup2(1, STDOUT_FILENO);
 		ft_execve(cmd, NULL, path);
+		write (2, "exit\n", 5);
 		exit(1);
 	}
 	else
@@ -117,24 +118,24 @@ void	ft_parce(t_data *data)
 			temp = temp->next;
 		data->full_cmd = ft_split(tmp, ' ');
 		path = check_path(data->full_cmd[0]);
+		//printf ("cmd = %s\n", data->full_cmd[0]);
 		if (data->full_cmd[0] && !path && ft_strcmp(data->full_cmd[0], "<<"))
 			printf("HA HA HA HA HA HA! d3iiiif !!\n");
-		if (temp && temp->id == -1 && status != 2)
+		if (temp && temp->id == -1)
 			status = 1;
 		if (data->full_cmd[0] != NULL)
 			process(data->full_cmd, path, data, status);
 		else
-		{
-			close(data->fd[0]);
-			close(data->fd[1]);
-		}
+			dup2(data->fd[0], STDIN_FILENO);
 		free(path);
 		free_array(data->full_cmd);
 	}
 	t_cmd	*temp1;
 	temp1 = data->cmd_list;
+	// the number of process created is less than what you expected here!!
 	while(temp1->id != -1)
 	{
+		//write (1, "here\n", 5);
 		waitpid(-1, NULL, 0);
 		temp1 = temp1->next;
 	}
