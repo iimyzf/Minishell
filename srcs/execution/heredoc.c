@@ -22,8 +22,6 @@ void ft_putchar(t_data *data, char *input)
 	i = 0;
 	if (pid == 0)
 	{
-		close(data->here_fd[0]);
-		dup2(data->here_fd[1], STDOUT_FILENO);
 		while (input[i])
 		{
 			write(data->here_fd[1], &input[i], 1);
@@ -37,13 +35,16 @@ void ft_putchar(t_data *data, char *input)
 void	heredoc(char	*cmd, t_data *data, int	is_last_here)
 {
 	char	*input;
+	int		in;
 
-	printf("last = %d\n", is_last_here);
+	in = STDIN_FILENO;
 	while (1)
 	{
+		//dup2(1, STDIN_FILENO);
 		input = readline("heredoc> ");
 		if (!ft_strcmp(cmd, input))
 		{
+		//write (2, "here\n", 5);
 			if (is_last_here)
 				close (data->here_fd[1]);
 			break;
@@ -55,4 +56,5 @@ void	heredoc(char	*cmd, t_data *data, int	is_last_here)
 		}
 		free(input);
 	}
+	//dup2(in ,STDIN_FILENO);
 }

@@ -26,6 +26,8 @@
 typedef	struct s_cmd
 {
 	int				id;
+	int				in;
+	int				out;
 	char			*cmd;
 	struct s_cmd	*next;
 }	t_cmd;
