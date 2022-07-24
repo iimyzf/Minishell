@@ -25,7 +25,7 @@ char	*ft_strjoin2(char *s1, char *s2)
 	if (!s1 || !s2)
 		return (NULL);
 	j = ft_strlen(s1) + ft_strlen (s2);
-	ptr = malloc (sizeof(char) * (j + 1));
+	ptr = malloc (sizeof(char) * j + 2);
 	if (!ptr)
 		return (NULL);
 	j = 0;

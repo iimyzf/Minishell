@@ -33,16 +33,14 @@ void	process(char **cmd, char *path, t_data *data, int status)
 	if (pid == 0)
 	{
 		if (status == 0)
-			dup2(data->fd[1], STDOUT_FILENO);
+			dup2(data->out, STDOUT_FILENO);
 		else
-			dup2(1, STDOUT_FILENO);
+			dup2(data->out, STDOUT_FILENO);
 		ft_execve(cmd, NULL, path);
-		write (2, "exit\n", 5);
-		exit(1);
 	}
 	else
 	{
-		dup2(data->fd[0], STDIN_FILENO);
+		dup2(data->in, STDIN_FILENO);
 		close(data->fd[0]);
 		close(data->fd[1]);
 	}
@@ -57,6 +55,7 @@ void	ft_parce(t_data *data)
 	char	*tmp;
 	char	*path;
 	int 	status;
+	int		pid;
 
 	i = 0;
 	tmp = "";
@@ -99,6 +98,8 @@ void	ft_parce(t_data *data)
 		status = 0;
 		tmp = "";
 		pipe(data->fd);
+		data->out = data->fd[1];
+		data->in = data->fd[0];
 		while (temp->id != -1 && (temp->id != 8))
 		{
 			if (temp->id == 4)
@@ -110,6 +111,13 @@ void	ft_parce(t_data *data)
 				}
 				temp = temp->next;
 			}
+			else if(temp->id == 2)
+			{
+				temp = temp->next;
+				pid = open(temp->cmd, O_RDWR | O_CREAT | O_TRUNC);
+				data->out = dup(pid);
+				status = 1;
+			}
 			else
 				tmp = ft_strjoin2(tmp, temp->cmd);
 			temp = temp->next;
@@ -118,24 +126,28 @@ void	ft_parce(t_data *data)
 			temp = temp->next;
 		data->full_cmd = ft_split(tmp, ' ');
 		path = check_path(data->full_cmd[0]);
-		//printf ("cmd = %s\n", data->full_cmd[0]);
+		int j = -1;
+		while (data->full_cmd[++j])
+			fprintf (stdout ,"cmd = %s\n", data->full_cmd[j]);
 		if (data->full_cmd[0] && !path && ft_strcmp(data->full_cmd[0], "<<"))
 			printf("HA HA HA HA HA HA! d3iiiif !!\n");
-		if (temp && temp->id == -1)
+		if (temp && temp->id == -1 && status == 0)
+		{
 			status = 1;
+			data->out = 1;
+		}
 		if (data->full_cmd[0] != NULL)
 			process(data->full_cmd, path, data, status);
 		else
-			dup2(data->fd[0], STDIN_FILENO);
+			dup2(data->in, STDIN_FILENO);
 		free(path);
+		usleep(300);
 		free_array(data->full_cmd);
 	}
 	t_cmd	*temp1;
 	temp1 = data->cmd_list;
-	// the number of process created is less than what you expected here!!
 	while(temp1->id != -1)
 	{
-		//write (1, "here\n", 5);
 		waitpid(-1, NULL, 0);
 		temp1 = temp1->next;
 	}
