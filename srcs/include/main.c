@@ -102,6 +102,7 @@ void	ft_parce(t_data *data)
 		data->in = data->fd[0];
 		while (temp->id != -1 && (temp->id != 8))
 		{
+			printf("cmd = %s ID = %d\n", temp->cmd, temp->id);
 			if (temp->id == 4)
 			{
 				if (is_last_heredoc(temp))
@@ -118,6 +119,13 @@ void	ft_parce(t_data *data)
 				data->out = dup(pid);
 				status = 1;
 			}
+			else if(temp->id == 3)
+			{
+				temp = temp->next;
+				pid = open(temp->cmd, O_RDWR | O_CREAT | O_APPEND , 0777);
+				data->out = dup(pid);
+				status = 1;
+			}
 			else
 				tmp = ft_strjoin2(tmp, temp->cmd);
 			temp = temp->next;
@@ -126,9 +134,9 @@ void	ft_parce(t_data *data)
 			temp = temp->next;
 		data->full_cmd = ft_split(tmp, ' ');
 		path = check_path(data->full_cmd[0]);
-		int j = -1;
-		while (data->full_cmd[++j])
-			fprintf (stdout ,"cmd = %s\n", data->full_cmd[j]);
+		//int j = -1;
+		/*while (data->full_cmd[++j])
+			fprintf (stdout ,"cmd = %s\n", data->full_cmd[j]);*/
 		if (data->full_cmd[0] && !path && ft_strcmp(data->full_cmd[0], "<<"))
 			printf("HA HA HA HA HA HA! d3iiiif !!\n");
 		if (temp && temp->id == -1 && status == 0)
