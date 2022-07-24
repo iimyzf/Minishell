@@ -114,7 +114,7 @@ void	ft_parce(t_data *data)
 			else if(temp->id == 2)
 			{
 				temp = temp->next;
-				pid = open(temp->cmd, O_RDWR | O_CREAT | O_TRUNC);
+				pid = open(temp->cmd, O_RDWR | O_CREAT | O_TRUNC, 0777);
 				data->out = dup(pid);
 				status = 1;
 			}
