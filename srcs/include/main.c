@@ -28,21 +28,21 @@ void	free_array(char **arr)
 void	process(char **cmd, char *path, t_data *data, int status)
 {
 	pid_t	pid;
+	int kra;
 
+	kra = status;
+	kra = 0;
 	pid = fork();
 	if (pid == 0)
 	{
-		if (status == 0)
-			dup2(data->out, STDOUT_FILENO);
-		else
-			dup2(data->out, STDOUT_FILENO);
+		dup2(data->out, STDOUT_FILENO);
 		ft_execve(cmd, NULL, path);
 	}
 	else
 	{
 		dup2(data->in, STDIN_FILENO);
-		close(data->fd[0]);
-		close(data->fd[1]);
+		close(data->out);
+		close(data->in);
 	}
 }
 
@@ -73,6 +73,11 @@ void	ft_parce(t_data *data)
 	free(lexer);
 	free (token);
 	temp = (data)->cmd_list;
+	if (temp->id == 8)
+	{
+		printf("minishell: syntax error near unexpected token `|'\n");
+		exit(1);
+	}
 	while(temp && (temp->id != -1))
 	{
 		//write (1, "here\n", 5);
@@ -102,7 +107,7 @@ void	ft_parce(t_data *data)
 		data->in = data->fd[0];
 		while (temp->id != -1 && (temp->id != 8))
 		{
-			printf("cmd = %s ID = %d\n", temp->cmd, temp->id);
+		//printf("cmd = %s ID = %d\n", temp->cmd, temp->id);
 			if (temp->id == 4)
 			{
 				if (is_last_heredoc(temp))
@@ -125,6 +130,12 @@ void	ft_parce(t_data *data)
 				pid = open(temp->cmd, O_RDWR | O_CREAT | O_APPEND , 0777);
 				data->out = dup(pid);
 				status = 1;
+			}
+			else if(temp->id == 1)
+			{
+				temp = temp->next;
+				pid = open(temp->cmd, O_RDONLY);
+				dup2(pid, STDIN_FILENO);
 			}
 			else
 				tmp = ft_strjoin2(tmp, temp->cmd);
@@ -149,7 +160,6 @@ void	ft_parce(t_data *data)
 		else
 			dup2(data->in, STDIN_FILENO);
 		free(path);
-		usleep(300);
 		free_array(data->full_cmd);
 	}
 	t_cmd	*temp1;
@@ -161,7 +171,6 @@ void	ft_parce(t_data *data)
 	}
 	exit (0);
 }
-
 
 int main(int ac, char **av, char **env)
 {

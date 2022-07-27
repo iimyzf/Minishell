@@ -20,5 +20,6 @@ size_t	ft_strlen(char *str);
 char	*ft_strcat(char *str1, char *str2);
 int		ft_strcmp(char *str1, char *str2);
 int		ft_isalnum(char c);
+char	get_next_char(int pid);
 
 #endif
