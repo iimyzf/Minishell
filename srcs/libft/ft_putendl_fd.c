@@ -1,41 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_echo.c                                          :+:      :+:    :+:   */
+/*   ft_putendl_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yagnaou <yagnaou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/13 19:20:35 by azabir            #+#    #+#             */
-/*   Updated: 2022/07/22 21:15:52 by yagnaou          ###   ########.fr       */
+/*   Created: 2022/07/22 12:14:08 by yagnaou           #+#    #+#             */
+/*   Updated: 2022/07/22 12:14:23 by yagnaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "libft.h"
 
-int	ft_echo(char **cmd)
+void	ft_putchar_fd(char c, int fd)
 {
-	int	i;
+	write(fd, &c, 1);
+}
 
-	i = 1;
-	if (cmd[1] == NULL)
-		printf("\n");
-	if (ft_strcmp(cmd[1], "-n"))
+void	ft_putstr_fd(char *s, int fd)
+{
+	size_t	i;
+
+	if (s == NULL)
+		return ;
+	i = 0;
+	while (s[i] != '\0')
 	{
-		while (cmd[i])
-		{
-			printf("%s", cmd[i]);
-			i++;
-		}
-		printf("\n");
+		ft_putchar_fd(s[i], fd);
+		i++;
 	}
-	else if (!ft_strcmp(cmd[1], "-n"))
-	{
-		i = 2;
-		while (cmd[i])
-		{
-			printf("%s", cmd[i]);
-			i++;
-		}
-	}
-	return (0);
+}
+
+void	ft_putendl_fd(char *s, int fd)
+{
+	ft_putstr_fd(s, fd);
+	ft_putchar_fd('\n', fd);
 }

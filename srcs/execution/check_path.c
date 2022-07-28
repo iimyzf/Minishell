@@ -6,11 +6,12 @@
 /*   By: yagnaou <yagnaou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 10:35:58 by azabir            #+#    #+#             */
-/*   Updated: 2022/06/12 10:30:51 by yagnaou          ###   ########.fr       */
+/*   Updated: 2022/07/28 18:45:18 by yagnaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
 char	*make_path(char *path, char *cmd)
 {
 	char		*cmd_path;

@@ -1,41 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_echo.c                                          :+:      :+:    :+:   */
+/*   ft_lstadd_back_new.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yagnaou <yagnaou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/13 19:20:35 by azabir            #+#    #+#             */
-/*   Updated: 2022/07/22 21:15:52 by yagnaou          ###   ########.fr       */
+/*   Created: 2022/07/23 15:20:08 by yagnaou           #+#    #+#             */
+/*   Updated: 2022/07/23 15:41:19 by yagnaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "libft.h"
 
-int	ft_echo(char **cmd)
+t_lst	*ft_lstlast(t_lst *lst)
 {
-	int	i;
-
-	i = 1;
-	if (cmd[1] == NULL)
-		printf("\n");
-	if (ft_strcmp(cmd[1], "-n"))
+	if (lst)
 	{
-		while (cmd[i])
-		{
-			printf("%s", cmd[i]);
-			i++;
-		}
-		printf("\n");
-	}
-	else if (!ft_strcmp(cmd[1], "-n"))
-	{
-		i = 2;
-		while (cmd[i])
-		{
-			printf("%s", cmd[i]);
-			i++;
-		}
+		while (lst->next)
+			lst = lst->next;
+		return (lst);
 	}
 	return (0);
+}
+
+void	ft_lstadd_back_new(t_lst **lst, t_lst *new)
+{
+	if (*lst == NULL)
+		*lst = new;
+	else
+		ft_lstlast(*lst)->next = new;
 }

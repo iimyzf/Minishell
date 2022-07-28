@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_exucve.c                                        :+:      :+:    :+:   */
+/*   ft_execve.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: azabir <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: yagnaou <yagnaou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 11:34:29 by azabir            #+#    #+#             */
-/*   Updated: 2022/06/29 11:34:30 by azabir           ###   ########.fr       */
+/*   Updated: 2022/07/28 18:57:35 by yagnaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-int	is_builtin(char	*cmd)
+/*int	is_builtin(char	*cmd)
 {
-	/*if (!ft_strcmp(cmd, "echo"))
+	if (!ft_strcmp(cmd, "echo"))
 		return (1);
 	else if (!ft_strcmp(cmd, "cd"))
 		return (2);
@@ -26,32 +26,45 @@ int	is_builtin(char	*cmd)
 	else if (!ft_strcmp(cmd, "env"))
 		return (6);
 	else if (!ft_strcmp(cmd, "exit"))
-		return (7);*/
+		return (7);
 	if (!ft_strcmp(cmd, "<<"))
 		return (8);
 	return (0);
-}
+}*/
 
-void	ft_execve(char **cmd, char **env, char *path)
+void	ft_execve(char **cmd, char **env, char *path, t_data *data)
 {
-	char **ok;
-
-	ok = env;
-	/*if (is_builtin(cmd[0]) == 1)
-		ft_echo(cmd, env);
-	else if (is_builtin(cmd[0]) == 2)
-		ft_cd(cmd, env);
-	else if (is_builtin(cmd[0]) == 3)
-		ft_pwd(cmd, env);
-	else if (is_builtin(cmd[0]) == 4)
-		ft_export(cmd, env);
-	else if (is_builtin(cmd[0]) == 5)
-		ft_unset(cmd, env);
-	else if (is_builtin(cmd[0]) == 6)
+	char	**tab;
+	tab = env;
+	/* else if (is_builtin(cmd[0]) == 2)
+		ft_cd(cmd, env);*/
+	if (!ft_strcmp(cmd[0], "pwd"))
+		ft_pwd();
+	else if (!ft_strcmp(cmd[0], "echo"))
+		ft_echo(cmd);
+	else if (!ft_strcmp(cmd[0], "env") && cmd[1] == NULL)
+		ft_env(env);
+	else if (!ft_strcmp(cmd[0], "export"))
+		ft_export(&cmd[1], data);
+	/*else if (is_builtin(cmd[0]) == 6)
 		ft_env(cmd, env);
 	else if (is_builtin(cmd[0]) == 7)
 		ft_exit(cmd, env);*/
 	/*if (is_builtin(cmd[0]) == 8)
 		heredoc(cmd[1]);*/
+	else
 		execve(path, cmd, NULL);
 }
+
+/*void	execution(char **lst)
+{
+	//t_env	*tmp;
+
+	// tmp = *lst;
+	printf("%s\n", lst[0]);
+	if (!(ft_strcmp(lst[0], "pwd")))
+	{
+		write(2, "IM HERE\n", 9);
+		ft_pwd();
+	}
+}*/

@@ -1,41 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_echo.c                                          :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yagnaou <yagnaou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/13 19:20:35 by azabir            #+#    #+#             */
-/*   Updated: 2022/07/22 21:15:52 by yagnaou          ###   ########.fr       */
+/*   Created: 2022/07/28 17:46:51 by yagnaou           #+#    #+#             */
+/*   Updated: 2022/07/28 17:46:56 by yagnaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "libft.h"
 
-int	ft_echo(char **cmd)
+char	*ft_strdup(const char	*src)
 {
-	int	i;
+	int		i;
+	int		j;
+	char	*dst;
 
-	i = 1;
-	if (cmd[1] == NULL)
-		printf("\n");
-	if (ft_strcmp(cmd[1], "-n"))
+	i = 0;
+	j = 0;
+	while (src[i] != '\0')
+		i++;
+	dst = (char *) malloc (sizeof(char) * (i + 1));
+	if (!dst)
+		return (NULL);
+	while (j < i)
 	{
-		while (cmd[i])
-		{
-			printf("%s", cmd[i]);
-			i++;
-		}
-		printf("\n");
+		dst[j] = src[j];
+		j++;
 	}
-	else if (!ft_strcmp(cmd[1], "-n"))
-	{
-		i = 2;
-		while (cmd[i])
-		{
-			printf("%s", cmd[i]);
-			i++;
-		}
-	}
-	return (0);
+	dst[j] = '\0';
+	return (dst);
 }

@@ -17,7 +17,7 @@ int	is_last_heredoc(t_cmd	*cmd)
 	t_cmd	*temp;
 
 	temp = cmd;
-	while (temp && temp->id != -1)
+	while (temp && temp->id != -1 && temp->id != 8)
 	{	
 		temp = temp->next;
 		if (temp->id == 4)
