@@ -12,6 +12,16 @@
 
 #include "minishell.h"
 
+
+void kra (int sig)
+{
+	(void) sig;
+	//write (1,"\nminishell> ",12);
+	kill
+	//rl_on_new_line();
+	//rl_redisplay();
+}
+
 void	free_array(char **arr)
 {
 	int		i;
@@ -50,14 +60,12 @@ void	ft_parce(t_data *data)
 {
 	t_lexer	*lexer;
 	t_token	*token;
-	int		i;
 	t_cmd	*temp;
 	char	*tmp;
 	char	*path;
 	int 	status;
 	int		pid;
 
-	i = 0;
 	tmp = "";
 	lexer = lexer_init(data->input);
 	(data)->cmd_list = NULL;
@@ -80,7 +88,6 @@ void	ft_parce(t_data *data)
 	}
 	while(temp && (temp->id != -1))
 	{
-		//write (1, "here\n", 5);
 		while (temp->id != -1 && (temp->id != 8))
 		{
 			if (temp->id == 4)
@@ -107,7 +114,6 @@ void	ft_parce(t_data *data)
 		data->in = data->fd[0];
 		while (temp->id != -1 && (temp->id != 8))
 		{
-		//printf("cmd = %s ID = %d\n", temp->cmd, temp->id);
 			if (temp->id == 4)
 			{
 				if (is_last_heredoc(temp))
@@ -145,16 +151,10 @@ void	ft_parce(t_data *data)
 			temp = temp->next;
 		data->full_cmd = ft_split(tmp, ' ');
 		path = check_path(data->full_cmd[0]);
-		//int j = -1;
-		/*while (data->full_cmd[++j])
-			fprintf (stdout ,"cmd = %s\n", data->full_cmd[j]);*/
 		if (data->full_cmd[0] && !path && ft_strcmp(data->full_cmd[0], "<<"))
 			printf("HA HA HA HA HA HA! d3iiiif !!\n");
 		if (temp && temp->id == -1 && status == 0)
-		{
-			status = 1;
 			data->out = 1;
-		}
 		if (data->full_cmd[0] != NULL)
 			process(data->full_cmd, path, data, status);
 		else
@@ -193,7 +193,10 @@ int main(int ac, char **av, char **env)
 			pid = fork();
 			add_history(data.input);
 			if (pid == 0)
+			{
 				ft_parce(&data);
+			}
+			signal(SIGINT, kra);
 		}
 		waitpid(pid, NULL, 0);
 		free (data.input);

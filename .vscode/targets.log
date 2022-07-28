@@ -1,0 +1,493 @@
+make all --print-data-base --no-builtin-variables --no-builtin-rules --question
+# GNU Make 3.81
+# Copyright (C) 2006  Free Software Foundation, Inc.
+# This is free software; see the source for copying conditions.
+# There is NO warranty; not even for MERCHANTABILITY or FITNESS FOR A
+# PARTICULAR PURPOSE.
+
+# This program built for i386-apple-darwin11.3.0
+ 
+
+# Make data base, printed on Thu Jul 28 20:01:40 2022
+ 
+
+# Variables
+
+# automatic
+<D = $(patsubst %/,%,$(dir $<))
+# automatic
+?F = $(notdir $?)
+# automatic
+?D = $(patsubst %/,%,$(dir $?))
+# automatic
+@D = $(patsubst %/,%,$(dir $@))
+# automatic
+@F = $(notdir $@)
+# makefile
+CURDIR := /Users/azabir/Desktop/Minishell
+# makefile
+SHELL = /bin/sh
+# environment
+VSCODE_NLS_CONFIG = {"locale":"en-us","availableLanguages":{},"_languagePackSupport":true}
+# environment
+_ = /usr/bin/make
+# makefile (from `Makefile', line 15)
+CFLAGS = -Wall -Werror -Wextra -lreadline 
+# makefile (from `Makefile', line 1)
+MAKEFILE_LIST :=  Makefile
+# makefile (from `Makefile', line 21)
+OBJS = $(SRCS:.c=.o)
+# environment
+VSCODE_CWD = /
+# environment
+Apple_PubSub_Socket_Render = /private/tmp/com.apple.launchd.rhmQOL1mQ4/Render
+# environment
+PATH = /goinfre/azabir/miniconda3/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/munki
+# environment
+LSCOLORS = Gxfxcxdxbxegedabagacad
+# environment
+ELECTRON_RUN_AS_NODE = 1
+# default
+.FEATURES := target-specific order-only second-expansion else-if archives jobserver check-symlink
+# environment
+SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.OR9485shq1/Listeners
+# automatic
+%F = $(notdir $%)
+# environment
+PWD = /Users/azabir/Desktop/Minishell
+# environment
+ORIGINAL_XDG_CURRENT_DESKTOP = undefined
+# environment
+VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
+# environment
+HOME = /Users/azabir
+# default
+MAKEFILEPATH := /Applications/Xcode.app/Contents/Developer/Makefiles
+# environment
+VSCODE_CODE_CACHE_PATH = /Users/azabir/Library/Application Support/Code/CachedData/b06ae3b2d2dbfe28bca3134cc6be65935cdfea6a
+# environment
+LOGNAME = azabir
+# environment
+APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = 1
+# environment
+ZSH = /Users/azabir/.oh-my-zsh
+# environment
+VSCODE_HANDLES_UNCAUGHT_ERRORS = true
+# automatic
+^D = $(patsubst %/,%,$(dir $^))
+# environment
+XPC_FLAGS = 0x0
+# default
+MAKE = $(MAKE_COMMAND)
+# default
+MAKECMDGOALS := all
+# makefile (from `Makefile', line 17)
+SRCS = srcs/include/*.c srcs/libft/*.c srcs/execution/*.c
+# environment
+SHLVL = 1
+# default
+MAKE_VERSION := 3.81
+# environment
+USER = azabir
+# makefile
+.DEFAULT_GOAL := all
+# makefile (from `Makefile', line 13)
+NAME = minishell
+# environment
+LESS = -R
+# automatic
+%D = $(patsubst %/,%,$(dir $%))
+# default
+MAKE_COMMAND := /Applications/Xcode.app/Contents/Developer/usr/bin/make
+# default
+.VARIABLES := 
+# environment
+TMPDIR = /var/folders/zz/zyxvpxvq6csfxvn_n0000gx00003z8/T/
+# automatic
+*F = $(notdir $*)
+# environment
+VSCODE_IPC_HOOK = /Users/azabir/Library/Application Support/Code/1.69.1-main.sock
+# environment
+MallocNanoZone = 0
+# makefile
+MAKEFLAGS = Rrqp
+# environment
+MFLAGS = -Rrqp
+# automatic
+*D = $(patsubst %/,%,$(dir $*))
+# environment
+XPC_SERVICE_NAME = com.microsoft.VSCode.1168
+# automatic
++D = $(patsubst %/,%,$(dir $+))
+# automatic
++F = $(notdir $+)
+# environment
+__CF_USER_TEXT_ENCODING = 0xFE8:0:0
+# default
+MAKEFILES := 
+# automatic
+<F = $(notdir $<)
+# environment
+PAGER = less
+# environment
+LC_ALL = C
+# automatic
+^F = $(notdir $^)
+# default
+SUFFIXES := 
+# default
+.INCLUDE_DIRS = /usr/local/include
+# environment
+MAKELEVEL := 0
+# environment
+LANG = C
+# environment
+VSCODE_PID = 9902
+# variable set hash-table stats:
+# Load=65/1024=6%, Rehash=0, Collisions=2/97=2%
+
+# Pattern-specific Variable Values
+
+# No pattern-specific variable values.
+
+# Directories
+
+# . (device 16777227, inode 4506921): 8 files, no impossibilities.
+# srcs/libft (device 16777227, inode 4507170): 14 files, no impossibilities.
+# srcs/include (device 16777227, inode 4507163): 7 files, no impossibilities.
+# srcs/execution (device 16777227, inode 4529459): 13 files, no impossibilities.
+
+# 42 files, no impossibilities in 4 directories.
+
+# Implicit Rules
+
+# No implicit rules.
+
+# Files
+
+# Not a target:
+srcs/libft/get_next_char.c:
+#  Implicit rule search has been done.
+#  Last modified 2022-07-25 11:37:05
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+
+# Not a target:
+srcs/include/lexer.c:
+#  Implicit rule search has been done.
+#  Last modified 2022-06-29 12:58:08
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+
+all: minishell
+#  Command-line target.
+#  Implicit rule search has been done.
+#  File does not exist.
+#  File has been updated.
+#  Needs to be updated (-q is set).
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/5=0%
+
+# Not a target:
+srcs/execution/ft_env.c:
+#  Implicit rule search has been done.
+#  Last modified 2022-06-29 13:06:44
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+
+# Not a target:
+srcs/execution/ft_exit.c:
+#  Implicit rule search has been done.
+#  Last modified 2022-06-29 13:10:50
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+
+# Not a target:
+srcs/execution/heredoc.c:
+#  Implicit rule search has been done.
+#  Last modified 2022-07-22 17:14:46
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+
+# Not a target:
+srcs/libft/ft_isalnum.c:
+#  Implicit rule search has been done.
+#  Last modified 2022-06-12 10:59:17
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+
+# Not a target:
+srcs/libft/ft_strcmp.c:
+#  Implicit rule search has been done.
+#  Last modified 2022-07-03 19:14:32
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+
+# Not a target:
+srcs/execution/ft_pwd.c:
+#  Implicit rule search has been done.
+#  Last modified 2022-06-29 13:02:58
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+
+# Not a target:
+srcs/execution/is_last_heredoc.c:
+#  Implicit rule search has been done.
+#  Last modified 2022-07-23 19:35:09
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+
+# Not a target:
+srcs/libft/strjoin2.c:
+#  Implicit rule search has been done.
+#  Last modified 2022-07-23 23:03:09
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+
+# Not a target:
+.SUFFIXES:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+Makefile:
+#  Implicit rule search has been done.
+#  Last modified 2022-07-28 14:21:46
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+
+# Not a target:
+srcs/include/token.c:
+#  Implicit rule search has been done.
+#  Last modified 2022-06-29 12:58:19
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+
+# Not a target:
+srcs/libft/ft_splite.c:
+#  Implicit rule search has been done.
+#  Last modified 2022-07-02 17:15:49
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+
+minishell: srcs/include/lexer.c srcs/include/main.c srcs/include/token.c srcs/libft/ft_isalnum.c srcs/libft/ft_lstadd_back.c srcs/libft/ft_lstnew.c srcs/libft/ft_splite.c srcs/libft/ft_strcat.c srcs/libft/ft_strcmp.c srcs/libft/ft_strjoin.c srcs/libft/ft_strlen.c srcs/libft/get_next_char.c srcs/libft/lstfree.c srcs/libft/strjoin2.c srcs/execution/check_path.c srcs/execution/ft_cd.c srcs/execution/ft_echo.c srcs/execution/ft_env.c srcs/execution/ft_execve.c srcs/execution/ft_exit.c srcs/execution/ft_export.c srcs/execution/ft_pwd.c srcs/execution/ft_unset.c srcs/execution/heredoc.c srcs/execution/is_last_heredoc.c
+#  Implicit rule search has not been done.
+#  Implicit/static pattern stem: `'
+#  Last modified 2022-07-28 14:38:41
+#  File has been updated.
+#  Needs to be updated (-q is set).
+# automatic
+# @ := minishell
+# automatic
+# % := 
+# automatic
+# * := 
+ 
+# automatic
+# + := srcs/include/lexer.c srcs/include/main.c srcs/include/token.c srcs/libft/ft_isalnum.c srcs/libft/ft_lstadd_back.c srcs/libft/ft_lstnew.c srcs/libft/ft_splite.c srcs/libft/ft_strcat.c srcs/libft/ft_strcmp.c srcs/libft/ft_strjoin.c srcs/libft/ft_strlen.c srcs/libft/get_next_char.c srcs/libft/lstfree.c srcs/libft/strjoin2.c srcs/execution/check_path.c srcs/execution/ft_cd.c srcs/execution/ft_echo.c srcs/execution/ft_env.c srcs/execution/ft_execve.c srcs/execution/ft_exit.c srcs/execution/ft_export.c srcs/execution/ft_pwd.c srcs/execution/ft_unset.c srcs/execution/heredoc.c srcs/execution/is_last_heredoc.c
+# automatic
+# | := 
+# automatic
+# < := srcs/include/lexer.c
+# automatic
+# ^ := srcs/include/lexer.c srcs/include/main.c srcs/include/token.c srcs/libft/ft_isalnum.c srcs/libft/ft_lstadd_back.c srcs/libft/ft_lstnew.c srcs/libft/ft_splite.c srcs/libft/ft_strcat.c srcs/libft/ft_strcmp.c srcs/libft/ft_strjoin.c srcs/libft/ft_strlen.c srcs/libft/get_next_char.c srcs/libft/lstfree.c srcs/libft/strjoin2.c srcs/execution/check_path.c srcs/execution/ft_cd.c srcs/execution/ft_echo.c srcs/execution/ft_env.c srcs/execution/ft_execve.c srcs/execution/ft_exit.c srcs/execution/ft_export.c srcs/execution/ft_pwd.c srcs/execution/ft_unset.c srcs/execution/heredoc.c srcs/execution/is_last_heredoc.c
+# automatic
+# ? := srcs/include/main.c
+# variable set hash-table stats:
+# Load=8/32=25%, Rehash=0, Collisions=1/13=8%
+#  commands to execute (from `Makefile', line 26):
+	@echo Compiling...
+	@gcc $(CFLAGS) $(SRCS) -o $(NAME)
+	@echo "Done!"
+	
+
+fclean:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 35):
+	@rm -rf $(OBJS)
+	@rm -rf $(NAME)
+	@echo "Full Clean"
+	
+
+# Not a target:
+srcs/libft/ft_lstadd_back.c:
+#  Implicit rule search has been done.
+#  Last modified 2022-06-29 13:05:29
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+
+# Not a target:
+srcs/execution/ft_cd.c:
+#  Implicit rule search has been done.
+#  Last modified 2022-06-29 13:10:40
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+
+# Not a target:
+.DEFAULT:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+srcs/libft/ft_strlen.c:
+#  Implicit rule search has been done.
+#  Last modified 2022-06-05 20:34:12
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+
+re: fclean all
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+clean:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 31):
+	@rm -rf $(OBJS)
+	@echo "Clean"
+	
+
+# Not a target:
+srcs/libft/lstfree.c:
+#  Implicit rule search has been done.
+#  Last modified 2022-06-30 20:05:55
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+
+# Not a target:
+srcs/libft/ft_strjoin.c:
+#  Implicit rule search has been done.
+#  Last modified 2022-06-30 19:40:52
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+
+# Not a target:
+srcs/execution/check_path.c:
+#  Implicit rule search has been done.
+#  Last modified 2022-06-29 13:06:31
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+
+# Not a target:
+srcs/execution/ft_echo.c:
+#  Implicit rule search has been done.
+#  Last modified 2022-06-29 13:10:42
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+
+# Not a target:
+srcs/libft/ft_strcat.c:
+#  Implicit rule search has been done.
+#  Last modified 2022-06-05 20:34:12
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+
+# Not a target:
+srcs/execution/ft_export.c:
+#  Implicit rule search has been done.
+#  Last modified 2022-06-29 13:10:52
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+
+# Not a target:
+srcs/execution/ft_unset.c:
+#  Implicit rule search has been done.
+#  Last modified 2022-06-29 16:37:36
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+
+# Not a target:
+srcs/execution/ft_execve.c:
+#  Implicit rule search has been done.
+#  Last modified 2022-07-23 19:19:48
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+
+# Not a target:
+srcs/libft/ft_lstnew.c:
+#  Implicit rule search has been done.
+#  Last modified 2022-07-23 12:31:25
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+
+# Not a target:
+srcs/include/main.c:
+#  Implicit rule search has been done.
+#  Last modified 2022-07-28 14:41:14
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+
+# files hash-table stats:
+# Load=33/1024=3%, Rehash=0, Collisions=2/75=3%
+# VPATH Search Paths
+
+# No `vpath' search paths.
+
+# No general (`VPATH' variable) search path.
+
+# # of strings in strcache: 1
+# # of strcache buffers: 1
+# strcache size: total = 4096 / max = 4096 / min = 4096 / avg = 4096
+# strcache free: total = 4087 / max = 4087 / min = 4087 / avg = 4087
+
+# Finished Make data base on Thu Jul 28 20:01:40 2022
+
+ 
