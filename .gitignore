@@ -1,0 +1,5 @@
+minishell
+srcs/include/main.c
+.vscode/configurationCache.log
+.vscode/dryrun.log
+.vscode/targets.log

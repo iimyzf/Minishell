@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yagnaou <yagnaou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 19:20:35 by azabir            #+#    #+#             */
-/*   Updated: 2022/07/22 21:15:52 by yagnaou          ###   ########.fr       */
+/*   Updated: 2022/07/28 23:33:24 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ int	ft_echo(char **cmd)
 		while (cmd[i])
 		{
 			printf("%s", cmd[i]);
+			if (cmd[i + 1])
+				printf(" ");
 			i++;
 		}
 		printf("\n");
@@ -33,7 +35,7 @@ int	ft_echo(char **cmd)
 		i = 2;
 		while (cmd[i])
 		{
-			printf("%s", cmd[i]);
+			printf(" %s", cmd[i]);
 			i++;
 		}
 	}

@@ -21,6 +21,7 @@
 # include <sys/stat.h>
 # include <sys/types.h>
 # include <fcntl.h>
+# include "signal.h"
 
 // typedef struct	s_env
 // {

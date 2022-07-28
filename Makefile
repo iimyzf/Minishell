@@ -3,16 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: yagnaou <yagnaou@student.42.fr>            +#+  +:+       +#+         #
+#    By: azabir <azabir@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/27 11:27:39 by yagnaou           #+#    #+#              #
-#    Updated: 2022/07/23 21:21:00 by yagnaou          ###   ########.fr        #
+#    Updated: 2022/07/28 22:40:58 by azabir           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
-CFLAGS = -Wall -Werror -Wextra -lreadline #-fsanitize=address -g3
+CFLAGS = -Wall -Werror -Wextra -lreadline -L /goinfre/azabir/.brew/Cellar/readline/8.1.2/lib -I /goinfre/azabir/.brew/Cellar/readline/8.1.2/include#-fsanitize=address -g3
 
 SRCS =	srcs/include/*.c\
 		srcs/libft/*.c\

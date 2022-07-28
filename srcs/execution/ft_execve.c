@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_execve.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yagnaou <yagnaou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 11:34:29 by azabir            #+#    #+#             */
-/*   Updated: 2022/07/28 18:57:35 by yagnaou          ###   ########.fr       */
+/*   Updated: 2022/07/28 23:37:08 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ void	ft_execve(char **cmd, char **env, char *path, t_data *data)
 		heredoc(cmd[1]);*/
 	else
 		execve(path, cmd, NULL);
+	exit(0);
 }
 
 /*void	execution(char **lst)
