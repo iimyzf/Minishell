@@ -6,7 +6,7 @@
 /*   By: yagnaou <yagnaou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 09:46:02 by yagnaou           #+#    #+#             */
-/*   Updated: 2022/06/12 10:37:23 by yagnaou          ###   ########.fr       */
+/*   Updated: 2022/07/28 19:31:17 by yagnaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	process(char **cmd, char *path, t_data *data, int status)
 	if (pid == 0)
 	{
 		dup2(data->out, STDOUT_FILENO);
-		ft_execve(cmd, NULL, path);
+		ft_execve(cmd, data->env, path, data);
 	}
 	else
 	{
@@ -179,9 +179,8 @@ int main(int ac, char **av, char **env)
 
 	if (ac != 1)
 		return (1);
-	av[0] = "minishell> ";
+	av[0] = "\033[0;33m\e[1mminishell-1.0$ \033[0m";
 	data.env = env;
-	free (data.full_cmd);
 	data.in = 1;
 	while (1)
 	{
@@ -193,7 +192,7 @@ int main(int ac, char **av, char **env)
 			pid = fork();
 			add_history(data.input);
 			if (pid == 0)
-				ft_parce(&data);
+			ft_parce(&data);
 		}
 		waitpid(pid, NULL, 0);
 		free (data.input);

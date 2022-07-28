@@ -1,41 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_echo.c                                          :+:      :+:    :+:   */
+/*   ft_lstnew_new.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yagnaou <yagnaou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/13 19:20:35 by azabir            #+#    #+#             */
-/*   Updated: 2022/07/22 21:15:52 by yagnaou          ###   ########.fr       */
+/*   Created: 2022/07/23 15:18:10 by yagnaou           #+#    #+#             */
+/*   Updated: 2022/07/23 15:23:44 by yagnaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "libft.h"
 
-int	ft_echo(char **cmd)
+t_lst	*ft_lstnew_new(char *content)
 {
-	int	i;
+	t_lst	*new;
 
-	i = 1;
-	if (cmd[1] == NULL)
-		printf("\n");
-	if (ft_strcmp(cmd[1], "-n"))
-	{
-		while (cmd[i])
-		{
-			printf("%s", cmd[i]);
-			i++;
-		}
-		printf("\n");
-	}
-	else if (!ft_strcmp(cmd[1], "-n"))
-	{
-		i = 2;
-		while (cmd[i])
-		{
-			printf("%s", cmd[i]);
-			i++;
-		}
-	}
-	return (0);
+	new = malloc(sizeof(t_lst));
+	if (!new)
+		return (NULL);
+	new->value = content;
+	new->next = NULL;
+	return (new);
 }

@@ -3,31 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   ft_splite.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: azabir <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: yagnaou <yagnaou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 18:45:38 by azabir            #+#    #+#             */
-/*   Updated: 2022/06/12 18:45:41 by azabir           ###   ########.fr       */
+/*   Updated: 2022/07/28 17:37:40 by yagnaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
 
-/*void	skip_spaces(int	*i, char c, const char *str)
-{
-	int	j;
-
-	j = *i;
-	if (str[j] != c)
-	{
-		while (str[j] == ' ' || str[j] == '\t')
-			j++;
-		if (j - *i >= 2)
-			*i = j - 1;
-	}
-}*/
-
-static int	ft_strcount(char const *l, char c)
+static int	ft_strcount(char *l, char c)
 {
 	int	i;
 	int	j;
@@ -41,7 +27,7 @@ static int	ft_strcount(char const *l, char c)
 			if (l[i] != c)
 				j++;
 			while (l[i] != c && l[i] != '\0')
-				i++;
+			 	i++;
 			while (l[i] == c)
 				i++;
 		}
@@ -51,7 +37,7 @@ static int	ft_strcount(char const *l, char c)
 	return (j);
 }
 
-static char	**ft_mkstr(char **h, char const *s, char c)
+static char	**ft_mkstr(char **h, char *s, char c)
 {
 	int	i;
 	int	j;
@@ -64,15 +50,11 @@ static char	**ft_mkstr(char **h, char const *s, char c)
 	{
 		while (s[i] != c && s[i])
 		{
-			/*if (s[i] == ' ')
-				skip_spaces(&i, c, s);*/
 			k++;
 			i++;
 		}
 		while (s[i] == c && c)
 			i++;
-	/*while (s[i] == ' ' || s[i] == '\t')
-			i++;*/
 		h[j] = malloc(sizeof(char) * (k + 1));
 		if (!h[j])
 			return (NULL);
@@ -82,7 +64,7 @@ static char	**ft_mkstr(char **h, char const *s, char c)
 	return (h);
 }
 
-char	**ft_copy(char **h, char const *s, char c)
+char	**ft_copy(char **h, char *s, char c)
 {
 	int	i;
 	int	j;
@@ -95,8 +77,6 @@ char	**ft_copy(char **h, char const *s, char c)
 	{
 		while (s[i] != c && s[i])
 		{
-			/*if (s[i] == ' ')
-				skip_spaces(&i, c, s);*/
 			h[k][j] = s[i];
 			j++;
 			i++;
@@ -104,8 +84,6 @@ char	**ft_copy(char **h, char const *s, char c)
 		h[k][j] = '\0';
 		while (s[i] == c && c)
 			i++;
-		/*while (s[i] == ' ' || s[i] == '\t')
-			i++;*/
 		k++;
 		j = 0;
 	}
@@ -113,7 +91,7 @@ char	**ft_copy(char **h, char const *s, char c)
 	return (h);
 }
 
-char	**ft_split(char const *s, char c)
+char	**ft_split(char *s, char c)
 {
 	char	**h;
 	int		i;
