@@ -6,7 +6,7 @@
 /*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 09:46:02 by yagnaou           #+#    #+#             */
-/*   Updated: 2022/07/29 00:09:11 by azabir           ###   ########.fr       */
+/*   Updated: 2022/07/29 19:24:28 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,20 @@
 
 void sighandl(int sig)
 {
-	(void) sig;
-	write(1, "\n", 1);
-	rl_on_new_line();
-	rl_redisplay();
+	if (sig == SIGINT)
+	{
+		write(1, "\n", 1);
+		rl_replace_line("", 0);
+		rl_on_new_line();
+		rl_redisplay();
+	}
+	else if (sig ==  SIGQUIT)
+	{
+		rl_replace_line("", 0);
+		rl_on_new_line();
+		rl_redisplay();
+	}
+	
 }
 
 void	free_array(char **arr)
@@ -153,7 +163,7 @@ void	ft_parce(t_data *data)
 		if (temp && temp->id != -1)
 			temp = temp->next;
 		//fprintf (stdout ,"tmp = %s\n", tmp);
-		data->full_cmd = ft_split(tmp, ' ');
+		data->full_cmd = ft_split(tmp, '	');
 		path = check_path(data->full_cmd[0]);
 		//int j = -1;
 		/*while (data->full_cmd[++j])
@@ -193,9 +203,12 @@ int main(int ac, char **av, char **env)
 	data.env = env;
 	data.in = 1;
 	signal(SIGINT, sighandl);
+	signal(SIGQUIT, sighandl);
 	while (1)
 	{
 		data.input = readline(av[0]);
+		if (!data.input)
+			exit(0);
 		if (data.input[0])
 		{
 			if (!ft_strcmp(data.input, "exit"))
@@ -208,6 +221,6 @@ int main(int ac, char **av, char **env)
 		waitpid(pid, NULL, 0);
 		free (data.input);
 	}
-	system("leaks minishell");
+	//system("leaks minishell");
 	return (0);
 }
