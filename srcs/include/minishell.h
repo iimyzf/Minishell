@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yagnaou <yagnaou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 10:38:45 by azabir            #+#    #+#             */
-/*   Updated: 2022/07/28 18:45:24 by yagnaou          ###   ########.fr       */
+/*   Updated: 2022/07/30 12:12:06 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@
 // }	t_env;
 
 
+//char	**my_env;
+
 typedef	struct s_cmd
 {
 	int				id;
@@ -45,6 +47,7 @@ typedef struct s_data
 {
 	int				in;
 	int				out;
+	int				active_proc;
 	int				fd[2];
 	int				here_fd[2];
 	char			*input;
@@ -104,6 +107,7 @@ void	ft_add_env(t_data *data, char **env);
 void	ft_strswap(char **str1, char **str2);
 char	**cpy_env(char **env);
 void	sort_this(char **tab);
+int		is_buildin(char *cmd);
 void	ft_print_sorted_env(char **env);
 
 

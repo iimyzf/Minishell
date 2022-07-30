@@ -6,7 +6,7 @@
 /*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 09:46:02 by yagnaou           #+#    #+#             */
-/*   Updated: 2022/07/29 19:24:28 by azabir           ###   ########.fr       */
+/*   Updated: 2022/07/30 14:36:29 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,8 @@ void	process(char **cmd, char *path, t_data *data, int status)
 	else
 	{
 		dup2(data->in, STDIN_FILENO);
-		close(data->out);
-		close(data->in);
+		close(data->fd[0]);
+		close(data->fd[1]);
 	}
 }
 
@@ -178,7 +178,10 @@ void	ft_parce(t_data *data)
 		if (data->full_cmd[0] != NULL)
 			process(data->full_cmd, path, data, status);
 		else
+		{
 			dup2(data->in, STDIN_FILENO);
+			write (1, "here\n", 5);
+		}
 		free(path);
 		free_array(data->full_cmd);
 	}
@@ -189,13 +192,13 @@ void	ft_parce(t_data *data)
 		waitpid(-1, NULL, 0);
 		temp1 = temp1->next;
 	}
-	exit (0);
+	dup2(1, STDIN_FILENO);
 }
 
 int main(int ac, char **av, char **env)
 {
 	t_data	data;
-	int		pid;
+	//int		pid;
 
 	if (ac != 1)
 		return (1);
@@ -213,12 +216,9 @@ int main(int ac, char **av, char **env)
 		{
 			if (!ft_strcmp(data.input, "exit"))
 				break;
-			pid = fork();
 			add_history(data.input);
-			if (pid == 0)
 			ft_parce(&data);
 		}
-		waitpid(pid, NULL, 0);
 		free (data.input);
 	}
 	//system("leaks minishell");
