@@ -6,7 +6,7 @@
 /*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 09:46:02 by yagnaou           #+#    #+#             */
-/*   Updated: 2022/07/30 14:36:29 by azabir           ###   ########.fr       */
+/*   Updated: 2022/07/31 19:41:19 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,9 +121,6 @@ void	ft_parce(t_data *data)
 	{
 		status = 0;
 		tmp = "";
-		pipe(data->fd);
-		data->out = data->fd[1];
-		data->in = data->fd[0];
 		while (temp->id != -1 && (temp->id != 8))
 		{
 		//printf("cmd = %s ID = %d\n", temp->cmd, temp->id);
@@ -160,28 +157,39 @@ void	ft_parce(t_data *data)
 				tmp = ft_strjoin2(tmp, temp->cmd);
 			temp = temp->next;
 		}
-		if (temp && temp->id != -1)
-			temp = temp->next;
-		//fprintf (stdout ,"tmp = %s\n", tmp);
 		data->full_cmd = ft_split(tmp, '	');
+		if (temp->id == 8)
+		{
+			pipe(data->fd);
+			data->out = data->fd[1];
+			data->in = data->fd[0];
+			temp = temp->next;
+		}
+		else if (is_buildin(data->full_cmd[0]))
+		{
+			if (!ft_strcmp(data->full_cmd[0], "pwd"))
+				ft_pwd();
+			else if (!ft_strcmp(data->full_cmd[0], "echo"))
+				ft_echo(data->full_cmd);
+			else if (!ft_strcmp(data->full_cmd[0], "env") && data->full_cmd[1] == NULL)
+				ft_env(data->env);
+			else if (!ft_strcmp(data->full_cmd[0], "export"))
+				ft_export(&data->full_cmd[1], data);
+		}
+		//fprintf (stdout ,"tmp = %s\n", tmp);
 		path = check_path(data->full_cmd[0]);
 		//int j = -1;
 		/*while (data->full_cmd[++j])
 			fprintf (stdout ,"cmd = %s\n", data->full_cmd[j]);*/
-		if (data->full_cmd[0] && !path && ft_strcmp(data->full_cmd[0], "<<"))
+		if (data->full_cmd[0] && !path && !is_buildin(data->full_cmd[0]))
 			printf("HA HA HA HA HA HA! d3iiiif !!\n");
 		if (temp && temp->id == -1 && status == 0)
 		{
 			status = 1;
 			data->out = 1;
 		}
-		if (data->full_cmd[0] != NULL)
+		if (data->full_cmd[0] != NULL && !is_buildin(data->full_cmd[0]))
 			process(data->full_cmd, path, data, status);
-		else
-		{
-			dup2(data->in, STDIN_FILENO);
-			write (1, "here\n", 5);
-		}
 		free(path);
 		free_array(data->full_cmd);
 	}

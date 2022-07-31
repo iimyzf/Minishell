@@ -3,3 +3,4 @@ srcs/include/main.c
 .vscode/configurationCache.log
 .vscode/dryrun.log
 .vscode/targets.log
+minishell.dSYM/Contents/Info.plist
