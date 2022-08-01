@@ -6,7 +6,7 @@
 /*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 10:38:45 by azabir            #+#    #+#             */
-/*   Updated: 2022/07/30 12:12:06 by azabir           ###   ########.fr       */
+/*   Updated: 2022/08/01 02:17:11 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,6 @@
 # include <fcntl.h>
 # include "signal.h"
 
-// typedef struct	s_env
-// {
-// 	char			*name;
-// 	char			*value;
-// 	struct s_env	*next;
-// }	t_env;
-
-
-//char	**my_env;
 
 typedef	struct s_cmd
 {
@@ -45,6 +36,7 @@ typedef	struct s_cmd
 
 typedef struct s_data
 {
+	t_cmd			*cmd_list;
 	int				in;
 	int				out;
 	int				active_proc;
@@ -53,9 +45,7 @@ typedef struct s_data
 	char			*input;
 	char			**full_cmd;
 	char			**env;
-	t_cmd			*cmd_list;
 	int				p;
-	t_lst			*env_head;
 	char			**exp;
 }	t_data;
 
@@ -101,6 +91,7 @@ int		is_last_heredoc(t_cmd	*cmd);
 void	execution(char **lst);
 int		ft_pwd(void);
 int		ft_echo(char **env);
+void	fill_data_list(t_data *data);
 int		ft_env(char	**arg);
 void	ft_export(char **path, t_data *data);
 void	ft_add_env(t_data *data, char **env);
@@ -108,7 +99,11 @@ void	ft_strswap(char **str1, char **str2);
 char	**cpy_env(char **env);
 void	sort_this(char **tab);
 int		is_buildin(char *cmd);
+int		syntax_checker(t_cmd *cmd);
 void	ft_print_sorted_env(char **env);
+void	sighandl(int sig);
+void 	check_last(t_data *data);
+char	*ft_strjoin3(char *s1, char *s2);
 
 
 
