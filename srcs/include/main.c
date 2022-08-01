@@ -6,7 +6,7 @@
 /*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 09:46:02 by yagnaou           #+#    #+#             */
-/*   Updated: 2022/08/01 02:19:50 by azabir           ###   ########.fr       */
+/*   Updated: 2022/08/01 02:36:58 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ void	ft_parce(t_data *data)
 	char	*path;
 	int 	status;
 	int		pid;
+	int		status1;
 
 	i = 0;
 	tmp = "";
@@ -86,10 +87,10 @@ void	ft_parce(t_data *data)
 	{
 		status = 0;
 		tmp = "";
-		write (1, "here\n", 5);
+		status1 = 0;
 		while (temp->id != -1 && (temp->id != 8))
 		{
-			printf("cmd = %s >>>>>> id = %d\n", temp->cmd, temp->id);
+			//printf("cmd = %s >>>>>> id = %d\n", temp->cmd, temp->id);
 			if (temp->id == 4)
 			{
 				if (is_last_heredoc(temp))
@@ -131,7 +132,7 @@ void	ft_parce(t_data *data)
 			data->in = data->fd[0];
 			temp = temp->next;
 		}
-		/*else if (data->full_cmd[0] && is_buildin(data->full_cmd[0]) && temp->id == -1)
+		else if (data->full_cmd[0] && is_buildin(data->full_cmd[0]) && temp->id == -1)
 		{
 			dup2(data->out, STDOUT_FILENO);
 			if (!ft_strcmp(data->full_cmd[0], "pwd"))
@@ -142,10 +143,11 @@ void	ft_parce(t_data *data)
 				ft_env(data->env);
 			else if (!ft_strcmp(data->full_cmd[0], "export"))
 				ft_export(&data->full_cmd[1], data);
+			status1 = 1;
 			//dup2(0, STDOUT_FILENO);
-		}*/
+		}
 		path = check_path(data->full_cmd[0]);
-		fprintf(stderr, "cmd = %s\n", data->full_cmd[0]);
+		//fprintf(stderr, "cmd = %s\n", data->full_cmd[0]);
 		/*if (data->full_cmd[0] && !path && !is_buildin(data->full_cmd[0]))
 			printf("HA HA HA HA HA HA! d3iiiif !!\n");*/
 		if (temp && temp->id == -1 && status == 0)
@@ -153,7 +155,7 @@ void	ft_parce(t_data *data)
 			status = 1;
 			data->out = 1;
 		}
-		if (data->full_cmd[0] != NULL)
+		if (data->full_cmd[0] != NULL && status1 == 0)
 			process(data->full_cmd, path, data, status);
 		else
 		{
