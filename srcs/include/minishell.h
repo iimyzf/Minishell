@@ -6,7 +6,7 @@
 /*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 10:38:45 by azabir            #+#    #+#             */
-/*   Updated: 2022/08/01 02:17:11 by azabir           ###   ########.fr       */
+/*   Updated: 2022/08/01 15:43:43 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ char	*ft_strjoin2(char *s1, char *s2);
 void	heredoc(char	*cmd, t_data *data, int	is_last_here);
 int		is_last_heredoc(t_cmd	*cmd);
 void	execution(char **lst);
+void	check_heredoc(t_data *data);
 int		ft_pwd(void);
 int		ft_echo(char **env);
 void	fill_data_list(t_data *data);

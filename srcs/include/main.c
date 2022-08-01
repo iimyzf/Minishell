@@ -6,7 +6,7 @@
 /*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 09:46:02 by yagnaou           #+#    #+#             */
-/*   Updated: 2022/08/01 02:36:58 by azabir           ###   ########.fr       */
+/*   Updated: 2022/08/01 16:05:56 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,26 +63,10 @@ void	ft_parce(t_data *data)
 	temp = (data)->cmd_list;
 	if (!syntax_checker(temp))
 		return;
-	while(temp && (temp->id != -1))
-	{
-		//write (1, "here\n", 5);
-		while (temp->id != -1 && (temp->id != 8))
-		{
-			if (temp->id == 4)
-			{
-				if (is_last_heredoc(temp))
-					pipe(data->here_fd);
-				heredoc(temp->next->cmd, data, is_last_heredoc(temp));
-				if (is_last_heredoc(temp))
-					temp->in = data->here_fd[0];
-				temp = temp->next;
-			}
-			temp = temp->next;
-		}
-		if (temp && temp->id != -1)
-			temp = temp->next;
-	}
+	check_heredoc(data);
 	temp = (data)->cmd_list;
+	data->in = 1;
+	data->out = 0;
 	while (temp && (temp->id != -1))
 	{
 		status = 0;
@@ -125,10 +109,12 @@ void	ft_parce(t_data *data)
 			temp = temp->next;
 		}
 		data->full_cmd = ft_split(tmp, '	');
+		free(tmp);
 		if (temp->id == 8)
 		{
 			pipe(data->fd);
-			data->out = data->fd[1];
+			if (status == 0)
+				data->out = data->fd[1];
 			data->in = data->fd[0];
 			temp = temp->next;
 		}
@@ -157,11 +143,6 @@ void	ft_parce(t_data *data)
 		}
 		if (data->full_cmd[0] != NULL && status1 == 0)
 			process(data->full_cmd, path, data, status);
-		else
-		{
-			dup2(data->in, STDIN_FILENO);
-			//write (1, "here\n", 5);
-		}
 		free(path);
 		free_array(data->full_cmd);
 	}
@@ -172,6 +153,8 @@ void	ft_parce(t_data *data)
 		waitpid(-1, NULL, 0);
 		temp1 = temp1->next;
 	}
+	if (status1 == 1)
+		dup2(0, STDOUT_FILENO);
 	dup2(1, STDIN_FILENO);
 }
 

@@ -1,1 +1,7 @@
-@gccd $(CFLAGS) $(SRCS) -o $(NAME)
+Makefile
+here
+hrer
+mama
+minishell
+minishell.dSYM
+srcs

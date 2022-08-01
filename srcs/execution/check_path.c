@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_path.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yagnaou <yagnaou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 10:35:58 by azabir            #+#    #+#             */
-/*   Updated: 2022/07/28 18:45:18 by yagnaou          ###   ########.fr       */
+/*   Updated: 2022/08/01 23:27:41 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,10 @@ char	*make_path(char *path, char *cmd)
 char	*check_path(char	*cmd)
 {
 	char	*path;
-
+	struct stat buf;
+	
+	if (!stat(cmd, &buf))
+		return(ft_strjoin(cmd, ""));
 	if (path = make_path("/bin/", cmd), path)
 		return (path);
 	if (path = make_path("/usr/bin/", cmd), path)
