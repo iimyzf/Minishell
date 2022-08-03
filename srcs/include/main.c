@@ -6,7 +6,7 @@
 /*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 09:46:02 by yagnaou           #+#    #+#             */
-/*   Updated: 2022/08/01 16:05:56 by azabir           ###   ########.fr       */
+/*   Updated: 2022/08/03 21:19:48 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,15 @@ void	process(char **cmd, char *path, t_data *data, int status)
 	if (pid == 0)
 	{
 		dup2(data->out, STDOUT_FILENO);
+		close(data->fd[0]);
+		close(data->fd[1]);
 		ft_execve(cmd, data->env, path, data);
 	}
 	else
 	{
+		close(data->fd[1]);
 		dup2(data->in, STDIN_FILENO);
 		close(data->fd[0]);
-		close(data->fd[1]);
 	}
 }
 
@@ -56,6 +58,7 @@ void	ft_parce(t_data *data)
 	int 	status;
 	int		pid;
 	int		status1;
+	int		open_proce;
 
 	i = 0;
 	tmp = "";
@@ -67,11 +70,12 @@ void	ft_parce(t_data *data)
 	temp = (data)->cmd_list;
 	data->in = 1;
 	data->out = 0;
+	open_proce = 0;
+	status1 = 0;
 	while (temp && (temp->id != -1))
 	{
 		status = 0;
 		tmp = "";
-		status1 = 0;
 		while (temp->id != -1 && (temp->id != 8))
 		{
 			//printf("cmd = %s >>>>>> id = %d\n", temp->cmd, temp->id);
@@ -103,6 +107,7 @@ void	ft_parce(t_data *data)
 				temp = temp->next;
 				pid = open(temp->cmd, O_RDONLY);
 				dup2(pid, STDIN_FILENO);
+				//close(pid);
 			}
 			else
 				tmp = ft_strjoin2(tmp, temp->cmd);
@@ -117,10 +122,12 @@ void	ft_parce(t_data *data)
 				data->out = data->fd[1];
 			data->in = data->fd[0];
 			temp = temp->next;
-		}
-		else if (data->full_cmd[0] && is_buildin(data->full_cmd[0]) && temp->id == -1)
+			status1 = 2;
+ 		}
+		else if (data->full_cmd[0] && is_buildin(data->full_cmd[0]) && temp->id == -1 && status1 != 2)
 		{
 			dup2(data->out, STDOUT_FILENO);
+			write (2, "heee\n", 5);
 			if (!ft_strcmp(data->full_cmd[0], "pwd"))
 				ft_pwd();
 			else if (!ft_strcmp(data->full_cmd[0], "echo"))
@@ -134,24 +141,38 @@ void	ft_parce(t_data *data)
 		}
 		path = check_path(data->full_cmd[0]);
 		//fprintf(stderr, "cmd = %s\n", data->full_cmd[0]);
-		/*if (data->full_cmd[0] && !path && !is_buildin(data->full_cmd[0]))
-			printf("HA HA HA HA HA HA! d3iiiif !!\n");*/
+		if (data->full_cmd[0] && !path && !is_buildin(data->full_cmd[0]))
+			printf("HA HA HA HA HA HA! d3iiiif !!\n");
 		if (temp && temp->id == -1 && status == 0)
 		{
-			status = 1;
-			data->out = 1;
+			//data->out = 1;
+			pipe(data->fd);
+			if (status == 0)
+				data->out = 1;
+			data->in = data->fd[0];
+			temp = temp->next;
+			status1 = 2;
 		}
-		if (data->full_cmd[0] != NULL && status1 == 0)
+		if (data->full_cmd[0] != NULL && status1 != 1)
+		{
 			process(data->full_cmd, path, data, status);
+			open_proce ++;
+		}
 		free(path);
 		free_array(data->full_cmd);
+		//close (pid);
 	}
 	t_cmd	*temp1;
 	temp1 = data->cmd_list;
-	while(temp1->id != -1)
+	fprintf(stderr, ">> %d\n", open_proce);
+	//pipe(data->fd);
+	//close (data->fd[0]);
+	//close (data->fd[1]);
+	while(open_proce > 0)
 	{
 		waitpid(-1, NULL, 0);
-		temp1 = temp1->next;
+		write (2, "\nhere\n", 6);
+		open_proce --;
 	}
 	if (status1 == 1)
 		dup2(0, STDOUT_FILENO);
@@ -194,7 +215,8 @@ int main(int ac, char **av, char **env)
 /*  TO DO */
 
 /*	# signal should close heredoc
-	# handel last pipewith no cmd
+	# handel last pipewith no cmd --> done
 	# handel error syntax (special carrachters with no options) --> DONE
 	# exuce minishell in  minishell
+	# (ls | top) hang
 */

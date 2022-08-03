@@ -6,7 +6,7 @@
 /*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 11:34:29 by azabir            #+#    #+#             */
-/*   Updated: 2022/07/30 14:35:20 by azabir           ###   ########.fr       */
+/*   Updated: 2022/08/02 18:04:33 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	ft_execve(char **cmd, char **env, char *path, t_data *data)
 	/*if (is_builtin(cmd[0]) == 8)
 		heredoc(cmd[1]);*/
 	else
-		execve(path, cmd, NULL);
+		execve(path, cmd, env);
 	exit(0);
 }
 
