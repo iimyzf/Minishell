@@ -6,7 +6,7 @@
 /*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 09:46:02 by yagnaou           #+#    #+#             */
-/*   Updated: 2022/08/03 21:19:48 by azabir           ###   ########.fr       */
+/*   Updated: 2022/08/04 01:24:35 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,7 @@ void	ft_parce(t_data *data)
 		else if (data->full_cmd[0] && is_buildin(data->full_cmd[0]) && temp->id == -1 && status1 != 2)
 		{
 			dup2(data->out, STDOUT_FILENO);
-			write (2, "heee\n", 5);
+			//write (2, "heee\n", 5);
 			if (!ft_strcmp(data->full_cmd[0], "pwd"))
 				ft_pwd();
 			else if (!ft_strcmp(data->full_cmd[0], "echo"))
@@ -151,8 +151,8 @@ void	ft_parce(t_data *data)
 				data->out = 1;
 			data->in = data->fd[0];
 			temp = temp->next;
-			status1 = 2;
-		}
+			//status1 = 2;
+		}*/
 		if (data->full_cmd[0] != NULL && status1 != 1)
 		{
 			process(data->full_cmd, path, data, status);
@@ -164,14 +164,14 @@ void	ft_parce(t_data *data)
 	}
 	t_cmd	*temp1;
 	temp1 = data->cmd_list;
-	fprintf(stderr, ">> %d\n", open_proce);
+	//fprintf(stderr, ">> %d\n", open_proce);
 	//pipe(data->fd);
 	//close (data->fd[0]);
 	//close (data->fd[1]);
 	while(open_proce > 0)
 	{
 		waitpid(-1, NULL, 0);
-		write (2, "\nhere\n", 6);
+		//write (2, "\nhere\n", 6);
 		open_proce --;
 	}
 	if (status1 == 1)

@@ -6,7 +6,7 @@
 /*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 19:20:35 by azabir            #+#    #+#             */
-/*   Updated: 2022/07/28 23:33:24 by azabir           ###   ########.fr       */
+/*   Updated: 2022/08/04 01:22:08 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	ft_echo(char **cmd)
 	i = 1;
 	if (cmd[1] == NULL)
 		printf("\n");
-	if (ft_strcmp(cmd[1], "-n"))
+	else if (ft_strcmp(cmd[1], "-n"))
 	{
 		while (cmd[i])
 		{
