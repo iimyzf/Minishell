@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yagnaou <yagnaou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 16:28:33 by yagnaou           #+#    #+#             */
-/*   Updated: 2022/06/05 18:34:00 by yagnaou          ###   ########.fr       */
+/*   Updated: 2022/08/08 14:12:09 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ t_lexer	*lexer_init(char *data)
 	lexer->data = data;
 	lexer->index = 0;
 	lexer->c = data[lexer->index];
+	lexer->next_c = data[lexer->index + 1];
 	return (lexer);
 }
 
@@ -29,12 +30,14 @@ void	lexer_advance(t_lexer *lexer, int count)
 	{
 		lexer->index += count;
 		lexer->c = lexer->data[lexer->index];
+		if (lexer->data[lexer->index])
+			lexer->next_c = lexer->data[lexer->index + 1];
 	}
 }
 
 void	lexer_skip_white_spaces(t_lexer *lexer)
 {
-	while ((lexer->c == ' ' || lexer->c == '\t') && lexer->c != '-')
+	while ((lexer->next_c == ' ' || lexer->next_c == '\t') && lexer->c != '-')
 		lexer_advance(lexer, 1);
 }
 
@@ -56,7 +59,12 @@ t_token	*lexer_get_next_token(t_lexer *lexer)
 
 		else if (lexer->c == '>')
 			return (lexer_advance_with_token(lexer, token_init(TOKEN_ROPERATOR, lexer_get_current_char_as_string(lexer)), 1));
-
+			
+		else if (lexer->c == ' ')
+		{
+			lexer->c = '	';
+			return (lexer_advance_with_token(lexer, token_init(TOKEN_SPACE, lexer_get_current_char_as_string(lexer)), 1));
+		}
 		else if (lexer->c == '<' && lexer->data[lexer->index + 1] == '<')
 			return (lexer_advance_with_token(lexer, token_init(TOKEN_HEREDOC, lexer_get_current_char_as_two_strings(lexer)), 2));
 
@@ -111,7 +119,7 @@ t_token	*lexer_collect_string(t_lexer *lexer, char c)
 		lexer_advance(lexer, 1);
 	}
 	lexer_advance(lexer, 1);
-	return token_init(TOKEN_STRING, value);
+		return token_init(TOKEN_STRING, value);
 }
 
 t_token	*lexer_collect_id(t_lexer *lexer)
@@ -122,9 +130,12 @@ t_token	*lexer_collect_id(t_lexer *lexer)
 
 	value = calloc(1, sizeof(char));
 	value[0] = '\0';
-	while (ft_isalnum(lexer->c))
+	while (ft_isalnum(lexer->c) || lexer->c == '"' || lexer->c == '\'')
 	{
-		str = lexer_get_current_char_as_string(lexer);
+		if (lexer->c == '"' || lexer->c == '\'')
+			str = lexer_collect_string(lexer, lexer->c)->value;
+		else
+			str = lexer_get_current_char_as_string(lexer);
 		tmp = ft_strjoin(value, str);
 		free(value);
 		free(str);

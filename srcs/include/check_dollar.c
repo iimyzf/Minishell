@@ -1,43 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_echo.c                                          :+:      :+:    :+:   */
+/*   check_dollar.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/13 19:20:35 by azabir            #+#    #+#             */
-/*   Updated: 2022/08/04 23:20:53 by azabir           ###   ########.fr       */
+/*   Created: 2022/08/07 17:13:51 by azabir            #+#    #+#             */
+/*   Updated: 2022/08/07 17:34:21 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "minishell.h"
 
-int	ft_echo(char **cmd)
+int	check_dollar(char *cmd)
 {
 	int	i;
 
-	i = 1;
-	if (cmd[1] == NULL)
-		printf("\n");
-	else if (ft_strcmp(cmd[1], "-n"))
+	i = 0;
+	while (cmd[i])
 	{
-		while (cmd[i])
-		{
-			printf("%s", cmd[i]);
-			if (cmd[i + 1])
-				printf(" ");
-			i++;
-		}
-		printf("\n");
-	}
-	else if (!ft_strcmp(cmd[1], "-n"))
-	{
-		i = 2;
-		while (cmd[i])
-		{
-			printf(" %s", cmd[i]);
-			i++;
-		}
+		if (cmd[i] == '$')
+			return (1);
+		i++;
 	}
 	return (0);
 }

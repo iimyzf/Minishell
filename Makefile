@@ -6,13 +6,13 @@
 #    By: azabir <azabir@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/27 11:27:39 by yagnaou           #+#    #+#              #
-#    Updated: 2022/08/03 18:15:27 by azabir           ###   ########.fr        #
+#    Updated: 2022/08/07 14:40:39 by azabir           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
-CFLAGS = -Wall -Werror -Wextra -lreadline -L /Users/azabir/.brew/Cellar/readline/8.1.2/lib -I /Users/azabir/.brew/Cellar/readline/8.1.2/include -fsanitize=address -g3
+CFLAGS = -Wall -Werror -Wextra -lreadline -L /Users/azabir/.brew/Cellar/readline/8.1.2/lib -I /Users/azabir/.brew/Cellar/readline/8.1.2/include #-fsanitize=address -g3
 
 SRCS =	srcs/include/*.c\
 		srcs/libft/*.c\

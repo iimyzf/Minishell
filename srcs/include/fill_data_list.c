@@ -6,13 +6,13 @@
 /*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/31 21:56:16 by azabir            #+#    #+#             */
-/*   Updated: 2022/07/31 22:03:45 by azabir           ###   ########.fr       */
+/*   Updated: 2022/08/08 13:56:17 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	fill_data_list(t_data *data)
+int	fill_data_list(t_data *data)
 {
 	t_lexer	*lexer;
 	t_token	*token;
@@ -27,7 +27,14 @@ void	fill_data_list(t_data *data)
 			lstadd_back(&(data)->cmd_list, ft_lstnew(token->value, token->type));
 		free(token);
 	}
+	if (data->cmd_list == NULL && token == NULL)
+	{
+		free(lexer);
+		free (token);
+		return (0);
+	}
 	lstadd_back(&(data)->cmd_list, ft_lstnew("", -1));
 	free(lexer);
 	free (token);
+	return (1);
 }

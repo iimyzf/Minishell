@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yagnaou <yagnaou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 16:13:49 by yagnaou           #+#    #+#             */
-/*   Updated: 2022/06/05 17:33:13 by yagnaou          ###   ########.fr       */
+/*   Updated: 2022/08/08 11:24:39 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ enum
 	TOKEN_AND,
 	TOKEN_OR,
 	TOKEN_LPARAN,
-	TOKEN_RPARAN
+	TOKEN_RPARAN,
+	TOKEN_SPACE
 }	type;
 
 typedef struct s_token

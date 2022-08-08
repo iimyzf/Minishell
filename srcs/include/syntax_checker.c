@@ -6,7 +6,7 @@
 /*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/31 22:04:27 by azabir            #+#    #+#             */
-/*   Updated: 2022/08/01 01:52:42 by azabir           ###   ########.fr       */
+/*   Updated: 2022/08/08 12:02:07 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,17 @@ int	syntax_checker(t_cmd *cmd)
 	}
 	while (temp->id != -1)
 	{
-		if ((temp->id != 0 && temp->id != 5 && temp->id != 8) && (temp->next->id != 0 && temp->next->id != 5 && temp->next->id != -1))
+		if (temp->id == 14)
+			temp = temp->next;
+		if ((temp->id != 0 && temp->id != 5 && temp->id != 8 && temp->id != 6 && temp->id != 7) && (temp->next->id != 0 && temp->next->id != 5 && temp->next->id != -1 && temp->next->id != 14))
 		{
+			write (1, "heee\n", 5);
 			printf("minishell: syntax error near unexpected token `%s'\n", temp->next->cmd);
 			return (0);
 		}
-		if ((temp->id != 0 && temp->id != 5) && temp->next->id == -1)
+		if ((temp->id != 0 && temp->id != 5 && temp->id != 6 && temp->id != 7 && temp->id != 14) && temp->next->id == -1)
 		{
+			write (1, "here\n", 5);
 			printf("minishell: syntax error near unexpected token `newline'\n");
 			return(0);
 		}

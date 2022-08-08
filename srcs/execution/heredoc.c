@@ -6,7 +6,7 @@
 /*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/17 15:24:16 by azabir            #+#    #+#             */
-/*   Updated: 2022/08/01 01:48:11 by azabir           ###   ########.fr       */
+/*   Updated: 2022/08/05 18:51:44 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,8 @@ void	heredoc(char	*cmd, t_data *data, int	is_last_here)
 			ft_putchar(data, input);
 			waitpid(-1, NULL, 0);
 		}
-		free(input);
+		if (input)
+			free(input);
 	}
 	//dup2(in ,STDIN_FILENO);
 }

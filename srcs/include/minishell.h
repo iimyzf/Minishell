@@ -6,7 +6,7 @@
 /*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 10:38:45 by azabir            #+#    #+#             */
-/*   Updated: 2022/08/01 15:43:43 by azabir           ###   ########.fr       */
+/*   Updated: 2022/08/08 11:29:47 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <sys/types.h>
 # include <fcntl.h>
 # include "signal.h"
+# include <sys/errno.h>
 
 
 typedef	struct s_cmd
@@ -63,6 +64,7 @@ typedef struct s_parser
 typedef struct s_lexer
 {
 	char			c;
+	char			next_c;
 	unsigned int	index;
 	char			*data;
 }	t_lexer;
@@ -92,7 +94,7 @@ void	execution(char **lst);
 void	check_heredoc(t_data *data);
 int		ft_pwd(void);
 int		ft_echo(char **env);
-void	fill_data_list(t_data *data);
+int		fill_data_list(t_data *data);
 int		ft_env(char	**arg);
 void	ft_export(char **path, t_data *data);
 void	ft_add_env(t_data *data, char **env);
@@ -100,6 +102,10 @@ void	ft_strswap(char **str1, char **str2);
 char	**cpy_env(char **env);
 void	sort_this(char **tab);
 int		is_buildin(char *cmd);
+void	free_array(char **arr);
+int		check_dollar(char *cmd);
+char	*make_str(t_cmd *temp, int id);
+void	dollar(t_data *data, char **cmd, int id);
 int		syntax_checker(t_cmd *cmd);
 void	ft_print_sorted_env(char **env);
 void	sighandl(int sig);

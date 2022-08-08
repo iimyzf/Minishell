@@ -1,43 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_echo.c                                          :+:      :+:    :+:   */
+/*   free_array.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/13 19:20:35 by azabir            #+#    #+#             */
-/*   Updated: 2022/08/04 23:20:53 by azabir           ###   ########.fr       */
+/*   Created: 2022/08/07 18:12:51 by azabir            #+#    #+#             */
+/*   Updated: 2022/08/07 18:54:00 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	ft_echo(char **cmd)
+void	free_array(char **arr)
 {
-	int	i;
+	int		i;
 
-	i = 1;
-	if (cmd[1] == NULL)
-		printf("\n");
-	else if (ft_strcmp(cmd[1], "-n"))
+	i = 0;
+	while (arr[i])
 	{
-		while (cmd[i])
-		{
-			printf("%s", cmd[i]);
-			if (cmd[i + 1])
-				printf(" ");
-			i++;
-		}
-		printf("\n");
+		free(arr[i]);
+		i++;
 	}
-	else if (!ft_strcmp(cmd[1], "-n"))
-	{
-		i = 2;
-		while (cmd[i])
-		{
-			printf(" %s", cmd[i]);
-			i++;
-		}
-	}
-	return (0);
+	free(arr);
 }

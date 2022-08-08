@@ -6,7 +6,7 @@
 /*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 02:16:37 by azabir            #+#    #+#             */
-/*   Updated: 2022/08/01 15:26:53 by azabir           ###   ########.fr       */
+/*   Updated: 2022/08/08 00:06:24 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,10 @@ char	*ft_strjoin3(char *s1, char *s2)
 		ptr[j] = s1[j];
 		j++;
 	}
-	ptr[j++] = ' ';
+	//ptr[j++] = '	';
 	while (*s2)
 		ptr[j++] = *s2++;
 	ptr[j] = '\0';
-	free (s1);
+	//free (s1);
 	return (ptr);
 }
