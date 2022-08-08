@@ -6,7 +6,7 @@
 /*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 09:46:02 by yagnaou           #+#    #+#             */
-/*   Updated: 2022/08/08 14:30:42 by azabir           ###   ########.fr       */
+/*   Updated: 2022/08/08 14:33:58 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,8 @@ void	ft_parce(t_data *data)
 	status1 = 0;
 	while (temp && (temp->id != -1))
 	{
-		status = 0;
 		i = 0;
+		status = 0;
 		tmp = "";
 		while (temp->id != -1 && (temp->id != 8))
 		{
@@ -78,7 +78,7 @@ void	ft_parce(t_data *data)
 				}
 				fprintf(stderr, "tmp->cmd = [%s]\n", temp->cmd);
 			}	
-			else if (temp->id == 4)
+			if (temp->id == 4)
 			{
 				if (is_last_heredoc(temp))
 				{
