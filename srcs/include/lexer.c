@@ -6,7 +6,7 @@
 /*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 16:28:33 by yagnaou           #+#    #+#             */
-/*   Updated: 2022/08/08 14:12:09 by azabir           ###   ########.fr       */
+/*   Updated: 2022/08/09 15:25:08 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,11 @@ t_token	*lexer_collect_string(t_lexer *lexer, char c)
 		lexer_advance(lexer, 1);
 	}
 	lexer_advance(lexer, 1);
+	if (c == '\'')
+		return token_init(TOKEN_SQUOTES, value);
+	else if(c == '"')
+		return token_init(TOKEN_DQUOTES, value);
+	else
 		return token_init(TOKEN_STRING, value);
 }
 

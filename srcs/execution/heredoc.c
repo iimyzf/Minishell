@@ -6,7 +6,7 @@
 /*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/17 15:24:16 by azabir            #+#    #+#             */
-/*   Updated: 2022/08/05 18:51:44 by azabir           ###   ########.fr       */
+/*   Updated: 2022/08/08 16:47:48 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,9 @@ void	heredoc(char	*cmd, t_data *data, int	is_last_here)
 	in = STDIN_FILENO;
 	while (1)
 	{
-		//dup2(1, STDIN_FILENO);
 		input = readline("heredoc> ");
 		if (!ft_strcmp(cmd, input))
 		{
-		//write (2, "here\n", 5);
 			if (is_last_here)
 				close (data->here_fd[1]);
 			break;
@@ -57,5 +55,4 @@ void	heredoc(char	*cmd, t_data *data, int	is_last_here)
 		if (input)
 			free(input);
 	}
-	//dup2(in ,STDIN_FILENO);
 }

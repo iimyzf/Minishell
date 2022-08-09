@@ -6,7 +6,7 @@
 /*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 10:35:58 by azabir            #+#    #+#             */
-/*   Updated: 2022/08/01 23:27:41 by azabir           ###   ########.fr       */
+/*   Updated: 2022/08/09 15:35:30 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,6 @@ char	*check_path(char	*cmd)
 	char	*path;
 	struct stat buf;
 	
-	if (!stat(cmd, &buf))
-		return(ft_strjoin(cmd, ""));
 	if (path = make_path("/bin/", cmd), path)
 		return (path);
 	if (path = make_path("/usr/bin/", cmd), path)
@@ -44,5 +42,7 @@ char	*check_path(char	*cmd)
 		return (path);
 	if (path = make_path("/usr/local/munki/", cmd), path)
 		return (path);
+	if (!stat(cmd, &buf))
+		return(ft_strjoin(cmd, ""));
 	return (NULL);
 }

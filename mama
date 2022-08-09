@@ -1,3 +1,4 @@
 @echo Compiling...
 @gccd $(CFLAGS) $(SRCS) -o $(NAME)
-@echo "Done!"
+@echo "	Done!"
+tmp = [ grep    Done]

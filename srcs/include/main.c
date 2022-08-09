@@ -6,7 +6,7 @@
 /*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 09:46:02 by yagnaou           #+#    #+#             */
-/*   Updated: 2022/08/08 14:33:58 by azabir           ###   ########.fr       */
+/*   Updated: 2022/08/09 17:35:49 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	process(char **cmd, char *path, t_data *data, int status)
 	kra = status;
 	kra = 0;
 	pid = fork();
+
 	if (pid == 0)
 	{
 		dup2(data->out, STDOUT_FILENO);
@@ -69,17 +70,23 @@ void	ft_parce(t_data *data)
 			if (temp->id == 9)
 			{
 				temp = temp->next;
-				dollar(data, &(temp->cmd), temp->id);
-				while (temp->cmd[i])
+				if (temp->id != -1 && temp->id != 6 && temp->id != 7)
 				{
-					if (temp->cmd[i] == ' ')
-						temp->cmd[i] = '	';
-					i++;
+					dollar(data, &(temp->cmd), temp->id);
+					while (temp->cmd && temp->cmd[i])
+					{
+						write (1, "heee\n", 5);
+						if (temp->cmd[i] == ' ')
+							temp->cmd[i] = '	';
+						i++;
+					}
 				}
 				fprintf(stderr, "tmp->cmd = [%s]\n", temp->cmd);
 			}	
 			if (temp->id == 4)
 			{
+				if (temp->next->id == 14)
+					temp = temp->next;
 				if (is_last_heredoc(temp))
 				{
 					dup2(temp->in, STDIN_FILENO);
@@ -114,14 +121,23 @@ void	ft_parce(t_data *data)
 				dup2(pid, STDIN_FILENO);
 				//close(pid);
 			}
-			else if (temp->id == 5)
+			else if (temp->id == 6 || temp->id == 7)
 				tmp = ft_strjoin3(tmp, temp->cmd);
 			else
 				tmp = ft_strjoin2(tmp, temp->cmd);
 			temp = temp->next;
+			/*if (temp->id == 14)
+				temp = temp->next;*/
 		}
+		fprintf(stderr, "tmp = [%s]\n", tmp);
 		data->full_cmd = ft_split(tmp, '	');
 		free(tmp);
+		i = 0;
+		while (data->full_cmd[i])
+		{
+			fprintf(stderr, "cmd = [%s]\n", data->full_cmd[i]);
+			i++;
+		}
 		if (temp->id == 8)
 		{
 			pipe(data->fd);
@@ -147,6 +163,7 @@ void	ft_parce(t_data *data)
 			//dup2(0, STDOUT_FILENO);
 		}
 		path = check_path(data->full_cmd[0]);
+		//fprintf(stderr, "cmd = [%s]\n", path);
 		//fprintf(stderr, "cmd = %s\n", data->full_cmd[0]);
 		if (data->full_cmd[0] && !path && !is_buildin(data->full_cmd[0]))
 			printf("HA HA HA HA HA HA! d3iiiif !!\n");
@@ -157,9 +174,11 @@ void	ft_parce(t_data *data)
 			if (status == 0)
 				data->out = 1;
 			data->in = data->fd[0];
-			temp = temp->next;
+			//temp = temp->next;
 			//status1 = 2;
 		}
+		/*if (temp->id == -1)
+			break;*/
 		if (data->full_cmd[0] != NULL && status1 != 1)
 		{
 			process(data->full_cmd, path, data, status);
@@ -168,6 +187,7 @@ void	ft_parce(t_data *data)
 		free(path);
 		free_array(data->full_cmd);
 		//close (pid);
+	//	fprintf(stderr, "id = [%d]\n", temp->id);
 	}
 	t_cmd	*temp1;
 	temp1 = data->cmd_list;
@@ -209,7 +229,6 @@ int main(int ac, char **av, char **env)
 		}
 		free (data.input);
 	}
-	system("leaks minishell");
 	return (0);
 }
 
@@ -218,8 +237,16 @@ int main(int ac, char **av, char **env)
 /*  TO DO */
 
 /*	# signal should close heredoc
+	# $ sign protect --> doing
+	# path protect
+	# complete isalnum
+	# unclosed qoutes protect
+	# leaks handle
+	# exit status
+	# grep not woking
+	# fix path checking (check from env)
 	# handel last pipewith no cmd --> done
-	# handel error syntax (special carrachters with no options) --> DONE
-	# exuce minishell in  minishell
-	# (ls | top) hang
+	# handel error syntax (special carrachters with no options) --> done
+	# exuce minishell in  minishell --> done
+	# (ls | top) hang --> done
 */

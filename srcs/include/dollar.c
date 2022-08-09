@@ -6,11 +6,13 @@
 /*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 17:11:22 by azabir            #+#    #+#             */
-/*   Updated: 2022/08/08 14:34:10 by azabir           ###   ########.fr       */
+/*   Updated: 2022/08/09 17:16:50 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	dollar_in_string();
 
 char	*check_env(t_data *data, char *cmd)
 {
