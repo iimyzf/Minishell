@@ -1,4 +1,3 @@
 @echo Compiling...
-@gccd $(CFLAGS) $(SRCS) -o $(NAME)
-@echo "	Done!"
-tmp = [ grep    Done]
+@gcc $(CFLAGS) $(SRCS) -o $(NAME)
+@echo "Done!"

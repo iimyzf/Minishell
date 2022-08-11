@@ -6,7 +6,7 @@
 /*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 09:46:02 by yagnaou           #+#    #+#             */
-/*   Updated: 2022/08/09 17:35:49 by azabir           ###   ########.fr       */
+/*   Updated: 2022/08/11 13:19:29 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,12 @@ void	ft_parce(t_data *data)
 	t_cmd	*temp;
 	char	*tmp;
 	char	*path;
-	int 	status;
+	int		status;
 	int		pid;
 	int		status1;
 	int		open_proce;
+	int		saved_out;
+	int		saved_in;
 
 	tmp = "";
 	fill_data_list(data);
@@ -55,10 +57,12 @@ void	ft_parce(t_data *data)
 		return;
 	check_heredoc(data);
 	temp = (data)->cmd_list;
-	data->in = 1;
-	data->out = 0;
+	data->in = 0;
+	data->out = 1;
 	open_proce = 0;
 	status1 = 0;
+	saved_out = dup(STDOUT_FILENO);
+	saved_in = dup(STDIN_FILENO);
 	while (temp && (temp->id != -1))
 	{
 		i = 0;
@@ -66,7 +70,7 @@ void	ft_parce(t_data *data)
 		tmp = "";
 		while (temp->id != -1 && (temp->id != 8))
 		{
-			printf("cmd = %s >>>>>> id = %d\n", temp->cmd, temp->id);
+			//printf("cmd = %s >>>>>> id = %d\n", temp->cmd, temp->id);
 			if (temp->id == 9)
 			{
 				temp = temp->next;
@@ -75,13 +79,13 @@ void	ft_parce(t_data *data)
 					dollar(data, &(temp->cmd), temp->id);
 					while (temp->cmd && temp->cmd[i])
 					{
-						write (1, "heee\n", 5);
+						//write (1, "heee\n", 5);
 						if (temp->cmd[i] == ' ')
 							temp->cmd[i] = '	';
 						i++;
 					}
 				}
-				fprintf(stderr, "tmp->cmd = [%s]\n", temp->cmd);
+			//	fprintf(stderr, "tmp->cmd = [%s]\n", temp->cmd);
 			}	
 			if (temp->id == 4)
 			{
@@ -129,15 +133,15 @@ void	ft_parce(t_data *data)
 			/*if (temp->id == 14)
 				temp = temp->next;*/
 		}
-		fprintf(stderr, "tmp = [%s]\n", tmp);
+		//fprintf(stderr, "tmp = [%s]\n", tmp);
 		data->full_cmd = ft_split(tmp, '	');
 		free(tmp);
 		i = 0;
-		while (data->full_cmd[i])
+		/*while (data->full_cmd[i])
 		{
 			fprintf(stderr, "cmd = [%s]\n", data->full_cmd[i]);
 			i++;
-		}
+		}*/
 		if (temp->id == 8)
 		{
 			pipe(data->fd);
@@ -197,9 +201,13 @@ void	ft_parce(t_data *data)
 		//write (2, "\nhere\n", 6);
 		open_proce --;
 	}
-	if (status1 == 1)
-		dup2(0, STDOUT_FILENO);
-	dup2(1, STDIN_FILENO);
+	//fprintf(stderr, "stdin = %d\n", STDIN_FILENO);
+		dup2(saved_out, STDOUT_FILENO);
+		dup2(saved_in, STDIN_FILENO);
+		close (saved_out);
+		close (saved_in);
+		
+	//fprintf(stderr, "stdin = %d\n", STDIN_FILENO);
 }
 
 int main(int ac, char **av, char **env)

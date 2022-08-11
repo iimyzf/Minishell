@@ -6,7 +6,7 @@
 /*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 16:28:33 by yagnaou           #+#    #+#             */
-/*   Updated: 2022/08/09 15:25:08 by azabir           ###   ########.fr       */
+/*   Updated: 2022/08/11 13:14:58 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,12 +135,9 @@ t_token	*lexer_collect_id(t_lexer *lexer)
 
 	value = calloc(1, sizeof(char));
 	value[0] = '\0';
-	while (ft_isalnum(lexer->c) || lexer->c == '"' || lexer->c == '\'')
+	while (ft_isalnum(lexer->c))
 	{
-		if (lexer->c == '"' || lexer->c == '\'')
-			str = lexer_collect_string(lexer, lexer->c)->value;
-		else
-			str = lexer_get_current_char_as_string(lexer);
+		str = lexer_get_current_char_as_string(lexer);
 		tmp = ft_strjoin(value, str);
 		free(value);
 		free(str);
