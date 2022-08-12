@@ -6,7 +6,7 @@
 /*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 16:28:33 by yagnaou           #+#    #+#             */
-/*   Updated: 2022/08/11 13:14:58 by azabir           ###   ########.fr       */
+/*   Updated: 2022/08/12 02:13:54 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,15 +41,17 @@ void	lexer_skip_white_spaces(t_lexer *lexer)
 		lexer_advance(lexer, 1);
 }
 
-t_token	*lexer_get_next_token(t_lexer *lexer)
+t_token	*lexer_get_next_token(t_lexer *lexer, t_data *data)
 {
 	while (lexer->c != '\0' && lexer->index < ft_strlen(lexer->data))
 	{
 		if (lexer->c == ' ' || lexer->c == '\t')
 			lexer_skip_white_spaces(lexer);
 
-		if (lexer->c == '"' || lexer->c == '\'')
-			return (lexer_collect_string(lexer, lexer->c));
+		if (lexer->c == '"')
+			return (lexer_collect_dq_string(lexer, lexer->c, data));
+		if (lexer->c == '\'')
+			return (lexer_collect_string(lexer, lexer->c, TOKEN_SQUOTES));
 
 		else if (ft_isalnum(lexer->c))
 			return (lexer_collect_id(lexer));
@@ -100,7 +102,7 @@ t_token	*lexer_get_next_token(t_lexer *lexer)
 	return (NULL);
 }
 
-t_token	*lexer_collect_string(t_lexer *lexer, char c)
+t_token	*lexer_collect_string(t_lexer *lexer, char c, int token)
 {
 	char	*value;
 	char	*tmp;
@@ -119,12 +121,42 @@ t_token	*lexer_collect_string(t_lexer *lexer, char c)
 		lexer_advance(lexer, 1);
 	}
 	lexer_advance(lexer, 1);
-	if (c == '\'')
-		return token_init(TOKEN_SQUOTES, value);
-	else if(c == '"')
-		return token_init(TOKEN_DQUOTES, value);
-	else
-		return token_init(TOKEN_STRING, value);
+	return token_init(token, value);
+}
+
+t_token	*lexer_collect_dq_string(t_lexer *lexer, char c, t_data *data)
+{
+	char	*value;
+	char	*tmp;
+	char	*str;
+
+	lexer_advance(lexer, 1);
+	value = calloc(1, sizeof(char));
+	value[0] = '\0';
+	while (lexer->c != c && lexer->c != '\0')
+	{
+		if (lexer->c == '$' && ft_isalnum2(lexer->next_c))
+		{
+			lexer_advance(lexer, 1);
+			str = check_env(data, lexer_collect_id(lexer)->value);
+		}
+		else
+		{
+			str = lexer_get_current_char_as_string(lexer);
+			lexer_advance(lexer, 1);
+		}
+		if (str != NULL)
+			tmp = ft_strjoin(value, str);
+		else
+			tmp = value;
+		fprintf(stderr, "tmp = %s\n", tmp);
+		if (str != NULL)
+			free (value);
+		free(str);
+		value = tmp;
+	}
+	lexer_advance(lexer, 1);
+	return token_init(TOKEN_DQUOTES, value);
 }
 
 t_token	*lexer_collect_id(t_lexer *lexer)

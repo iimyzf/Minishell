@@ -6,7 +6,7 @@
 /*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/05 18:22:04 by yagnaou           #+#    #+#             */
-/*   Updated: 2022/08/01 15:29:53 by azabir           ###   ########.fr       */
+/*   Updated: 2022/08/12 02:12:41 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,12 @@ char	*ft_strjoin(char *s1, char *s2)
 	if (!ptr)
 		return (NULL);
 	j = 0;
-	while (s1[j])
+	while (s1 && s1[j])
 	{
 		ptr[j] = s1[j];
 		j++;
 	}
-	while (*s2)
+	while (s2 && *s2)
 		ptr[j++] = *s2++;
 	ptr [j] = 0;
 	return (ptr);

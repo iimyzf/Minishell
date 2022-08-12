@@ -6,7 +6,7 @@
 /*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 19:21:07 by azabir            #+#    #+#             */
-/*   Updated: 2022/07/31 18:37:38 by azabir           ###   ########.fr       */
+/*   Updated: 2022/08/11 19:01:53 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ char	**add_to_list(t_data *data, char *str)
 	}
 	new_env[i] = string;
 	new_env[i + 1] = NULL;
-	//free(data->env);
+	//free(data->env);f
 	return (new_env);
 }
 
@@ -109,7 +109,7 @@ void	ft_export(char **path, t_data *data)
 			}
 		}
 		i++;
-	}
+}
 	// i = 0;
 	// while (data->env[i])
 	// {

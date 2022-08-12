@@ -6,7 +6,7 @@
 /*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/31 21:56:16 by azabir            #+#    #+#             */
-/*   Updated: 2022/08/08 13:56:17 by azabir           ###   ########.fr       */
+/*   Updated: 2022/08/11 18:41:20 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	fill_data_list(t_data *data)
 
 	lexer = lexer_init(data->input);
 	(data)->cmd_list = NULL;
-	while ((token = lexer_get_next_token(lexer)) != NULL)
+	while ((token = lexer_get_next_token(lexer, data)) != NULL)
 	{
 		if (!((data)->cmd_list))
 			(data)->cmd_list = ft_lstnew(token->value, token->type);

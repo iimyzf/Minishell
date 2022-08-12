@@ -6,7 +6,7 @@
 /*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 09:46:02 by yagnaou           #+#    #+#             */
-/*   Updated: 2022/08/11 13:19:29 by azabir           ###   ########.fr       */
+/*   Updated: 2022/08/11 14:38:08 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	ft_parce(t_data *data)
 		tmp = "";
 		while (temp->id != -1 && (temp->id != 8))
 		{
-			//printf("cmd = %s >>>>>> id = %d\n", temp->cmd, temp->id);
+			printf("cmd = %s >>>>>> id = %d\n", temp->cmd, temp->id);
 			if (temp->id == 9)
 			{
 				temp = temp->next;
@@ -251,7 +251,7 @@ int main(int ac, char **av, char **env)
 	# unclosed qoutes protect
 	# leaks handle
 	# exit status
-	# grep not woking
+	# grep not woking --> done
 	# fix path checking (check from env)
 	# handel last pipewith no cmd --> done
 	# handel error syntax (special carrachters with no options) --> done

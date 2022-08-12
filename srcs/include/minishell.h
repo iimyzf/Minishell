@@ -6,7 +6,7 @@
 /*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 10:38:45 by azabir            #+#    #+#             */
-/*   Updated: 2022/08/08 11:29:47 by azabir           ###   ########.fr       */
+/*   Updated: 2022/08/11 18:42:30 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,9 @@ typedef struct s_lexer
 
 
 t_lexer	*lexer_init(char *data);
-t_token	*lexer_get_next_token(t_lexer *lexer);
-t_token	*lexer_collect_string(t_lexer *lexer, char c);
+t_token	*lexer_get_next_token(t_lexer *lexer, t_data *data);
+t_token	*lexer_collect_string(t_lexer *lexer, char c, int token);
+t_token	*lexer_collect_dq_string(t_lexer *lexer, char c, t_data *data);
 t_token	*lexer_collect_id(t_lexer *lexer);
 t_token	*lexer_advance_with_token(t_lexer *lexer, t_token *token, int count);
 char	*lexer_get_current_char_as_string(t_lexer *lexer);
@@ -81,6 +82,7 @@ void	lexer_advance(t_lexer *lexer, int count);
 void	lexer_skip_white_spaces(t_lexer *lexer);
 void	free_all(t_lexer *lexer);
 char	*ft_strjoin(char const *s1, char const *s2);
+char	*check_env(t_data *data, char *cmd);
 t_cmd	*ft_lstnew(char *value, int id);
 void	lstadd_back(t_cmd **cmd_list, t_cmd *cmd);
 void	lstfree(t_cmd *lst);
