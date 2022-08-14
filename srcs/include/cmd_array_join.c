@@ -1,28 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
+/*   cmd_array_join.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/07 17:58:40 by azabir            #+#    #+#             */
-/*   Updated: 2022/08/14 11:47:21 by azabir           ###   ########.fr       */
+/*   Created: 2022/08/12 22:14:58 by azabir            #+#    #+#             */
+/*   Updated: 2022/08/13 18:02:09 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	lstadd_back(t_cmd **cmd_list, t_cmd *cmd)
+char	*cmd_array_join(char *cmd_part)
 {
-	t_cmd	*temp;
+	char	*cmd;
+	int		i;
 
-	if (!(*cmd_list))
-		*cmd_list = cmd;
-	else
+	cmd = malloc(sizeof(char) * ft_strlen(cmd_part) + 1);
+	i = 0;
+	while(cmd_part && cmd_part[i])
 	{
-		temp = *cmd_list;
-		while (temp->next != NULL)
-			temp = temp->next;
-		temp->next = cmd;
+		cmd[i] = cmd_part[i];
+		i++;
 	}
+	cmd[i] = 0;
+	return(cmd);
 }

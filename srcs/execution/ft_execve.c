@@ -6,7 +6,7 @@
 /*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 11:34:29 by azabir            #+#    #+#             */
-/*   Updated: 2022/08/11 12:56:53 by azabir           ###   ########.fr       */
+/*   Updated: 2022/08/13 01:03:25 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void	ft_execve(char **cmd, char **env, char *path, t_data *data)
 {
 	char	**tab;
 	tab = env;
+	(void) path;
 	/* else if (is_builtin(cmd[0]) == 2)
 		ft_cd(cmd, env);*/
 	if (!ft_strcmp(cmd[0], "pwd"))

@@ -6,7 +6,7 @@
 /*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 09:46:02 by yagnaou           #+#    #+#             */
-/*   Updated: 2022/08/11 14:38:08 by azabir           ###   ########.fr       */
+/*   Updated: 2022/08/14 10:37:28 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ void	ft_parce(t_data *data)
 	int		open_proce;
 	int		saved_out;
 	int		saved_in;
+	int		j;
 
 	tmp = "";
 	fill_data_list(data);
@@ -67,26 +68,13 @@ void	ft_parce(t_data *data)
 	{
 		i = 0;
 		status = 0;
+		j = 0; 
 		tmp = "";
+		data->full_cmd = calloc((cmd_parts_count(temp) + 1), sizeof(char *));
+		//fprintf(stderr, "count = [%d]\n", cmd_parts_count(temp));
 		while (temp->id != -1 && (temp->id != 8))
 		{
 			printf("cmd = %s >>>>>> id = %d\n", temp->cmd, temp->id);
-			if (temp->id == 9)
-			{
-				temp = temp->next;
-				if (temp->id != -1 && temp->id != 6 && temp->id != 7)
-				{
-					dollar(data, &(temp->cmd), temp->id);
-					while (temp->cmd && temp->cmd[i])
-					{
-						//write (1, "heee\n", 5);
-						if (temp->cmd[i] == ' ')
-							temp->cmd[i] = '	';
-						i++;
-					}
-				}
-			//	fprintf(stderr, "tmp->cmd = [%s]\n", temp->cmd);
-			}	
 			if (temp->id == 4)
 			{
 				if (temp->next->id == 14)
@@ -125,23 +113,31 @@ void	ft_parce(t_data *data)
 				dup2(pid, STDIN_FILENO);
 				//close(pid);
 			}
-			else if (temp->id == 6 || temp->id == 7)
-				tmp = ft_strjoin3(tmp, temp->cmd);
-			else
-				tmp = ft_strjoin2(tmp, temp->cmd);
-			temp = temp->next;
+			else if ((temp->id == 0 || temp->id == 6 || temp->id == 9 || temp->id == 7))
+			{
+				while (temp->id == 0 || temp->id == 6 || temp->id == 9 || temp->id == 7)
+				{
+					data->full_cmd[j] = ft_strjoin(data->full_cmd[j], temp->cmd);
+					temp = temp->next;
+				}
+				j++;
+			}
+			if (temp->id != 1 && temp->id != 2 && temp->id != 3 && temp->id != 4 && temp->id != -1)
+				temp = temp->next;
 			/*if (temp->id == 14)
 				temp = temp->next;*/
 		}
-		//fprintf(stderr, "tmp = [%s]\n", tmp);
-		data->full_cmd = ft_split(tmp, '	');
-		free(tmp);
+		data->full_cmd[j] = NULL;
+	//	fprintf(stderr, "tmp = [%s]\n", tmp);
+		//data->full_cmd = ft_split(tmp, '	');
+		//free(tmp);
 		i = 0;
-		/*while (data->full_cmd[i])
+		while (data->full_cmd[i])
 		{
-			fprintf(stderr, "cmd = [%s]\n", data->full_cmd[i]);
+			//fprintf(stderr, "cmd[%d] = [%s]\n",i ,data->full_cmd[i]);
 			i++;
-		}*/
+		}
+		fprintf(stderr, "======\n");
 		if (temp->id == 8)
 		{
 			pipe(data->fd);
@@ -244,15 +240,25 @@ int main(int ac, char **av, char **env)
 
 /*  TO DO */
 
-/*	# signal should close heredoc
-	# $ sign protect --> doing
+/*	
+	# $cmd
+	# signal should close heredoc
+	# $ sign protect --> Testing
 	# path protect
+	# echo "hello">"gg"
+	# remove split --> doing
 	# complete isalnum
 	# unclosed qoutes protect
 	# leaks handle
 	# exit status
-	# grep not woking --> done
+	# empty cmd handle
+	# remove unused TOKENS
+	# handel dollar sign in lexer
+	# memory protections
+	# errors handle
+	# remove forbiden funcs like calloc
 	# fix path checking (check from env)
+	# grep not woking --> done
 	# handel last pipewith no cmd --> done
 	# handel error syntax (special carrachters with no options) --> done
 	# exuce minishell in  minishell --> done

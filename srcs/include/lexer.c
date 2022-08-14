@@ -6,7 +6,7 @@
 /*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 16:28:33 by yagnaou           #+#    #+#             */
-/*   Updated: 2022/08/12 02:13:54 by azabir           ###   ########.fr       */
+/*   Updated: 2022/08/14 09:08:30 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ t_token	*lexer_get_next_token(t_lexer *lexer, t_data *data)
 			return (lexer_collect_string(lexer, lexer->c, TOKEN_SQUOTES));
 
 		else if (ft_isalnum(lexer->c))
-			return (lexer_collect_id(lexer));
+			return (lexer_collect_id(lexer, data));
 
 		if (lexer->c == '>' && lexer->data[lexer->index + 1] == '>')
 			return (lexer_advance_with_token(lexer, token_init(TOKEN_APPEND, lexer_get_current_char_as_two_strings(lexer)), 2));
@@ -86,7 +86,7 @@ t_token	*lexer_get_next_token(t_lexer *lexer, t_data *data)
 			return (lexer_advance_with_token(lexer, token_init(TOKEN_PIPE, lexer_get_current_char_as_string(lexer)), 1));
 
 		else if (lexer->c == '$')
-			return (lexer_advance_with_token(lexer, token_init(TOKEN_DOLLAR, lexer_get_current_char_as_string(lexer)), 1));
+			return (lexer_collect_env_string(lexer, data, TOKEN_DOLLAR));
 
 		if (lexer->c == '&' && lexer->data[lexer->index + 1] == '&')
 			return (lexer_advance_with_token(lexer, token_init(TOKEN_AND, lexer_get_current_char_as_two_strings(lexer)), 2));
@@ -124,6 +124,25 @@ t_token	*lexer_collect_string(t_lexer *lexer, char c, int token)
 	return token_init(token, value);
 }
 
+t_token	*lexer_collect_env_string(t_lexer *lexer,t_data *data, int token)
+{
+	char	*value;
+	char	*str;
+
+	lexer_advance(lexer, 1);
+	value = calloc(1, sizeof(char));
+	value[0] = '\0';
+	if (ft_isalnum2(lexer->c))
+	{
+		str = check_env(data, lexer_collect_id(lexer, data)->value);
+		value = ft_strjoin2(value, str);
+	}
+	else
+		value = lexer_get_current_char_as_string(lexer);
+	fprintf(stderr, "value = [%s]\n", value);
+	return token_init(token, value);
+}
+
 t_token	*lexer_collect_dq_string(t_lexer *lexer, char c, t_data *data)
 {
 	char	*value;
@@ -135,10 +154,14 @@ t_token	*lexer_collect_dq_string(t_lexer *lexer, char c, t_data *data)
 	value[0] = '\0';
 	while (lexer->c != c && lexer->c != '\0')
 	{
+		if (lexer->c == '"')
+			str = (lexer_collect_dq_string(lexer, lexer->c, data))->value;
+		if (lexer->c == '\'')
+			str = (lexer_collect_string(lexer, lexer->c, TOKEN_SQUOTES))->value;
 		if (lexer->c == '$' && ft_isalnum2(lexer->next_c))
 		{
 			lexer_advance(lexer, 1);
-			str = check_env(data, lexer_collect_id(lexer)->value);
+			str = check_env(data, lexer_collect_id(lexer, data)->value);
 		}
 		else
 		{
@@ -149,17 +172,16 @@ t_token	*lexer_collect_dq_string(t_lexer *lexer, char c, t_data *data)
 			tmp = ft_strjoin(value, str);
 		else
 			tmp = value;
-		fprintf(stderr, "tmp = %s\n", tmp);
 		if (str != NULL)
 			free (value);
 		free(str);
 		value = tmp;
 	}
-	lexer_advance(lexer, 1);
+lexer_advance(lexer, 1);
 	return token_init(TOKEN_DQUOTES, value);
 }
 
-t_token	*lexer_collect_id(t_lexer *lexer)
+t_token	*lexer_collect_id(t_lexer *lexer, t_data *data)
 {
 	char	*value;
 	char	*tmp;
@@ -167,9 +189,14 @@ t_token	*lexer_collect_id(t_lexer *lexer)
 
 	value = calloc(1, sizeof(char));
 	value[0] = '\0';
-	while (ft_isalnum(lexer->c))
+	while (ft_isalnum(lexer->c) || lexer->c == '\'' || lexer->c == '"')
 	{
-		str = lexer_get_current_char_as_string(lexer);
+		if (lexer->c == '\'')
+			str = lexer_collect_string(lexer, lexer->c, TOKEN_SQUOTES)->value;
+		else if (lexer->c == '"')
+			str = lexer_collect_dq_string(lexer, lexer->c, data)->value;
+		else
+			str = lexer_get_current_char_as_string(lexer);
 		tmp = ft_strjoin(value, str);
 		free(value);
 		free(str);

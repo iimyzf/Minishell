@@ -6,7 +6,7 @@
 /*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 10:38:45 by azabir            #+#    #+#             */
-/*   Updated: 2022/08/11 18:42:30 by azabir           ###   ########.fr       */
+/*   Updated: 2022/08/13 18:51:01 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,9 @@ t_lexer	*lexer_init(char *data);
 t_token	*lexer_get_next_token(t_lexer *lexer, t_data *data);
 t_token	*lexer_collect_string(t_lexer *lexer, char c, int token);
 t_token	*lexer_collect_dq_string(t_lexer *lexer, char c, t_data *data);
-t_token	*lexer_collect_id(t_lexer *lexer);
+t_token	*lexer_collect_id(t_lexer *lexer, t_data *data);
 t_token	*lexer_advance_with_token(t_lexer *lexer, t_token *token, int count);
+t_token *lexer_collect_env_string(t_lexer *lexer,t_data *data, int token);
 char	*lexer_get_current_char_as_string(t_lexer *lexer);
 char	*lexer_get_current_char_as_two_strings(t_lexer *lexer);
 void	lexer_advance(t_lexer *lexer, int count);
@@ -92,9 +93,11 @@ void	ft_execve(char **cmd, char **env, char *path, t_data *data);
 char	*ft_strjoin2(char *s1, char *s2);
 void	heredoc(char	*cmd, t_data *data, int	is_last_here);
 int		is_last_heredoc(t_cmd	*cmd);
+char	*cmd_array_join(char *cmd_part);
 void	execution(char **lst);
 void	check_heredoc(t_data *data);
 int		ft_pwd(void);
+int		cmd_parts_count(t_cmd *cmd);
 int		ft_echo(char **env);
 int		fill_data_list(t_data *data);
 int		ft_env(char	**arg);

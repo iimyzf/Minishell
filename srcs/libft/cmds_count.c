@@ -1,28 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
+/*   cmds_count.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/07 17:58:40 by azabir            #+#    #+#             */
-/*   Updated: 2022/08/14 11:47:21 by azabir           ###   ########.fr       */
+/*   Created: 2022/08/12 21:34:25 by azabir            #+#    #+#             */
+/*   Updated: 2022/08/14 09:50:50 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+# include "../include/minishell.h"
 
-void	lstadd_back(t_cmd **cmd_list, t_cmd *cmd)
+int	cmd_parts_count(t_cmd *cmd)
 {
-	t_cmd	*temp;
+	int	count;
 
-	if (!(*cmd_list))
-		*cmd_list = cmd;
-	else
+	count = 0;	
+	while(cmd && cmd->id != 8 && cmd->id != -1)
 	{
-		temp = *cmd_list;
-		while (temp->next != NULL)
-			temp = temp->next;
-		temp->next = cmd;
+		if (cmd->id == 1 || cmd->id == 2 || cmd->id == 3 || cmd->id == 4)
+			count -= 2;
+		if (cmd->id != 14)
+		{
+			// if (cmd->id ==)
+			count++;
+		}
+		cmd = cmd->next;
 	}
+	return(count);
 }
