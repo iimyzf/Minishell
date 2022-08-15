@@ -6,13 +6,11 @@
 /*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 17:11:22 by azabir            #+#    #+#             */
-/*   Updated: 2022/08/10 11:36:12 by azabir           ###   ########.fr       */
+/*   Updated: 2022/08/14 17:39:30 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	dollar_in_string();
 
 char	*check_env(t_data *data, char *cmd)
 {
@@ -31,10 +29,8 @@ char	*check_env(t_data *data, char *cmd)
 	return (NULL);
 }
 
-
 void	dollar(t_data *data, char **cmd, int id)
 {
 	(void) id;
 	*cmd = check_env(data, *cmd);
-	// fprintf(stderr, "cmd final = %s\n", *cmd);
 }

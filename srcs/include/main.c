@@ -6,19 +6,16 @@
 /*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 09:46:02 by yagnaou           #+#    #+#             */
-/*   Updated: 2022/08/14 10:37:28 by azabir           ###   ########.fr       */
+/*   Updated: 2022/08/15 07:50:56 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	process(char **cmd, char *path, t_data *data, int status)
+void	process(char **cmd, char *path, t_data *data)
 {
 	pid_t	pid;
-	int kra;
 
-	kra = status;
-	kra = 0;
 	pid = fork();
 
 	if (pid == 0)
@@ -26,7 +23,7 @@ void	process(char **cmd, char *path, t_data *data, int status)
 		dup2(data->out, STDOUT_FILENO);
 		close(data->fd[0]);
 		close(data->fd[1]);
-		ft_execve(cmd, data->env, path, data);
+		ft_execve(cmd, data->env, path, data);	
 	}
 	else
 	{
@@ -71,10 +68,9 @@ void	ft_parce(t_data *data)
 		j = 0; 
 		tmp = "";
 		data->full_cmd = calloc((cmd_parts_count(temp) + 1), sizeof(char *));
-		//fprintf(stderr, "count = [%d]\n", cmd_parts_count(temp));
 		while (temp->id != -1 && (temp->id != 8))
 		{
-			printf("cmd = %s >>>>>> id = %d\n", temp->cmd, temp->id);
+			//printf("cmd = %s >>>>>> id = %d\n", temp->cmd, temp->id);
 			if (temp->id == 4)
 			{
 				if (temp->next->id == 14)
@@ -111,7 +107,6 @@ void	ft_parce(t_data *data)
 					temp = temp->next;
 				pid = open(temp->cmd, O_RDONLY);
 				dup2(pid, STDIN_FILENO);
-				//close(pid);
 			}
 			else if ((temp->id == 0 || temp->id == 6 || temp->id == 9 || temp->id == 7))
 			{
@@ -124,20 +119,9 @@ void	ft_parce(t_data *data)
 			}
 			if (temp->id != 1 && temp->id != 2 && temp->id != 3 && temp->id != 4 && temp->id != -1)
 				temp = temp->next;
-			/*if (temp->id == 14)
-				temp = temp->next;*/
 		}
 		data->full_cmd[j] = NULL;
-	//	fprintf(stderr, "tmp = [%s]\n", tmp);
-		//data->full_cmd = ft_split(tmp, '	');
-		//free(tmp);
 		i = 0;
-		while (data->full_cmd[i])
-		{
-			//fprintf(stderr, "cmd[%d] = [%s]\n",i ,data->full_cmd[i]);
-			i++;
-		}
-		fprintf(stderr, "======\n");
 		if (temp->id == 8)
 		{
 			pipe(data->fd);
@@ -150,7 +134,6 @@ void	ft_parce(t_data *data)
 		else if (data->full_cmd[0] && is_buildin(data->full_cmd[0]) && temp->id == -1 && status1 != 2)
 		{
 			dup2(data->out, STDOUT_FILENO);
-			//write (2, "heee\n", 5);
 			if (!ft_strcmp(data->full_cmd[0], "pwd"))
 				ft_pwd();
 			else if (!ft_strcmp(data->full_cmd[0], "echo"))
@@ -160,56 +143,41 @@ void	ft_parce(t_data *data)
 			else if (!ft_strcmp(data->full_cmd[0], "export"))
 				ft_export(&data->full_cmd[1], data);
 			status1 = 1;
-			//dup2(0, STDOUT_FILENO);
 		}
 		path = check_path(data->full_cmd[0]);
-		//fprintf(stderr, "cmd = [%s]\n", path);
-		//fprintf(stderr, "cmd = %s\n", data->full_cmd[0]);
 		if (data->full_cmd[0] && !path && !is_buildin(data->full_cmd[0]))
 			printf("HA HA HA HA HA HA! d3iiiif !!\n");
 		if (temp && temp->id == -1 && status == 0)
 		{
-			//data->out = 1;
 			pipe(data->fd);
 			if (status == 0)
 				data->out = 1;
 			data->in = data->fd[0];
-			//temp = temp->next;
-			//status1 = 2;
 		}
-		/*if (temp->id == -1)
-			break;*/
 		if (data->full_cmd[0] != NULL && status1 != 1)
 		{
-			process(data->full_cmd, path, data, status);
+			process(data->full_cmd, path, data);
 			open_proce ++;
 		}
 		free(path);
 		free_array(data->full_cmd);
-		//close (pid);
-	//	fprintf(stderr, "id = [%d]\n", temp->id);
 	}
 	t_cmd	*temp1;
 	temp1 = data->cmd_list;
 	while(open_proce > 0)
 	{
 		waitpid(-1, NULL, 0);
-		//write (2, "\nhere\n", 6);
 		open_proce --;
 	}
-	//fprintf(stderr, "stdin = %d\n", STDIN_FILENO);
 		dup2(saved_out, STDOUT_FILENO);
 		dup2(saved_in, STDIN_FILENO);
 		close (saved_out);
 		close (saved_in);
-		
-	//fprintf(stderr, "stdin = %d\n", STDIN_FILENO);
 }
 
 int main(int ac, char **av, char **env)
 {
 	t_data	data;
-	//int		pid;
 
 	if (ac != 1)
 		return (1);
@@ -243,10 +211,10 @@ int main(int ac, char **av, char **env)
 /*	
 	# $cmd
 	# signal should close heredoc
-	# $ sign protect --> Testing
-	# path protect
+	# path protect  -->doing
 	# echo "hello">"gg"
 	# remove split --> doing
+	# << << error
 	# complete isalnum
 	# unclosed qoutes protect
 	# leaks handle
@@ -258,6 +226,7 @@ int main(int ac, char **av, char **env)
 	# errors handle
 	# remove forbiden funcs like calloc
 	# fix path checking (check from env)
+	# $ sign protect --> done
 	# grep not woking --> done
 	# handel last pipewith no cmd --> done
 	# handel error syntax (special carrachters with no options) --> done

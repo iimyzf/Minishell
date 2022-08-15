@@ -6,15 +6,14 @@
 /*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 16:13:49 by yagnaou           #+#    #+#             */
-/*   Updated: 2022/08/08 11:24:39 by azabir           ###   ########.fr       */
+/*   Updated: 2022/08/15 07:15:45 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TOKEN_H
 # define TOKEN_H
 
-
-enum
+typedef enum e_mun
 {
 	TOKEN_ID,
 	TOKEN_LOPERATOR,
@@ -31,7 +30,7 @@ enum
 	TOKEN_LPARAN,
 	TOKEN_RPARAN,
 	TOKEN_SPACE
-}	type;
+}	t_num;
 
 typedef struct s_token
 {

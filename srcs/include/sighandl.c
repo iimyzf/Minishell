@@ -6,14 +6,13 @@
 /*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 01:36:45 by azabir            #+#    #+#             */
-/*   Updated: 2022/08/05 03:07:12 by azabir           ###   ########.fr       */
+/*   Updated: 2022/08/14 18:17:39 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-
-void sighandl(int sig)
+void	sighandl(int sig)
 {
 	if (sig == SIGINT)
 	{
@@ -22,7 +21,7 @@ void sighandl(int sig)
 		rl_on_new_line();
 		rl_redisplay();
 	}
-	else if (sig ==  SIGQUIT)
+	else if (sig == SIGQUIT)
 	{
 		rl_replace_line("", 0);
 		rl_on_new_line();

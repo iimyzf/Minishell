@@ -6,7 +6,7 @@
 /*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 10:38:45 by azabir            #+#    #+#             */
-/*   Updated: 2022/08/13 18:51:01 by azabir           ###   ########.fr       */
+/*   Updated: 2022/08/14 18:16:43 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,16 +24,15 @@
 # include "signal.h"
 # include <sys/errno.h>
 
-
-typedef	struct s_cmd
+typedef struct s_cmd
 {
 	int				id;
 	int				in;
 	int				out;
 	char			*cmd;
+	char			*saved;
 	struct s_cmd	*next;
 }	t_cmd;
-
 
 typedef struct s_data
 {
@@ -47,19 +46,18 @@ typedef struct s_data
 	char			**full_cmd;
 	char			**env;
 	int				p;
+	char			*saved;
 	char			**exp;
 }	t_data;
-
 
 typedef struct s_parser
 {
 	char	**infiles;
-	char 	**heredoc;
+	char	**heredoc;
 	char	**outfiles;
 	char	*commands;
 	t_cmd	*cmd;
 }	t_parser;
-
 
 typedef struct s_lexer
 {
@@ -69,14 +67,13 @@ typedef struct s_lexer
 	char			*data;
 }	t_lexer;
 
-
 t_lexer	*lexer_init(char *data);
 t_token	*lexer_get_next_token(t_lexer *lexer, t_data *data);
 t_token	*lexer_collect_string(t_lexer *lexer, char c, int token);
 t_token	*lexer_collect_dq_string(t_lexer *lexer, char c, t_data *data);
 t_token	*lexer_collect_id(t_lexer *lexer, t_data *data);
 t_token	*lexer_advance_with_token(t_lexer *lexer, t_token *token, int count);
-t_token *lexer_collect_env_string(t_lexer *lexer,t_data *data, int token);
+t_token	*lexer_collect_env_string(t_lexer *lexer, t_data *data, int token);
 char	*lexer_get_current_char_as_string(t_lexer *lexer);
 char	*lexer_get_current_char_as_two_strings(t_lexer *lexer);
 void	lexer_advance(t_lexer *lexer, int count);
@@ -84,14 +81,14 @@ void	lexer_skip_white_spaces(t_lexer *lexer);
 void	free_all(t_lexer *lexer);
 char	*ft_strjoin(char const *s1, char const *s2);
 char	*check_env(t_data *data, char *cmd);
-t_cmd	*ft_lstnew(char *value, int id);
+t_cmd	*ft_lstnew(char *value, int id, char *saved);
 void	lstadd_back(t_cmd **cmd_list, t_cmd *cmd);
 void	lstfree(t_cmd *lst);
 char	*check_path(char	*cmd);
 char	**ft_split(char *s, char c);
 void	ft_execve(char **cmd, char **env, char *path, t_data *data);
 char	*ft_strjoin2(char *s1, char *s2);
-void	heredoc(char	*cmd, t_data *data, int	is_last_here);
+void	heredoc(char *cmd, t_data *data, int is_last_here);
 int		is_last_heredoc(t_cmd	*cmd);
 char	*cmd_array_join(char *cmd_part);
 void	execution(char **lst);
@@ -99,7 +96,7 @@ void	check_heredoc(t_data *data);
 int		ft_pwd(void);
 int		cmd_parts_count(t_cmd *cmd);
 int		ft_echo(char **env);
-int		fill_data_list(t_data *data);
+void	fill_data_list(t_data *data);
 int		ft_env(char	**arg);
 void	ft_export(char **path, t_data *data);
 void	ft_add_env(t_data *data, char **env);
@@ -114,13 +111,7 @@ void	dollar(t_data *data, char **cmd, int id);
 int		syntax_checker(t_cmd *cmd);
 void	ft_print_sorted_env(char **env);
 void	sighandl(int sig);
-void 	check_last(t_data *data);
+void	check_last(t_data *data);
 char	*ft_strjoin3(char *s1, char *s2);
 
-
-
-
-
-
 #endif
-

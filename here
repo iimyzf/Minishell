@@ -1,0 +1,1 @@
+@gcc $(CFLAGS) $(SRCS) -o $(NAME)

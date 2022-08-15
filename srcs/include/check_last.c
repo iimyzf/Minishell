@@ -6,21 +6,21 @@
 /*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 01:16:09 by azabir            #+#    #+#             */
-/*   Updated: 2022/08/01 15:26:59 by azabir           ###   ########.fr       */
+/*   Updated: 2022/08/14 17:30:33 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void check_last(t_data *data)
+void	check_last(t_data *data)
 {
 	int		i;
 	char	*str;
-	
+
 	i = 1;
 	if (ft_isalnum(data->input[0]))
 	{
-		while(data->input[i + 1])
+		while (data->input[i + 1])
 			i++;
 		if (data->input[i] == '|')
 		{
