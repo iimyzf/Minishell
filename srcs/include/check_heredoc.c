@@ -6,7 +6,7 @@
 /*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 15:41:34 by azabir            #+#    #+#             */
-/*   Updated: 2022/08/14 17:26:17 by azabir           ###   ########.fr       */
+/*   Updated: 2022/08/15 21:34:34 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	check_heredoc(t_data *data)
 	t_cmd	*temp;
 
 	temp = data->cmd_list;
-	while (temp && temp->id != -1 && (temp->id != 8))
+	while (temp && temp->id != -1)
 	{
 		if (temp->id == 4)
 		{

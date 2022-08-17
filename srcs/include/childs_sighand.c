@@ -1,14 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_cd.c                                            :+:      :+:    :+:   */
+/*   childs_sighand.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/13 19:20:49 by azabir            #+#    #+#             */
-/*   Updated: 2022/08/17 17:37:05 by azabir           ###   ########.fr       */
+/*   Created: 2022/08/15 18:57:52 by azabir            #+#    #+#             */
+/*   Updated: 2022/08/17 15:58:08 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "minishell.h"
 
+void	child_sighand(int sig)
+{
+	if (sig == SIGINT)
+	{
+		//
+	}
+	else if (sig == SIGQUIT)
+	{
+		(void) sig;
+	}	
+}

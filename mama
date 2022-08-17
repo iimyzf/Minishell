@@ -1,3 +1,4 @@
-@echo Compiling...
-@gcc $(CFLAGS) $(SRCS) -o $(NAME)
-@echo "Done!"
+	@gcc $(CFLAGS) $(SRCS) -o $(NAME)
+	@rm -rf $(OBJS)
+	@rm -rf $(OBJS)
+	@rm -rf $(NAME)

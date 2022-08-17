@@ -6,12 +6,13 @@
 /*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 09:46:02 by yagnaou           #+#    #+#             */
-/*   Updated: 2022/08/15 07:50:56 by azabir           ###   ########.fr       */
+/*   Updated: 2022/08/17 16:46:17 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+\
 void	process(char **cmd, char *path, t_data *data)
 {
 	pid_t	pid;
@@ -20,6 +21,7 @@ void	process(char **cmd, char *path, t_data *data)
 
 	if (pid == 0)
 	{
+		signal(SIGINT, SIG_IGN);
 		dup2(data->out, STDOUT_FILENO);
 		close(data->fd[0]);
 		close(data->fd[1]);

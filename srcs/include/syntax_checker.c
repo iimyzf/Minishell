@@ -6,7 +6,7 @@
 /*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/31 22:04:27 by azabir            #+#    #+#             */
-/*   Updated: 2022/08/14 18:18:06 by azabir           ###   ########.fr       */
+/*   Updated: 2022/08/17 14:01:27 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	syntax_checker(t_cmd *cmd)
 
 	if (temp->id == 8 || temp->id == 11)
 	{
-		printf("minishell: syntax error near unexpected token `%s'\n", temp->cmd);
+		fprintf(stderr ,"minishell: syntax error near unexpected token `%s'\n", temp->cmd);
 		return(0);
 	}
 	while (temp->id != -1)
@@ -30,13 +30,13 @@ int	syntax_checker(t_cmd *cmd)
 		if ((temp->id != 0 && temp->id != 5 && temp->id != 9 && temp->id != 8 && temp->id != 6 && temp->id != 7 && temp->id != 14) && (temp->next->id != 0 && temp->next->id != 5 && temp->next->id != -1 && temp->next->id != 14))
 		{
 			write (1, "heee\n", 5);
-			printf("minishell: syntax error near unexpected token `%s'\n", temp->next->cmd);
+			fprintf(stderr,"minishell: syntax error near unexpected token `%s'\n", temp->next->cmd);
 			return (0);
 		}
 		if ((temp->id != 0 && temp->id != 5 && temp->id != 9 && temp->id != 6 && temp->id != 7 && temp->id != 14) && temp->next->id == -1)
 		{
 			write (1, "here\n", 5);
-			printf("minishell: syntax error near unexpected token `newline'\n");
+			fprintf(stderr, "minishell: syntax error near unexpected token `newline'\n");
 			return(0);
 		}
 		temp = temp->next;
