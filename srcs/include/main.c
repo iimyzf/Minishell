@@ -6,7 +6,7 @@
 /*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 09:46:02 by yagnaou           #+#    #+#             */
-/*   Updated: 2022/08/18 17:30:34 by azabir           ###   ########.fr       */
+/*   Updated: 2022/08/18 18:01:41 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -201,8 +201,6 @@ int main(int ac, char **av, char **env)
 		if (data.input[0])
 		{
 			//check_last(&data);
-			if (!ft_strcmp(data.input, "exit"))
-				break;
 			add_history(data.input);
 			ft_parce(&data);
 		}
