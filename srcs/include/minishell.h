@@ -6,7 +6,7 @@
 /*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 10:38:45 by azabir            #+#    #+#             */
-/*   Updated: 2022/08/14 18:16:43 by azabir           ###   ########.fr       */
+/*   Updated: 2022/08/18 17:39:13 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ typedef struct s_data
 	int				p;
 	char			*saved;
 	char			**exp;
+	int				exit_code;
 }	t_data;
 
 typedef struct s_parser
@@ -76,6 +77,7 @@ t_token	*lexer_advance_with_token(t_lexer *lexer, t_token *token, int count);
 t_token	*lexer_collect_env_string(t_lexer *lexer, t_data *data, int token);
 char	*lexer_get_current_char_as_string(t_lexer *lexer);
 char	*lexer_get_current_char_as_two_strings(t_lexer *lexer);
+int		ft_strncmp(const char *s1, const char *s2, size_t n);
 void	lexer_advance(t_lexer *lexer, int count);
 void	lexer_skip_white_spaces(t_lexer *lexer);
 void	free_all(t_lexer *lexer);
@@ -84,6 +86,7 @@ char	*check_env(t_data *data, char *cmd);
 t_cmd	*ft_lstnew(char *value, int id, char *saved);
 void	lstadd_back(t_cmd **cmd_list, t_cmd *cmd);
 void	lstfree(t_cmd *lst);
+void	child_sighand(int sig);
 char	*check_path(char	*cmd);
 char	**ft_split(char *s, char c);
 void	ft_execve(char **cmd, char **env, char *path, t_data *data);
@@ -92,19 +95,23 @@ void	heredoc(char *cmd, t_data *data, int is_last_here);
 int		is_last_heredoc(t_cmd	*cmd);
 char	*cmd_array_join(char *cmd_part);
 void	execution(char **lst);
-void	check_heredoc(t_data *data);
+int		check_heredoc(t_data *data);
 int		ft_pwd(void);
 int		cmd_parts_count(t_cmd *cmd);
 int		ft_echo(char **env);
 void	fill_data_list(t_data *data);
+int		ft_exit(t_data *data);
 int		ft_env(char	**arg);
+void	ft_cd(t_data *data, char *path);
 void	ft_export(char **path, t_data *data);
 void	ft_add_env(t_data *data, char **env);
 void	ft_strswap(char **str1, char **str2);
+void	ft_unset(t_data *data, char **str);
 char	**cpy_env(char **env);
 void	sort_this(char **tab);
 int		is_buildin(char *cmd);
 void	free_array(char **arr);
+int		return_index(char **env, char *str);
 int		check_dollar(char *cmd);
 char	*make_str(t_cmd *temp, int id);
 void	dollar(t_data *data, char **cmd, int id);

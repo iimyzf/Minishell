@@ -6,53 +6,49 @@
 /*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/17 15:24:16 by azabir            #+#    #+#             */
-/*   Updated: 2022/08/08 16:47:48 by azabir           ###   ########.fr       */
+/*   Updated: 2022/08/18 17:46:19 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-
-void ft_putchar(t_data *data, char *input)
+void	ft_putchar(t_data *data, char *input)
 {
 	int	i;
-	int	pid;
 
-	pid = fork();
 	i = 0;
-	if (pid == 0)
+	while (input[i])
 	{
-		while (input[i])
-		{
-			write(data->here_fd[1], &input[i], 1);
-			i++;
-		}
-		write(data->here_fd[1], "\n", 1);
-		exit(0);
+		write(data->here_fd[1], &input[i], 1);
+		i++;
 	}
+	write(data->here_fd[1], "\n", 1);
 }
 
-void	heredoc(char	*cmd, t_data *data, int	is_last_here)
+void	heredoc(char *cmd, t_data *data, int is_last_here)
 {
 	char	*input;
-	int		in;
+	int		pid;
 
-	in = STDIN_FILENO;
-	while (1)
+	pid = fork();
+	if (pid == 0)
 	{
-		input = readline("heredoc> ");
-		if (!ft_strcmp(cmd, input))
+		signal(SIGINT, child_sighand);
+		while (1)
 		{
-			if (is_last_here)
+			input = readline("heredoc> ");
+			if (!input)
+				exit(0);
+			if (!ft_strcmp(cmd, input))
+			{
 				close (data->here_fd[1]);
-			break;
+				exit(0);
+			}
+			else if (is_last_here)
+			{
+				close (data->here_fd[0]);
+				ft_putchar(data, input);
+			}
 		}
-		else if (is_last_here)
-		{
-			ft_putchar(data, input);
-			waitpid(-1, NULL, 0);
-		}
-		if (input)
-			free(input);
 	}
 }

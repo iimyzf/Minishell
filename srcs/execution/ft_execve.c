@@ -6,7 +6,7 @@
 /*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 11:34:29 by azabir            #+#    #+#             */
-/*   Updated: 2022/08/17 16:46:21 by azabir           ###   ########.fr       */
+/*   Updated: 2022/08/17 17:56:42 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ void	ft_execve(char **cmd, char **env, char *path, t_data *data)
 		ft_env(env);
 	else if (!ft_strcmp(cmd[0], "export"))
 		ft_export(&cmd[1], data);
+	else if (!ft_strcmp(cmd[0], "unset"))
+		ft_unset(data, cmd);
 	/*else if (is_builtin(cmd[0]) == 6)
 		ft_env(cmd, env);
 	else if (is_builtin(cmd[0]) == 7)

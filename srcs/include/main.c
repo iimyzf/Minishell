@@ -6,13 +6,12 @@
 /*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 09:46:02 by yagnaou           #+#    #+#             */
-/*   Updated: 2022/08/17 16:46:17 by azabir           ###   ########.fr       */
+/*   Updated: 2022/08/18 17:30:34 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-\
 void	process(char **cmd, char *path, t_data *data)
 {
 	pid_t	pid;
@@ -21,7 +20,6 @@ void	process(char **cmd, char *path, t_data *data)
 
 	if (pid == 0)
 	{
-		signal(SIGINT, SIG_IGN);
 		dup2(data->out, STDOUT_FILENO);
 		close(data->fd[0]);
 		close(data->fd[1]);
@@ -55,7 +53,8 @@ void	ft_parce(t_data *data)
 	temp = (data)->cmd_list;
 	if (!syntax_checker(temp))
 		return;
-	check_heredoc(data);
+	if (!check_heredoc(data))
+		return ;
 	temp = (data)->cmd_list;
 	data->in = 0;
 	data->out = 1;
@@ -144,6 +143,12 @@ void	ft_parce(t_data *data)
 				ft_env(data->env);
 			else if (!ft_strcmp(data->full_cmd[0], "export"))
 				ft_export(&data->full_cmd[1], data);
+			else if (!ft_strcmp(data->full_cmd[0], "unset"))
+					ft_unset(data, data->full_cmd);
+			else if (!ft_strcmp(data->full_cmd[0], "exit"))
+					ft_exit(data);
+			else if (!ft_strcmp(data->full_cmd[0], "cd"))
+					ft_cd(data, data->full_cmd[1]);
 			status1 = 1;
 		}
 		path = check_path(data->full_cmd[0]);
