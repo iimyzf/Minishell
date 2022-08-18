@@ -6,18 +6,11 @@
 /*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 15:41:34 by azabir            #+#    #+#             */
-/*   Updated: 2022/08/18 17:38:24 by azabir           ###   ########.fr       */
+/*   Updated: 2022/08/18 17:58:04 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	return_status(int status)
-{
-	if (WIFEXITED(status) && WEXITSTATUS(status) == 1)
-		return (0);
-	return (1);
-}
 
 int	exuc_heredoc(t_cmd	**temp, t_data *data)
 {
@@ -32,9 +25,8 @@ int	exuc_heredoc(t_cmd	**temp, t_data *data)
 	else
 		heredoc((*temp)->next->saved, data, is_last_heredoc(*temp));
 	waitpid(-1, &status, 0);
-	if (is_last_heredoc(*temp))
-		close (data->here_fd[1]);
-	return (return_status(status));
+	WIFEXITED(status);
+	return (WEXITSTATUS(status));
 }
 
 int	check_heredoc(t_data *data)
@@ -46,11 +38,12 @@ int	check_heredoc(t_data *data)
 	{
 		if (temp->id == 4)
 		{
-			if (!exuc_heredoc(&temp, data))
+			if (exuc_heredoc(&temp, data))
 				return (0);
 			if (is_last_heredoc(temp))
 			{
 				temp->in = dup (data->here_fd[0]);
+				close (data->here_fd[1]);
 				close (data->here_fd[0]);
 			}
 			temp = temp->next;
