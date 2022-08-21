@@ -6,7 +6,7 @@
 /*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 10:38:45 by azabir            #+#    #+#             */
-/*   Updated: 2022/08/18 17:39:13 by azabir           ###   ########.fr       */
+/*   Updated: 2022/08/21 12:43:49 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,10 +82,13 @@ void	lexer_advance(t_lexer *lexer, int count);
 void	lexer_skip_white_spaces(t_lexer *lexer);
 void	free_all(t_lexer *lexer);
 char	*ft_strjoin(char const *s1, char const *s2);
+char	*path_checker(char *cmd, char **env);
 char	*check_env(t_data *data, char *cmd);
 t_cmd	*ft_lstnew(char *value, int id, char *saved);
 void	lstadd_back(t_cmd **cmd_list, t_cmd *cmd);
 void	lstfree(t_cmd *lst);
+int		is_special(char c);
+int		unclosed_quotes(char	*input);
 void	child_sighand(int sig);
 char	*check_path(char	*cmd);
 char	**ft_split(char *s, char c);

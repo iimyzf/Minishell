@@ -6,7 +6,7 @@
 /*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 10:35:58 by azabir            #+#    #+#             */
-/*   Updated: 2022/08/09 15:35:30 by azabir           ###   ########.fr       */
+/*   Updated: 2022/08/21 11:47:39 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,24 +25,45 @@ char	*make_path(char *path, char *cmd)
 	return(NULL);
 }
 
-char	*check_path(char	*cmd)
+int is_dir(char *cmd)
 {
-	char	*path;
+	int	i;
+
+	i = 0;
+	while(cmd && cmd[i])
+	{
+		if (cmd[i] == '\\')
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+char	*path_checker(char *cmd, char **env)
+{
+	char	**complete_path;
+	char	*cmd_path;
+	char	*part_of_path;
+	int		i;
 	struct stat buf;
-	
-	if (path = make_path("/bin/", cmd), path)
-		return (path);
-	if (path = make_path("/usr/bin/", cmd), path)
-		return (path);
-	if (path = make_path("/usr/local/bin/", cmd), path)
-		return (path);
-	if (path = make_path("/sbin/", cmd), path)
-		return (path);
-	if (path = make_path("/usr/sbin", cmd), path)
-		return (path);
-	if (path = make_path("/usr/local/munki/", cmd), path)
-		return (path);
-	if (!stat(cmd, &buf))
-		return(ft_strjoin(cmd, ""));
-	return (NULL);
+
+	i = 0;
+	while (env[i] && strnstr(env[i], "PATH", 4) == 0)
+		i++;
+	if (env[i] == NULL)
+		return (NULL);
+	complete_path = ft_split(env[i] + 5, ':');
+	i = 0;
+	while (complete_path[i])
+	{
+		part_of_path = ft_strjoin(complete_path[i], "/");
+		cmd_path = ft_strjoin(part_of_path, cmd);
+		free(part_of_path);
+		if (access(cmd_path, F_OK) == 0)
+			return (cmd_path);
+		else if (is_dir(cmd) && !stat(cmd, &buf))
+			return(ft_strjoin(cmd, ""));
+		i++;
+	}
+	return (0);
 }

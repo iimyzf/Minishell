@@ -6,7 +6,7 @@
 /*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 09:46:02 by yagnaou           #+#    #+#             */
-/*   Updated: 2022/08/18 18:01:41 by azabir           ###   ########.fr       */
+/*   Updated: 2022/08/21 12:45:02 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ void	process(char **cmd, char *path, t_data *data)
 	{
 		close(data->fd[1]);
 		dup2(data->in, STDIN_FILENO);
-		close(data->fd[0]);
 	}
 }
 
@@ -89,6 +88,8 @@ void	ft_parce(t_data *data)
 				if(temp->id == 14)
 					temp = temp->next;
 				pid = open(temp->cmd, O_RDWR | O_CREAT | O_TRUNC, 0777);
+				if (pid < 0)
+					return ;
 				data->out = dup(pid);
 				status = 1;
 			}
@@ -98,6 +99,8 @@ void	ft_parce(t_data *data)
 				if(temp->id == 14)
 					temp = temp->next;
 				pid = open(temp->cmd, O_RDWR | O_CREAT | O_APPEND , 0777);
+				if (pid < 0)
+					return ;
 				data->out = dup(pid);
 				status = 1;
 			}
@@ -107,6 +110,8 @@ void	ft_parce(t_data *data)
 				if(temp->id == 14)
 					temp = temp->next;
 				pid = open(temp->cmd, O_RDONLY);
+				if (pid < 0)
+					return ;
 				dup2(pid, STDIN_FILENO);
 			}
 			else if ((temp->id == 0 || temp->id == 6 || temp->id == 9 || temp->id == 7))
@@ -151,7 +156,7 @@ void	ft_parce(t_data *data)
 					ft_cd(data, data->full_cmd[1]);
 			status1 = 1;
 		}
-		path = check_path(data->full_cmd[0]);
+		path = path_checker(data->full_cmd[0], data->env);
 		if (data->full_cmd[0] && !path && !is_buildin(data->full_cmd[0]))
 			printf("HA HA HA HA HA HA! d3iiiif !!\n");
 		if (temp && temp->id == -1 && status == 0)
@@ -198,7 +203,7 @@ int main(int ac, char **av, char **env)
 		data.input = readline(av[0]);
 		if (!data.input)
 			exit(0);
-		if (data.input[0])
+		if (data.input[0] && !unclosed_quotes(data.input))
 		{
 			//check_last(&data);
 			add_history(data.input);
@@ -215,14 +220,14 @@ int main(int ac, char **av, char **env)
 
 /*	
 	# $cmd
-	# signal should close heredoc
-	# path protect  -->doing
+	# path protect  --> doing
 	# echo "hello">"gg"
 	# remove split --> doing
 	# << << error
 	# complete isalnum
-	# unclosed qoutes protect
+	# unclosed qoutes protectf
 	# leaks handle
+	# permissions
 	# exit status
 	# empty cmd handle
 	# remove unused TOKENS
@@ -231,6 +236,7 @@ int main(int ac, char **av, char **env)
 	# errors handle
 	# remove forbiden funcs like calloc
 	# fix path checking (check from env)
+	# signal should close heredoc --> done
 	# $ sign protect --> done
 	# grep not woking --> done
 	# handel last pipewith no cmd --> done
