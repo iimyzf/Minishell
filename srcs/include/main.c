@@ -6,7 +6,7 @@
 /*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 09:46:02 by yagnaou           #+#    #+#             */
-/*   Updated: 2022/08/21 12:45:02 by azabir           ###   ########.fr       */
+/*   Updated: 2022/08/21 23:43:29 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	ft_parce(t_data *data)
 		data->full_cmd = calloc((cmd_parts_count(temp) + 1), sizeof(char *));
 		while (temp->id != -1 && (temp->id != 8))
 		{
-			//printf("cmd = %s >>>>>> id = %d\n", temp->cmd, temp->id);
+			fprintf(stderr ,"cmd = [%s] >>>>>> id = %d\n", temp->cmd, temp->id);
 			if (temp->id == 4)
 			{
 				if (temp->next->id == 14)
@@ -130,7 +130,7 @@ void	ft_parce(t_data *data)
 		i = 0;
 		if (temp->id == 8)
 		{
-			pipe(data->fd);
+			pipe(data->fd); 
 			if (status == 0)
 				data->out = data->fd[1];
 			data->in = data->fd[0];
