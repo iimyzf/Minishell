@@ -6,7 +6,7 @@
 /*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 16:28:33 by yagnaou           #+#    #+#             */
-/*   Updated: 2022/08/22 16:18:01 by azabir           ###   ########.fr       */
+/*   Updated: 2022/08/22 16:30:48 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,7 @@ t_token	*lexer_collect_dq_string(t_lexer *lexer, char c, t_data *data)
 	data->saved = value;
 	while (lexer->c != c && lexer->c != '\0' && lexer->c != '\n')
 	{
-		if (lexer->c == '$' && ft_isalnum(lexer->next_c))
+		if (lexer->c == '$' && (ft_isalnum(lexer->next_c) || lexer->next_c == '?'))
 			str = lexer_collect_env_string(lexer, data, TOKEN_DOLLAR)->value;
 		else
 		{

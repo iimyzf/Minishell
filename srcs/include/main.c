@@ -6,7 +6,7 @@
 /*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 09:46:02 by yagnaou           #+#    #+#             */
-/*   Updated: 2022/08/22 16:08:00 by azabir           ###   ########.fr       */
+/*   Updated: 2022/08/22 16:28:44 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,7 +191,6 @@ int main(int ac, char **av, char **env)
 {
 	t_data	data;
 
-	data.exit_code = 0;
 	if (ac != 1)
 		return (1);
 	av[0] = "\033[0;33m\e[1mminishell-1.0$ \033[0m";
