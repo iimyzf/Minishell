@@ -6,7 +6,7 @@
 /*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 09:46:02 by yagnaou           #+#    #+#             */
-/*   Updated: 2022/08/22 16:28:44 by azabir           ###   ########.fr       */
+/*   Updated: 2022/08/22 19:57:27 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ void	process(char **cmd, char *path, t_data *data)
 	{
 		close(data->fd[1]);
 		dup2(data->in, STDIN_FILENO);
+		close(data->fd[0]);
+		close(data->out);
 	}
 }
 
@@ -70,7 +72,7 @@ void	ft_parce(t_data *data)
 		data->full_cmd = calloc((cmd_parts_count(temp) + 1), sizeof(char *));
 		while (temp->id != -1 && (temp->id != 8))
 		{
-			fprintf(stderr ,"cmd = [%s] >>>>>> id = %d\n", temp->cmd, temp->id);
+			//fprintf(stderr ,"cmd = [%s] >>>>>> id = %d\n", temp->cmd, temp->id);
 			if (temp->id == 4)
 			{
 				if (temp->next->id == 14)
@@ -91,6 +93,7 @@ void	ft_parce(t_data *data)
 				if (pid < 0)
 					return ;
 				data->out = dup(pid);
+				close(pid);
 				status = 1;
 			}
 			else if(temp->id == 3)
@@ -102,6 +105,7 @@ void	ft_parce(t_data *data)
 				if (pid < 0)
 					return ;
 				data->out = dup(pid);
+				close(pid);
 				status = 1;
 			}
 			else if(temp->id == 1)
