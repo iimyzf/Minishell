@@ -6,7 +6,7 @@
 /*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 17:11:22 by azabir            #+#    #+#             */
-/*   Updated: 2022/08/14 17:39:30 by azabir           ###   ########.fr       */
+/*   Updated: 2022/08/22 16:26:36 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,15 @@ char	*check_env(t_data *data, char *cmd)
 {
 	int		i;
 	char	**env2;
+	char	*value;
 
 	i = 0;
+	value = NULL;
+	if (*cmd == '?')
+	{
+		value = ft_itoa(data->exit_code);
+		return (ft_strjoin(value, cmd + 1));
+	}
 	while (data->env[i])
 	{
 		env2 = ft_split(data->env[i], '=');
@@ -26,7 +33,7 @@ char	*check_env(t_data *data, char *cmd)
 		free_array(env2);
 		i++;
 	}
-	return (NULL);
+	return (value);
 }
 
 void	dollar(t_data *data, char **cmd, int id)

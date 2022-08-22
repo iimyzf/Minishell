@@ -6,7 +6,7 @@
 /*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 10:38:45 by azabir            #+#    #+#             */
-/*   Updated: 2022/08/21 16:50:06 by azabir           ###   ########.fr       */
+/*   Updated: 2022/08/22 15:59:28 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ typedef struct s_lexer
 }	t_lexer;
 
 t_lexer	*lexer_init(char *data);
+char	*ft_itoa(int r);
 t_token	*lexer_get_next_token(t_lexer *lexer, t_data *data);
 t_token	*lexer_collect_string(t_lexer *lexer, char c, int token);
 t_token	*lexer_collect_dq_string(t_lexer *lexer, char c, t_data *data);

@@ -6,7 +6,7 @@
 /*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 16:28:33 by yagnaou           #+#    #+#             */
-/*   Updated: 2022/08/21 16:50:57 by azabir           ###   ########.fr       */
+/*   Updated: 2022/08/22 16:18:01 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,10 +103,15 @@ t_token	*lexer_collect_env_string(t_lexer *lexer,t_data *data, int token)
 	data->saved = lexer_get_current_char_as_string(lexer);
 	lexer_advance(lexer, 1);
 	value = calloc(1, sizeof(char));
-	if (ft_isalnum(lexer->c))
+	if (lexer->c == '?')
+		data->saved = ft_strjoin(data->saved, "?");
+	if (ft_isalnum(lexer->c) || lexer->c == '?')
 	{
+		if (lexer->c == '?')
+			lexer_advance(lexer, 1);
 		data->saved = ft_strjoin(data->saved, lexer_collect_alnum(lexer)->value);		
 		str = check_env(data, data->saved + 1);
+		fprintf(stderr, "[%s]\n", data->saved + 1);
 		value = ft_strjoin2(value, str);
 	}
 	else
