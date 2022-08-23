@@ -6,7 +6,7 @@
 /*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/31 21:56:16 by azabir            #+#    #+#             */
-/*   Updated: 2022/08/14 18:11:02 by azabir           ###   ########.fr       */
+/*   Updated: 2022/08/23 20:00:29 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,15 @@ void	fill_list_from_env(t_data *data, char *value)
 	char	**arr;
 
 	arr = ft_split(value, ' ');
+	if (value == NULL)
+	{
+		lstadd_back(&(data)->cmd_list, ft_lstnew("", 9, data->saved));
+		lstadd_back(&(data)->cmd_list, ft_lstnew(" ", 14, data->saved));
+	}
 	while (*arr != NULL)
 	{
 		lstadd_back(&(data)->cmd_list, ft_lstnew(*arr, 9, data->saved));
-		lstadd_back(&(data)->cmd_list, ft_lstnew(" ", 14, data->saved));
+		lstadd_back(&(dat,.m	a)->cmd_list, ft_lstnew(" ", 14, data->saved));
 		arr++;
 	}
 }

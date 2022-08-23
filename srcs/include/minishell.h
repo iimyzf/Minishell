@@ -6,7 +6,7 @@
 /*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 10:38:45 by azabir            #+#    #+#             */
-/*   Updated: 2022/08/22 15:59:28 by azabir           ###   ########.fr       */
+/*   Updated: 2022/08/23 19:30:40 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ typedef struct s_data
 	char			*saved;
 	char			**exp;
 	int				exit_code;
+	char			*pwd;
 }	t_data;
 
 typedef struct s_parser
@@ -67,6 +68,8 @@ typedef struct s_lexer
 	unsigned int	index;
 	char			*data;
 }	t_lexer;
+
+t_data g_data;
 
 t_lexer	*lexer_init(char *data);
 char	*ft_itoa(int r);
@@ -117,7 +120,7 @@ void	sort_this(char **tab);
 int		is_buildin(char *cmd);
 void	free_array(char **arr);
 int		return_index(char **env, char *str);
-int		check_dollar(char *cmd);
+int		check_char(char *cmd, char c);
 char	*make_str(t_cmd *temp, int id);
 void	dollar(t_data *data, char **cmd, int id);
 int		syntax_checker(t_cmd *cmd);

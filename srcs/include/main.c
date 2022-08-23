@@ -6,7 +6,7 @@
 /*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 09:46:02 by yagnaou           #+#    #+#             */
-/*   Updated: 2022/08/22 20:02:30 by azabir           ###   ########.fr       */
+/*   Updated: 2022/08/23 20:01:29 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	ft_parce(t_data *data)
 		data->full_cmd = calloc((cmd_parts_count(temp) + 1), sizeof(char *));
 		while (temp->id != -1 && (temp->id != 8))
 		{
-			//fprintf(stderr ,"cmd = [%s] >>>>>> id = %d\n", temp->cmd, temp->id);
+			fprintf(stderr ,"cmd = [%s] >>>>>> id = %d\n", temp->cmd, temp->id);
 			if (temp->id == 4)
 			{
 				if (temp->next->id == 14)
@@ -163,7 +163,10 @@ void	ft_parce(t_data *data)
 		}
 		path = path_checker(data->full_cmd[0], data->env);
 		if (data->full_cmd[0] && !path && !is_buildin(data->full_cmd[0]))
+		{
 			printf("HA HA HA HA HA HA! d3iiiif !!\n");
+			data->exit_code = 127;
+		}
 		if (temp && temp->id == -1 && status == 0)
 		{
 			pipe(data->fd);
@@ -183,9 +186,11 @@ void	ft_parce(t_data *data)
 	temp1 = data->cmd_list;
 	while(open_proce > 0)
 	{
-		waitpid(-1, NULL, 0);
+		waitpid(-1, &j, 0);
 		open_proce --;
 	}
+	WIFEXITED(j);
+	data->exit_code = (WEXITSTATUS(j));
 		dup2(saved_out, STDOUT_FILENO);
 		dup2(saved_in, STDIN_FILENO);
 		close (saved_out);
@@ -194,27 +199,26 @@ void	ft_parce(t_data *data)
 
 int main(int ac, char **av, char **env)
 {
-	t_data	data;
 
 	if (ac != 1)
 		return (1);
 	av[0] = "\033[0;33m\e[1mminishell-1.0$ \033[0m";
-	data.env = env;
-	data.in = 1;
+	g_data.env = env;
+	g_data.in = 1;
 	signal(SIGINT, sighandl);
 	signal(SIGQUIT, sighandl);
 	while (1)
 	{
-		data.input = readline(av[0]);
-		if (!data.input)
+		g_data.input = readline(av[0]);
+		if (!g_data.input)
 			exit(0);
-		if (data.input[0] && !unclosed_quotes(data.input))
+		if (g_data.input[0] && !unclosed_quotes(g_data.input))
 		{
-			//check_last(&data);
-			add_history(data.input);
-			ft_parce(&data);
+			//check_last(&g_data);
+			add_history(g_data.input);
+			ft_parce(&g_data);
 		}
-		free (data.input);
+		free (g_data.input);
 	}
 	return (0);
 }

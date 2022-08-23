@@ -6,7 +6,7 @@
 /*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 16:28:33 by yagnaou           #+#    #+#             */
-/*   Updated: 2022/08/22 16:30:48 by azabir           ###   ########.fr       */
+/*   Updated: 2022/08/23 20:01:23 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ t_token	*lexer_collect_env_string(t_lexer *lexer,t_data *data, int token)
 		value = ft_strjoin2(value, str);
 	}
 	else
-		value = data->saved;
+		value = data->saved + 1;
 	return token_init(token, value);
 }
 
