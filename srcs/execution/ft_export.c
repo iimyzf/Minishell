@@ -6,7 +6,7 @@
 /*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 19:21:07 by azabir            #+#    #+#             */
-/*   Updated: 2022/08/11 19:01:53 by azabir           ###   ########.fr       */
+/*   Updated: 2022/08/24 19:09:46 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,10 +103,7 @@ void	ft_export(char **path, t_data *data)
 		else
 		{
 			if (!check_if_exist(data, path[i]))
-			{
-				printf("-------------------------------------->\n");
 				data->env = add_to_list(data, path[i]);
-			}
 		}
 		i++;
 }
@@ -117,17 +114,3 @@ void	ft_export(char **path, t_data *data)
 	// 	i++;
 	// }
 }
-
-// int main(int ac, char **av, char **env)
-// {
-// 	t_data	*data;
-// 	(void)ac;
-// 	(void)av;
-
-// 	data = malloc(sizeof(t_data));
-// 	data->env = cpy_env(env);
-// 	av++;
-// 	ft_export(av, data);
-// 	ft_export(av, data);
-// 	return (0);
-// }

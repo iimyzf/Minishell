@@ -1,4 +1,0 @@
-	@gcc $(CFLAGS) $(SRCS) -o $(NAME)
-	@rm -rf $(OBJS)
-	@rm -rf $(OBJS)
-	@rm -rf $(NAME)

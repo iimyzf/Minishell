@@ -6,38 +6,66 @@
 /*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/31 22:04:27 by azabir            #+#    #+#             */
-/*   Updated: 2022/08/17 14:01:27 by azabir           ###   ########.fr       */
+/*   Updated: 2022/08/24 11:59:41 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	is_del(int id)
+{
+	if (id >= 1 && id <= 4)
+		return (1);
+	return (0);
+}
+
+int	check_next(t_cmd **temp, int id)
+{
+	if ((*temp)->id == 14)
+		*temp = (*temp)->next;
+	if (id == 8 || is_del(id))
+	{
+		if ((*temp)->id == -1)
+		{
+			fprintf(stderr ,"minishell: syntax error near unexpected token `newline\n");
+			return (0);
+		}
+		if ((*temp)->id == 8)
+		{
+			fprintf(stderr ,"minishell: syntax error near unexpected token `%s'\n", (*temp)->cmd);
+			return (0);
+		}
+	}
+	if (is_del(id))
+	{
+		if ((*temp)->id == 8 || is_del((*temp)->id))
+		{
+			fprintf(stderr ,"minishell: syntax error near unexpected token `%s'\n", (*temp)->cmd);
+			return (0);
+		}
+	}
+	return (1);
+}
 
 int	syntax_checker(t_cmd *cmd)
 {
 	t_cmd	*temp;
 	
 	temp = cmd;
-
-	if (temp->id == 8 || temp->id == 11)
+	if (temp->id == 14)
+		temp = temp->next;
+	if (temp->id == 8)
 	{
 		fprintf(stderr ,"minishell: syntax error near unexpected token `%s'\n", temp->cmd);
-		return(0);
+		g_data.exit_code = 258;
+		return (0);
 	}
 	while (temp->id != -1)
 	{
-		/*if (temp->id == 14)
-			temp = temp->next;*/
-		if ((temp->id != 0 && temp->id != 5 && temp->id != 9 && temp->id != 8 && temp->id != 6 && temp->id != 7 && temp->id != 14) && (temp->next->id != 0 && temp->next->id != 5 && temp->next->id != -1 && temp->next->id != 14))
+		if ((is_del(temp->id) || temp->id == 8) && !check_next(&(temp->next), temp->id))
 		{
-			write (1, "heee\n", 5);
-			fprintf(stderr,"minishell: syntax error near unexpected token `%s'\n", temp->next->cmd);
-			return (0);
-		}
-		if ((temp->id != 0 && temp->id != 5 && temp->id != 9 && temp->id != 6 && temp->id != 7 && temp->id != 14) && temp->next->id == -1)
-		{
-			write (1, "here\n", 5);
-			fprintf(stderr, "minishell: syntax error near unexpected token `newline'\n");
-			return(0);
+				g_data.exit_code = 258;
+				return (0);
 		}
 		temp = temp->next;
 	}

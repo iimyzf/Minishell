@@ -6,7 +6,7 @@
 /*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 11:34:29 by azabir            #+#    #+#             */
-/*   Updated: 2022/08/17 17:56:42 by azabir           ###   ########.fr       */
+/*   Updated: 2022/08/24 18:54:37 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,30 +34,22 @@
 
 void	ft_execve(char **cmd, char **env, char *path, t_data *data)
 {
-	char	**tab;
-	tab = env;
-	(void) path;
-	/* else if (is_builtin(cmd[0]) == 2)
-		ft_cd(cmd, env);*/
-	if (!ft_strcmp(cmd[0], "pwd"))
+	if (!ft_strcmp(cmd[0], "pwd") || !ft_strcmp(cmd[0], "PWD"))
 		ft_pwd();
-	else if (!ft_strcmp(cmd[0], "echo"))
+	else if (!ft_strcmp(cmd[0], "echo") || !ft_strcmp(cmd[0], "ECHO"))
 		ft_echo(cmd);
-	else if (!ft_strcmp(cmd[0], "env") && cmd[1] == NULL)
+	else if ((!ft_strcmp(cmd[0], "env") || !ft_strcmp(cmd[0], "ENV")) && cmd[1] == NULL)
 		ft_env(env);
-	else if (!ft_strcmp(cmd[0], "export"))
+	else if (!ft_strcmp(cmd[0], "export") || !ft_strcmp(cmd[0], "EXPORT"))
 		ft_export(&cmd[1], data);
-	else if (!ft_strcmp(cmd[0], "unset"))
-		ft_unset(data, cmd);
-	/*else if (is_builtin(cmd[0]) == 6)
-		ft_env(cmd, env);
-	else if (is_builtin(cmd[0]) == 7)
-		ft_exit(cmd, env);*/
-	/*if (is_builtin(cmd[0]) == 8)
-		heredoc(cmd[1]);*/
+	else if (!ft_strcmp(cmd[0], "unset") || !ft_strcmp(cmd[0], "UNSET"))
+		ft_unset(data, &cmd[1]);
+	else if (!ft_strcmp(cmd[0], "exit") || !ft_strcmp(cmd[0], "EXIT"))
+		ft_exit(data);
+	else if (!ft_strcmp(cmd[0], "cd") || !ft_strcmp(cmd[0], "CD"))
+		ft_cd(data, cmd[1]);
 	else
 		execve(path, cmd, env);
-	exit(0);
 }
 
 /*void	execution(char **lst)

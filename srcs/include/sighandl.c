@@ -6,7 +6,7 @@
 /*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 01:36:45 by azabir            #+#    #+#             */
-/*   Updated: 2022/08/23 15:01:35 by azabir           ###   ########.fr       */
+/*   Updated: 2022/08/24 19:04:28 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	sighandl(int sig)
 {
 	if (sig == SIGINT)
 	{
-		fprintf(stderr, "from main %d\n", getpid());
+		//fprintf(stderr, "from main %d\n", getpid());
 		write(1, "\n", 1);
 		rl_replace_line("", 0);
 		rl_on_new_line();
@@ -27,5 +27,5 @@ void	sighandl(int sig)
 		rl_replace_line("", 0);
 		rl_on_new_line();
 		rl_redisplay();
-	}	
+	}
 }

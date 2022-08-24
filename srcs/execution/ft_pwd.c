@@ -6,7 +6,7 @@
 /*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 19:20:57 by azabir            #+#    #+#             */
-/*   Updated: 2022/08/23 18:39:00 by azabir           ###   ########.fr       */
+/*   Updated: 2022/08/24 18:55:51 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,10 @@
 int	ft_pwd(void)
 {
 	char	*path;
-	char	*buf;
 
-	buf = NULL;
-	path = NULL;
-	while (path == NULL) {
-		path = getcwd(buf, 1000);
-	}
+	path = getcwd(NULL, 0);
+	if (path == NULL)
+		printf("THIS SHOULD BE THE OLD PWD, OR THE PATH\n");
 	printf("%s\n", path);
 	return(0);
 }

@@ -6,7 +6,7 @@
 /*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/17 15:24:16 by azabir            #+#    #+#             */
-/*   Updated: 2022/08/23 18:27:22 by azabir           ###   ########.fr       */
+/*   Updated: 2022/08/24 14:02:49 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void	heredoc(char *cmd, t_data *data, int is_last_here)
 	pid = fork();
 	if (pid == 0)
 	{
+		fprintf(stderr, "cmd = [%s]\n", cmd);
 		signal(SIGINT, child_sighand);
 		while (1)
 		{

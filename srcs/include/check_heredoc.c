@@ -6,7 +6,7 @@
 /*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 15:41:34 by azabir            #+#    #+#             */
-/*   Updated: 2022/08/23 18:27:18 by azabir           ###   ########.fr       */
+/*   Updated: 2022/08/24 18:26:56 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,16 @@ int	exuc_heredoc(t_cmd	**temp, t_data *data)
 {
 	int		status;
 
+	//expand = check_char((*temp)->next->cmd);
 	if (is_last_heredoc(*temp))
 		pipe(data->here_fd);
 	if ((*temp)->next->id == 14)
 		*temp = (*temp)->next;
+	if ((*temp)->next->id == -1)
+	{
+		g_data.exit_code = 258;
+		return(258);
+	}
 	if ((*temp)->next->id == 9)
 		heredoc((*temp)->next->saved, data, is_last_heredoc(*temp));
 	else
@@ -32,10 +38,11 @@ int	exuc_heredoc(t_cmd	**temp, t_data *data)
 int	check_heredoc(t_data *data)
 {
 	t_cmd	*temp;
-
+	
 	temp = data->cmd_list;
 	while (temp && temp->id != -1)
 	{
+		fprintf(stderr ,"from her: cmd = [%s] >>>>>> id = %d\n", temp->cmd, temp->id);
 		if (temp->id == 4)
 		{
 			if (exuc_heredoc(&temp, data))

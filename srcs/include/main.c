@@ -6,7 +6,7 @@
 /*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 09:46:02 by yagnaou           #+#    #+#             */
-/*   Updated: 2022/08/23 20:01:29 by azabir           ###   ########.fr       */
+/*   Updated: 2022/08/24 18:34:42 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,10 @@ void	ft_parce(t_data *data)
 	fill_data_list(data);
 	temp = (data)->cmd_list;
 	if (!syntax_checker(temp))
-		return;
+	{
+		//check_heredoc(data);
+		return ;
+	}
 	if (!check_heredoc(data))
 		return ;
 	temp = (data)->cmd_list;
@@ -115,7 +118,12 @@ void	ft_parce(t_data *data)
 					temp = temp->next;
 				pid = open(temp->cmd, O_RDONLY);
 				if (pid < 0)
-					return ;
+				{
+					fprintf(stderr, "minishell: %s: No such file or directory\n", temp->cmd);
+					g_data.exit_code = 1;
+					temp = temp->next;
+					break;
+				}
 				dup2(pid, STDIN_FILENO);
 				close (pid);
 			}
@@ -228,23 +236,26 @@ int main(int ac, char **av, char **env)
 /*  TO DO */
 
 /*	
-	# $cmd
-	# path protect  --> doing
-	# echo "hello">"gg"
-	# remove split --> doing
-	# << << error
-	# complete isalnum
-	# unclosed qoutes protectf
+	# << ok << 
 	# leaks handle
 	# permissions
 	# exit status
-	# empty cmd handle
-	# remove unused TOKENS
-	# handel dollar sign in lexer
+	# cat<<$USER"" (expand in heredoc)
 	# memory protections
 	# errors handle
-	# remove forbiden funcs like calloc
-	# fix path checking (check from env)
+	# readline + CTRL-C
+	# remove forbiden funcs like calloc and fprintf
+	# unclosed qoutes protect --> done
+	# remove unused TOKENS --> done
+	# empty cmd handle --> done
+	# complete isalnum --> done
+	# handel dollar sign in lexer --> done
+	# fix path checking (check from env) --> done
+	# $cmd --> done
+	# path protect  --> done
+	# echo "hello">"gg" --> done
+	# remove split --> done
+	# << << error  --> done
 	# signal should close heredoc --> done
 	# $ sign protect --> done
 	# grep not woking --> done

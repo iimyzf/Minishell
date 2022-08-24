@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yagnaou <yagnaou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/22 12:14:54 by yagnaou           #+#    #+#             */
-/*   Updated: 2022/07/28 17:46:01 by yagnaou          ###   ########.fr       */
+/*   Updated: 2022/08/24 19:10:28 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,9 @@ char	**cpy_env(char **env)
 
 void	sort_this(char **tab)
 {
-	int	i;
-	int	j;
+	int		i;
+	int		j;
+	char	**tmp;
 
 	i = 0;
 	while (tab[i])
@@ -61,7 +62,8 @@ void	sort_this(char **tab)
 	i = 0;
 	while (tab[i])
 	{
-		printf("declare -x %s\n", tab[i]);
+		tmp = ft_split(tab[i], '=');
+		printf("declare -x %s=\"%s\"\n", tmp[0], tmp[1]);
 		i++;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 19:20:49 by azabir            #+#    #+#             */
-/*   Updated: 2022/08/17 18:03:26 by azabir           ###   ########.fr       */
+/*   Updated: 2022/08/24 18:57:53 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,18 @@ void	set_old_pwd(t_data *data)
 	char	*old_pwd;
 	char	*tmp;
 	int		index;
+	char	**tmp2;
 
 	old_pwd = getcwd(NULL, 0);
 	index = return_index(data->env, "OLDPWD");
+	if (index == -1)
+	{
+		tmp2 = malloc(sizeof(char *) * 2);
+		tmp2[0] = "OLDPWD=";
+		tmp2[1] = NULL;
+		ft_export(tmp2, data);
+		index = return_index(data->env, "OLDPWD");
+	}
 	tmp = ft_strjoin("OLDPWD=", old_pwd);
 	//free(old_pwd);
 	data->env[index] = ft_strdup(tmp);
@@ -31,9 +40,18 @@ void	set_new_pwd(t_data *data)
 	char	*new_pwd;
 	char	*tmp;
 	int		index;
+	char	**tmp2;
 
 	new_pwd = getcwd(NULL, 0);
 	index = return_index(data->env, "PWD");
+	if (index == -1)
+	{
+		tmp2 = malloc(sizeof(char *) * 2);
+		tmp2[0] = "PWD=";
+		tmp2[1] = NULL;
+		ft_export(tmp2, data);
+		index = return_index(data->env, "PWD");
+	}
 	tmp = ft_strjoin("PWD=", new_pwd);
 	//free(new_pwd);
 	data->env[index] = ft_strdup(tmp);
