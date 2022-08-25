@@ -6,7 +6,7 @@
 /*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 09:46:02 by yagnaou           #+#    #+#             */
-/*   Updated: 2022/08/24 18:34:42 by azabir           ###   ########.fr       */
+/*   Updated: 2022/08/25 22:06:01 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ void	process(char **cmd, char *path, t_data *data)
 		dup2(data->out, STDOUT_FILENO);
 		close(data->fd[0]);
 		close(data->fd[1]);
-		ft_execve(cmd, data->env, path, data);	
+		ft_execve(cmd, data->env, path, data);
+		exit(0);
 	}
 	else
 	{
@@ -45,8 +46,6 @@ void	ft_parce(t_data *data)
 	int		pid;
 	int		status1;
 	int		open_proce;
-	int		saved_out;
-	int		saved_in;
 	int		j;
 
 	tmp = "";
@@ -64,8 +63,8 @@ void	ft_parce(t_data *data)
 	data->out = 1;
 	open_proce = 0;
 	status1 = 0;
-	saved_out = dup(STDOUT_FILENO);
-	saved_in = dup(STDIN_FILENO);
+	data->saved_out = dup(STDOUT_FILENO);
+	data->saved_in = dup(STDIN_FILENO);
 	while (temp && (temp->id != -1))
 	{
 		i = 0;
@@ -133,6 +132,8 @@ void	ft_parce(t_data *data)
 				{
 					data->full_cmd[j] = ft_strjoin(data->full_cmd[j], temp->cmd);
 					temp = temp->next;
+					if (temp->id == 9)
+						j++;
 				}
 				j++;
 			}
@@ -175,6 +176,7 @@ void	ft_parce(t_data *data)
 			printf("HA HA HA HA HA HA! d3iiiif !!\n");
 			data->exit_code = 127;
 		}
+	
 		if (temp && temp->id == -1 && status == 0)
 		{
 			pipe(data->fd);
@@ -189,6 +191,7 @@ void	ft_parce(t_data *data)
 		}
 		free(path);
 		free_array(data->full_cmd);
+		
 	}
 	t_cmd	*temp1;
 	temp1 = data->cmd_list;
@@ -199,10 +202,10 @@ void	ft_parce(t_data *data)
 	}
 	WIFEXITED(j);
 	data->exit_code = (WEXITSTATUS(j));
-		dup2(saved_out, STDOUT_FILENO);
-		dup2(saved_in, STDIN_FILENO);
-		close (saved_out);
-		close (saved_in);
+	dup2(data->saved_out, STDOUT_FILENO);
+	dup2(data->saved_in, STDIN_FILENO);
+	close (data->saved_out);
+	close (data->saved_in);
 }
 
 int main(int ac, char **av, char **env)

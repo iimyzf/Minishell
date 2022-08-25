@@ -6,7 +6,7 @@
 /*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 10:38:45 by azabir            #+#    #+#             */
-/*   Updated: 2022/08/23 19:30:40 by azabir           ###   ########.fr       */
+/*   Updated: 2022/08/25 21:53:07 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ typedef struct s_data
 	char			*saved;
 	char			**exp;
 	int				exit_code;
+	int				saved_out;
+	int				saved_in;
 	char			*pwd;
 }	t_data;
 
