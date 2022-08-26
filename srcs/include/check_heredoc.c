@@ -6,15 +6,34 @@
 /*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 15:41:34 by azabir            #+#    #+#             */
-/*   Updated: 2022/08/25 21:31:14 by azabir           ###   ########.fr       */
+/*   Updated: 2022/08/26 17:38:06 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+char	*del_maker(t_cmd *list, int *is_expand)
+{
+	t_cmd	*temp;
+	char	*del;
+
+	temp = list;
+	del = NULL;
+	*is_expand = 0;
+	while (!(temp->id >= 1 && temp->id <= 4) && temp->id != -1 && temp->id != 14)
+	{
+		if (temp->id == 6)
+			*is_expand = 1;
+		del = ft_strjoin(del, temp->saved);
+		temp = temp->next;
+	}
+	return(del);
+}
+
 int	exuc_heredoc(t_cmd	**temp, t_data *data)
 {
 	int		status;
+	int		exp;
 
 	//expand = check_char((*temp)->next->cmd);
 	if (is_last_heredoc(*temp))
@@ -26,10 +45,7 @@ int	exuc_heredoc(t_cmd	**temp, t_data *data)
 		g_data.exit_code = 258;
 		return(258);
 	}
-	if ((*temp)->next->id == 9)
-		heredoc((*temp)->next->saved, data, is_last_heredoc(*temp));
-	else
-		heredoc((*temp)->next->cmd, data, is_last_heredoc(*temp));
+	heredoc(del_maker((*temp)->next, &exp), data, exp, is_last_heredoc(*temp));
 	waitpid(-1, &status, 0);
 	WIFEXITED(status);
 	return (WEXITSTATUS(status));

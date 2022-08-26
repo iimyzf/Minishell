@@ -6,7 +6,7 @@
 /*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/31 21:56:16 by azabir            #+#    #+#             */
-/*   Updated: 2022/08/25 21:37:03 by azabir           ###   ########.fr       */
+/*   Updated: 2022/08/26 17:28:21 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,13 @@ void	fill_list_from_env(t_data *data, char *value)
 
 	arr = ft_split(value, ' ');
 	if (value == NULL)
-	{
 		lstadd_back(&(data)->cmd_list, ft_lstnew("", 9, data->saved));
-		//lstadd_back(&(data)->cmd_list, ft_lstnew(" ", 14, data->saved));
-	}
 	while (*arr != NULL)
 	{
 		lstadd_back(&(data)->cmd_list, ft_lstnew(*arr, 9, data->saved));
-		//lstadd_back(&(data)->cmd_list, ft_lstnew(" ", 14, data->saved));
 		arr++;
+		if (*arr != NULL)
+			lstadd_back(&(data)->cmd_list, ft_lstnew(" ", 14, data->saved));
 	}
 }
 
@@ -46,6 +44,7 @@ void	fill_data_list(t_data *data)
 			lstadd_back(&(data)->cmd_list, ft_lstnew(token->value, token->type, \
 						data->saved));
 		free(token);
+		data->saved = NULL;
 		token = lexer_get_next_token(lexer, data);
 	}
 	lstadd_back(&(data)->cmd_list, ft_lstnew("", -1, data->saved));

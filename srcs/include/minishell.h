@@ -6,7 +6,7 @@
 /*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 10:38:45 by azabir            #+#    #+#             */
-/*   Updated: 2022/08/25 21:53:07 by azabir           ###   ########.fr       */
+/*   Updated: 2022/08/25 22:27:07 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ char	*check_path(char	*cmd);
 char	**ft_split(char *s, char c);
 void	ft_execve(char **cmd, char **env, char *path, t_data *data);
 char	*ft_strjoin2(char *s1, char *s2);
-void	heredoc(char *cmd, t_data *data, int is_last_here);
+void	heredoc(char *cmd, t_data *data, int exp, int is_last_here);
 int		is_last_heredoc(t_cmd	*cmd);
 char	*cmd_array_join(char *cmd_part);
 void	execution(char **lst);

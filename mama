@@ -1,8 +1,1 @@
-	@echo Compiling...
-	@gcc $(CFLAGS) $(SRCS) -o $(NAME)
-	@echo "Done!"
-	@rm -rf $(OBJS)
-	@echo "Clean"
-	@rm -rf $(OBJS)
-	@rm -rf $(NAME)
-	@echo "Full Clean"
+hi

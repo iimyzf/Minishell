@@ -6,7 +6,7 @@
 /*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 09:46:02 by yagnaou           #+#    #+#             */
-/*   Updated: 2022/08/25 22:06:01 by azabir           ###   ########.fr       */
+/*   Updated: 2022/08/26 17:39:02 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,6 @@ void	ft_parce(t_data *data)
 		data->full_cmd = calloc((cmd_parts_count(temp) + 1), sizeof(char *));
 		while (temp->id != -1 && (temp->id != 8))
 		{
-			fprintf(stderr ,"cmd = [%s] >>>>>> id = %d\n", temp->cmd, temp->id);
 			if (temp->id == 4)
 			{
 				if (temp->next->id == 14)
@@ -128,12 +127,12 @@ void	ft_parce(t_data *data)
 			}
 			else if ((temp->id == 0 || temp->id == 6 || temp->id == 9 || temp->id == 7))
 			{
-				while (temp->id == 0 || temp->id == 6 || temp->id == 9 || temp->id == 7)
+				write (2, "here\n", 5);
+				while ((temp->id == 0 || temp->id == 6 || temp->id == 9 || temp->id == 7))
 				{
+					fprintf(stderr ,"cmd = [%s] >>>>>> id = %d\n", temp->cmd, temp->id);
 					data->full_cmd[j] = ft_strjoin(data->full_cmd[j], temp->cmd);
 					temp = temp->next;
-					if (temp->id == 9)
-						j++;
 				}
 				j++;
 			}
@@ -144,7 +143,7 @@ void	ft_parce(t_data *data)
 		i = 0;
 		if (temp->id == 8)
 		{
-			pipe(data->fd); 
+			pipe(data->fd);
 			if (status == 0)
 				data->out = data->fd[1];
 			data->in = data->fd[0];
@@ -177,7 +176,7 @@ void	ft_parce(t_data *data)
 			data->exit_code = 127;
 		}
 	
-		if (temp && temp->id == -1 && status == 0)
+		if (temp && temp->id == -1)
 		{
 			pipe(data->fd);
 			if (status == 0)
@@ -248,6 +247,7 @@ int main(int ac, char **av, char **env)
 	# errors handle
 	# readline + CTRL-C
 	# remove forbiden funcs like calloc and fprintf
+	#  echo $USER$USER$USER
 	# unclosed qoutes protect --> done
 	# remove unused TOKENS --> done
 	# empty cmd handle --> done
