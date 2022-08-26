@@ -6,22 +6,57 @@
 /*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/17 15:24:16 by azabir            #+#    #+#             */
-/*   Updated: 2022/08/26 17:33:52 by azabir           ###   ########.fr       */
+/*   Updated: 2022/08/26 23:03:12 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
+char	*make_alnume(char *str, int	*i)
+{
+	char	*cmd;
+	int		j;
+	
+	j = *i;
+	while (str[j] && ft_isalnum(str[j]))
+		j++;
+	cmd = malloc(sizeof(char) * (j - (*i) + 1));
+	j = 0;
+	while (str[*i] && ft_isalnum(str[*i]))
+	{
+		cmd[j] = str[*i];
+		*i += 1;
+		j++;
+	}
+	cmd[j] = 0;
+	//*i -= 1;
+	return (cmd);
+}
+
 void	ft_putchar(t_data *data, char *input, int exp)
 {
-	int	i;
+	int		i;
+	char	*cmd;
+	char	*str;
 
 	i = 0;
-	(void) exp;
 	while (input[i])
 	{
+		if (input[i] == '$' && ft_isalnum(input[i + 1]) && exp)
+		{
+			i++;
+			str = make_alnume(input, &i);
+			cmd = check_env(data, str);
+			free(str);
+			while(cmd && *cmd)
+			{
+				write(data->here_fd[1], &(*cmd), 1);
+				cmd++;
+			}
+		}
 		write(data->here_fd[1], &input[i], 1);
-		i++;
+		if (input[i])
+			i++;
 	}
 	write(data->here_fd[1], "\n", 1);
 }

@@ -6,7 +6,7 @@
 /*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 09:46:02 by yagnaou           #+#    #+#             */
-/*   Updated: 2022/08/26 21:53:39 by azabir           ###   ########.fr       */
+/*   Updated: 2022/08/26 23:04:06 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -251,11 +251,11 @@ int main(int ac, char **av, char **env)
 	# leaks handle
 	# permissions
 	# exit status
-	# cat<<$USER"" (expand in heredoc) --> doing
 	# memory protections
 	# errors handle
 	# readline + CTRL-C
 	# remove forbiden funcs like calloc and fprintf
+	# cat<<$USER"" (expand in heredoc) --> done
 	#  echo $USER$USER$USER --> done
 	# unclosed qoutes protect --> done
 	# remove unused TOKENS --> done
