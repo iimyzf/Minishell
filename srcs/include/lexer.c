@@ -6,7 +6,7 @@
 /*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 16:28:33 by yagnaou           #+#    #+#             */
-/*   Updated: 2022/08/26 15:15:39 by azabir           ###   ########.fr       */
+/*   Updated: 2022/08/26 21:18:36 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ t_token	*lexer_collect_env_string(t_lexer *lexer,t_data *data, int token)
 		value = ft_strjoin2(value, str);
 	}
 	else
-		value = data->saved + 1;
+		value = data->saved;
 	return token_init(token, value);
 }
 
@@ -156,21 +156,20 @@ t_token	*lexer_collect_id(t_lexer *lexer, t_data *data)
 	char	*value;
 	char	*tmp;
 	char	*str;
-
+	(void)	data;
 	value = calloc(1, sizeof(char));
 	value[0] = '\0';
 	while (lexer->c && !is_special(lexer->c))
 	{
-		if (lexer->c == '\'')
+		/*if (lexer->c == '\'')
 			str = lexer_collect_string(lexer, lexer->c, TOKEN_SQUOTES)->value;
 		else if (lexer->c == '"')
 			str = lexer_collect_dq_string(lexer, lexer->c, data)->value;
 		else if (lexer->c == '$')
 			str = lexer_collect_env_string(lexer, data, TOKEN_DOLLAR)->value;
-		else
-			str = lexer_get_current_char_as_string(lexer);
-		if (ft_isalnum(lexer->c))
-			str = lexer_get_current_char_as_string(lexer);
+		else*/
+			//str = lexer_get_current_char_as_string(lexer);
+		str = lexer_get_current_char_as_string(lexer);
 		tmp = ft_strjoin(value, str);
 		free(value);
 		free(str);

@@ -6,7 +6,7 @@
 /*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 09:46:02 by yagnaou           #+#    #+#             */
-/*   Updated: 2022/08/26 17:39:02 by azabir           ###   ########.fr       */
+/*   Updated: 2022/08/26 21:51:26 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,11 @@ void	ft_parce(t_data *data)
 					close (temp->in);
 				}
 				temp = temp->next;
+				while (!(temp->id >= 1 && temp->id <= 4) && temp->id != -1 && temp->id != 14)
+				{
+					fprintf(stderr, "del =  %s\n", temp->cmd);
+					temp = temp->next;
+				}
 			}
 			else if(temp->id == 2)
 			{
@@ -172,21 +177,23 @@ void	ft_parce(t_data *data)
 		path = path_checker(data->full_cmd[0], data->env);
 		if (data->full_cmd[0] && !path && !is_buildin(data->full_cmd[0]))
 		{
-			printf("HA HA HA HA HA HA! d3iiiif !!\n");
+			printf("minishell: %s: command not found\n", data->full_cmd[0]);
 			data->exit_code = 127;
 		}
-	
-		if (temp && temp->id == -1)
+		else
 		{
-			pipe(data->fd);
-			if (status == 0)
-				data->out = 1;
-			data->in = data->fd[0];
-		}
-		if (data->full_cmd[0] != NULL && status1 != 1)
-		{
-			process(data->full_cmd, path, data);
-			open_proce ++;
+			if (temp && temp->id == -1)
+			{
+				pipe(data->fd);
+				if (status == 0)
+					data->out = 1;
+				data->in = data->fd[0];
+			}
+			if (data->full_cmd[0] != NULL && status1 != 1)
+			{
+				process(data->full_cmd, path, data);
+				open_proce ++;
+			}
 		}
 		free(path);
 		free_array(data->full_cmd);
@@ -198,9 +205,9 @@ void	ft_parce(t_data *data)
 	{
 		waitpid(-1, &j, 0);
 		open_proce --;
+		WIFEXITED(j);
+		data->exit_code = (WEXITSTATUS(j));
 	}
-	WIFEXITED(j);
-	data->exit_code = (WEXITSTATUS(j));
 	dup2(data->saved_out, STDOUT_FILENO);
 	dup2(data->saved_in, STDIN_FILENO);
 	close (data->saved_out);
@@ -210,26 +217,31 @@ void	ft_parce(t_data *data)
 int main(int ac, char **av, char **env)
 {
 
+	t_data	data;
 	if (ac != 1)
 		return (1);
 	av[0] = "\033[0;33m\e[1mminishell-1.0$ \033[0m";
-	g_data.env = env;
-	g_data.in = 1;
+	data.env = env;
+	data.in = 1;
 	signal(SIGINT, sighandl);
 	signal(SIGQUIT, sighandl);
 	while (1)
 	{
-		g_data.input = readline(av[0]);
-		if (!g_data.input)
+		data.input = readline(av[0]);
+		if (!data.input)
+		{
+			//system("leaks minishell");
 			exit(0);
-		if (g_data.input[0] && !unclosed_quotes(g_data.input))
+		}
+		if (data.input[0] && !unclosed_quotes(data.input))
 		{
 			//check_last(&g_data);
-			add_history(g_data.input);
-			ft_parce(&g_data);
+			add_history(data.input);
+			ft_parce(&data);
 		}
-		free (g_data.input);
+		free (data.input);
 	}
+	system("leaks minishell");
 	return (0);
 }
 
