@@ -6,7 +6,7 @@
 /*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 09:46:02 by yagnaou           #+#    #+#             */
-/*   Updated: 2022/08/26 21:51:26 by azabir           ###   ########.fr       */
+/*   Updated: 2022/08/26 21:53:39 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,10 +85,7 @@ void	ft_parce(t_data *data)
 				}
 				temp = temp->next;
 				while (!(temp->id >= 1 && temp->id <= 4) && temp->id != -1 && temp->id != 14)
-				{
-					fprintf(stderr, "del =  %s\n", temp->cmd);
 					temp = temp->next;
-				}
 			}
 			else if(temp->id == 2)
 			{
@@ -254,12 +251,12 @@ int main(int ac, char **av, char **env)
 	# leaks handle
 	# permissions
 	# exit status
-	# cat<<$USER"" (expand in heredoc)
+	# cat<<$USER"" (expand in heredoc) --> doing
 	# memory protections
 	# errors handle
 	# readline + CTRL-C
 	# remove forbiden funcs like calloc and fprintf
-	#  echo $USER$USER$USER
+	#  echo $USER$USER$USER --> done
 	# unclosed qoutes protect --> done
 	# remove unused TOKENS --> done
 	# empty cmd handle --> done
