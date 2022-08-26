@@ -6,7 +6,7 @@
 /*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 16:28:33 by yagnaou           #+#    #+#             */
-/*   Updated: 2022/08/26 21:18:36 by azabir           ###   ########.fr       */
+/*   Updated: 2022/08/26 22:15:16 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,8 +142,8 @@ t_token	*lexer_collect_dq_string(t_lexer *lexer, char c, t_data *data)
 			tmp = ft_strjoin(value, str);
 		else
 			tmp = value;
-		if (str != NULL)
-			free (value);
+		/*if (str != NULL)
+			free (value);*/
 		free(str);
 		value = tmp;
 	}

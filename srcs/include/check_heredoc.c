@@ -6,7 +6,7 @@
 /*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 15:41:34 by azabir            #+#    #+#             */
-/*   Updated: 2022/08/26 18:40:55 by azabir           ###   ########.fr       */
+/*   Updated: 2022/08/26 22:20:17 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,13 @@ char	*del_maker(t_cmd *temp, int *is_expand)
 	char	*del;
 
 	del = NULL;
-	*is_expand = 0;
+	*is_expand = 1;
 	temp = temp->next;
 	while (!(temp->id >= 1 && temp->id <= 4) && temp->id != -1 && temp->id != 14)
 	{
 		if (temp->id == 6)
-			*is_expand = 1;
+			*is_expand = 0;
+		fprintf(stderr ,"exp = %d\n", *is_expand);
 		del = ft_strjoin(del, temp->saved);
 		temp = temp->next;
 	}
