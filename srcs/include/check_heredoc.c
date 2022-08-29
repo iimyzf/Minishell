@@ -6,7 +6,7 @@
 /*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 15:41:34 by azabir            #+#    #+#             */
-/*   Updated: 2022/08/26 22:20:17 by azabir           ###   ########.fr       */
+/*   Updated: 2022/08/26 23:33:15 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	*del_maker(t_cmd *temp, int *is_expand)
 	{
 		if (temp->id == 6)
 			*is_expand = 0;
-		fprintf(stderr ,"exp = %d\n", *is_expand);
+		//fprintf(stderr ,"exp = %d\n", *is_expand);
 		del = ft_strjoin(del, temp->saved);
 		temp = temp->next;
 	}
@@ -58,7 +58,7 @@ int	check_heredoc(t_data *data)
 	temp = data->cmd_list;
 	while (temp && temp->id != -1)
 	{
-		fprintf(stderr ,"from her: cmd = [%s] >>>>>> id = %d\n", temp->cmd, temp->id);
+		//fprintf(stderr ,"from her: cmd = [%s] >>>>>> id = %d\n", temp->cmd, temp->id);
 		if (temp->id == 4)
 		{
 			if (exuc_heredoc(&temp, data))

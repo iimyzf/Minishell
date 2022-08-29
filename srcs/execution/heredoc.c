@@ -6,7 +6,7 @@
 /*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/17 15:24:16 by azabir            #+#    #+#             */
-/*   Updated: 2022/08/26 23:03:12 by azabir           ###   ########.fr       */
+/*   Updated: 2022/08/27 19:52:38 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ char	*make_alnume(char *str, int	*i)
 		j++;
 	}
 	cmd[j] = 0;
-	//*i -= 1;
 	return (cmd);
 }
 
@@ -42,7 +41,7 @@ void	ft_putchar(t_data *data, char *input, int exp)
 	i = 0;
 	while (input[i])
 	{
-		if (input[i] == '$' && ft_isalnum(input[i + 1]) && exp)
+		while (input[i] == '$' && ft_isalnum(input[i + 1]) && exp)
 		{
 			i++;
 			str = make_alnume(input, &i);
@@ -69,7 +68,7 @@ void	heredoc(char *cmd, t_data *data, int exp,int is_last_here)
 	pid = fork();
 	if (pid == 0)
 	{
-		fprintf(stderr, "cmd = [%s]\n", cmd);
+		//fprintf(stderr, "cmd = [%s]\n", cmd);
 		signal(SIGINT, child_sighand);
 		while (1)
 		{

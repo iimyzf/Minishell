@@ -6,7 +6,7 @@
 /*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 09:46:02 by yagnaou           #+#    #+#             */
-/*   Updated: 2022/08/26 23:04:06 by azabir           ###   ########.fr       */
+/*   Updated: 2022/08/29 21:55:24 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ void	process(char **cmd, char *path, t_data *data)
 		dup2(data->out, STDOUT_FILENO);
 		close(data->fd[0]);
 		close(data->fd[1]);
+		close(data->saved_out);
+		close(data->saved_in);
 		ft_execve(cmd, data->env, path, data);
 		exit(0);
 	}
@@ -177,8 +179,6 @@ void	ft_parce(t_data *data)
 			printf("minishell: %s: command not found\n", data->full_cmd[0]);
 			data->exit_code = 127;
 		}
-		else
-		{
 			if (temp && temp->id == -1)
 			{
 				pipe(data->fd);
@@ -191,7 +191,6 @@ void	ft_parce(t_data *data)
 				process(data->full_cmd, path, data);
 				open_proce ++;
 			}
-		}
 		free(path);
 		free_array(data->full_cmd);
 		
