@@ -6,7 +6,7 @@
 /*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 10:35:58 by azabir            #+#    #+#             */
-/*   Updated: 2022/08/23 14:28:03 by azabir           ###   ########.fr       */
+/*   Updated: 2022/08/30 22:00:02 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ char	*path_checker(char *cmd, char **env)
 	struct stat buf;
 
 	i = 0;
+	if (!cmd || !*cmd)
+		return (NULL);
 	while (env[i] && strnstr(env[i], "PATH", 4) == 0)
 		i++;
 	if (env[i] == NULL)
