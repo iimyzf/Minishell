@@ -6,7 +6,7 @@
 /*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 10:38:45 by azabir            #+#    #+#             */
-/*   Updated: 2022/08/29 21:35:00 by azabir           ###   ########.fr       */
+/*   Updated: 2022/08/30 21:10:58 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ char	*lexer_get_current_char_as_string(t_lexer *lexer);
 char	*lexer_get_current_char_as_two_strings(t_lexer *lexer);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 void	lexer_advance(t_lexer *lexer, int count);
-int		cmd_create(t_data *data, int	*status);
+int		cmd_create(t_data *data);
 void	lexer_skip_white_spaces(t_lexer *lexer);
 void	free_all(t_lexer *lexer);
 char	*ft_strjoin(char const *s1, char const *s2);

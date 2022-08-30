@@ -3,5 +3,18 @@
 		"minishell.h": "c",
 		"errno.h": "c",
 		"signal.h": "c"
-	}
+	},
+	"terminal.integrated.allowMnemonics": true,
+	"terminal.integrated.automationProfile.linux": {
+
+	},
+	"terminal.integrated.confirmOnExit": "never",
+	"terminal.integrated.confirmOnKill": "editor",
+	"editor.tabSize": 4,
+	"editor.insertSpaces": false,
+	"editor.renderWhitespace": "all",
+	"files.trimTrailingWhitespace": true,
+	"files.insertFinalNewline": true,
+	"norminette.command": "norminette",
+	"norminette.fileregex": "^ft.*\\.[ch]$",
 }

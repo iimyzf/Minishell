@@ -6,7 +6,7 @@
 /*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 09:46:02 by yagnaou           #+#    #+#             */
-/*   Updated: 2022/08/29 21:55:24 by azabir           ###   ########.fr       */
+/*   Updated: 2022/08/30 21:32:42 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,24 +40,16 @@ void	process(char **cmd, char *path, t_data *data)
 void	ft_parce(t_data *data)
 {
 
-	int		i;
 	t_cmd	*temp;
-	char	*tmp;
 	char	*path;
 	int		status;
-	int		pid;
 	int		status1;
 	int		open_proce;
-	int		j;
 
-	tmp = "";
 	fill_data_list(data);
 	temp = (data)->cmd_list;
 	if (!syntax_checker(temp))
-	{
-		//check_heredoc(data);
 		return ;
-	}
 	if (!check_heredoc(data))
 		return ;
 	temp = (data)->cmd_list;
@@ -67,91 +59,18 @@ void	ft_parce(t_data *data)
 	status1 = 0;
 	data->saved_out = dup(STDOUT_FILENO);
 	data->saved_in = dup(STDIN_FILENO);
-	while (temp && (temp->id != -1))
+	while (data->cmd_list && (data->cmd_list->id != -1))
 	{
-		i = 0;
-		status = 0;
-		j = 0; 
-		tmp = "";
-		data->full_cmd = calloc((cmd_parts_count(temp) + 1), sizeof(char *));
-		while (temp->id != -1 && (temp->id != 8))
-		{
-			if (temp->id == 4)
-			{
-				if (temp->next->id == 14)
-					temp = temp->next;
-				if (is_last_heredoc(temp))
-				{
-					dup2(temp->in, STDIN_FILENO);
-					close (temp->in);
-				}
-				temp = temp->next;
-				while (!(temp->id >= 1 && temp->id <= 4) && temp->id != -1 && temp->id != 14)
-					temp = temp->next;
-			}
-			else if(temp->id == 2)
-			{
-				temp = temp->next;
-				if(temp->id == 14)
-					temp = temp->next;
-				pid = open(temp->cmd, O_RDWR | O_CREAT | O_TRUNC, 0777);
-				if (pid < 0)
-					return ;
-				data->out = dup(pid);
-				close(pid);
-				status = 1;
-			}
-			else if(temp->id == 3)
-			{
-				temp = temp->next;
-				if(temp->id == 14)
-					temp = temp->next;
-				pid = open(temp->cmd, O_RDWR | O_CREAT | O_APPEND , 0777);
-				if (pid < 0)
-					return ;
-				data->out = dup(pid);
-				close(pid);
-				status = 1;
-			}
-			else if(temp->id == 1)
-			{
-				temp = temp->next;
-				if(temp->id == 14)
-					temp = temp->next;
-				pid = open(temp->cmd, O_RDONLY);
-				if (pid < 0)
-				{
-					fprintf(stderr, "minishell: %s: No such file or directory\n", temp->cmd);
-					g_data.exit_code = 1;
-					temp = temp->next;
-					break;
-				}
-				dup2(pid, STDIN_FILENO);
-				close (pid);
-			}
-			else if ((temp->id == 0 || temp->id == 6 || temp->id == 9 || temp->id == 7))
-			{
-				write (2, "here\n", 5);
-				while ((temp->id == 0 || temp->id == 6 || temp->id == 9 || temp->id == 7))
-				{
-					fprintf(stderr ,"cmd = [%s] >>>>>> id = %d\n", temp->cmd, temp->id);
-					data->full_cmd[j] = ft_strjoin(data->full_cmd[j], temp->cmd);
-					temp = temp->next;
-				}
-				j++;
-			}
-			if (temp->id != 1 && temp->id != 2 && temp->id != 3 && temp->id != 4 && temp->id != -1)
-				temp = temp->next;
-		}
-		data->full_cmd[j] = NULL;
-		i = 0;
-		if (temp->id == 8)
+		cmd_create(data);
+		//temp = data->cmd_list;
+
+		if (data->cmd_list->id == 8)
 		{
 			pipe(data->fd);
 			if (status == 0)
 				data->out = data->fd[1];
 			data->in = data->fd[0];
-			temp = temp->next;
+			//temp = temp->next;
 			status1 = 2;
  		}
 		else if (data->full_cmd[0] && is_buildin(data->full_cmd[0]) && temp->id == -1 && status1 != 2)
@@ -173,8 +92,9 @@ void	ft_parce(t_data *data)
 					ft_cd(data, data->full_cmd[1]);
 			status1 = 1;
 		}
+		data->cmd_list = data->cmd_list->next;
 		path = path_checker(data->full_cmd[0], data->env);
-		if (data->full_cmd[0] && !path && !is_buildin(data->full_cmd[0]))
+		if (data->full_cmd[0] && (!path && !is_buildin(data->full_cmd[0])))
 		{
 			printf("minishell: %s: command not found\n", data->full_cmd[0]);
 			data->exit_code = 127;
@@ -193,16 +113,13 @@ void	ft_parce(t_data *data)
 			}
 		free(path);
 		free_array(data->full_cmd);
-		
 	}
-	t_cmd	*temp1;
-	temp1 = data->cmd_list;
 	while(open_proce > 0)
 	{
-		waitpid(-1, &j, 0);
+		waitpid(-1, &status, 0);
 		open_proce --;
-		WIFEXITED(j);
-		data->exit_code = (WEXITSTATUS(j));
+		WIFEXITED(status);
+		data->exit_code = (WEXITSTATUS(status));
 	}
 	dup2(data->saved_out, STDOUT_FILENO);
 	dup2(data->saved_in, STDIN_FILENO);
@@ -216,11 +133,11 @@ int main(int ac, char **av, char **env)
 	t_data	data;
 	if (ac != 1)
 		return (1);
-	av[0] = "\033[0;33m\e[1mminishell-1.0$ \033[0m";
+	av[0] = "minishell-1.0$ ";
 	data.env = env;
 	data.in = 1;
 	signal(SIGINT, sighandl);
-	signal(SIGQUIT, sighandl);
+	signal(SIGQUIT, SIG_IGN);
 	while (1)
 	{
 		data.input = readline(av[0]);
@@ -245,13 +162,20 @@ int main(int ac, char **av, char **env)
 
 /*  TO DO */
 
-/*	
-	# << ok << 
+/*
+	# << ok <<
 	# leaks handle
 	# permissions
+	# pwd | ls | ls -la | cat > $PWD | chokran ela had | echo "Hello| World" (ikhan)
+	# protect open
+	# '   gbghggh | ghgh ' (seg) --> done
+	# '' or "" should print cmd not found!
+	# echo ">>" ''| ls >> l (hhhhhhhhh) --> HAHAHA DONE
+	# echo -n  bbb hello>>g (hhh)
 	# exit status
 	# memory protections
 	# errors handle
+	# echo dd > "ff"ff (collect file name)
 	# readline + CTRL-C
 	# remove forbiden funcs like calloc and fprintf
 	# cat<<$USER"" (expand in heredoc) --> done
