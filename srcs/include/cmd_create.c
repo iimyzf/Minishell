@@ -14,18 +14,17 @@
 
 int	cmd_create(t_data *data)
 {
-	int 	status;
 	t_cmd	*temp;
 	int		index;
-	int		pid;
+	int		status;
 
 	temp = data->cmd_list;
 	index = 0;
+	data->redirect = 0;
 	data->full_cmd = calloc((cmd_parts_count(temp) + 1), sizeof(char *));
-	//fprintf(stderr ,"out cmd = [%s] >>>>>> id = %d\n", data->cmd_list->cmd, data->cmd_list->id);
 	while (data->cmd_list->id != -1 && data->cmd_list->id != 8)
 	{
-		//fprintf(stderr ,"cmd = [%s] >>>>>> id = %d\n", data->cmd_list->cmd, data->cmd_list->id);
+		fprintf(stderr ,"cmd = [%s] >>>>>> id = %d\n", data->cmd_list->cmd, data->cmd_list->id);
 		if (data->cmd_list->id == 4)
 		{
 			if (data->cmd_list->next->id == 14)
@@ -40,41 +39,11 @@ int	cmd_create(t_data *data)
 				data->cmd_list = data->cmd_list->next;
 		}
 		else if(data->cmd_list->id == 2)
-		{
-			data->cmd_list = data->cmd_list->next;
-			if(data->cmd_list->id == 14)
-				data->cmd_list = data->cmd_list->next;
-			pid = open(data->cmd_list->cmd, O_RDWR | O_CREAT | O_TRUNC, 0777);
-			if (pid < 0)
-			{
-				perror("minishell");
-				return (0) ;
-			}
-			data->out = dup(pid);
-			close(pid);
-			status = 1;
-		}
+			status = write_in(data, 0);
 		else if(data->cmd_list->id == 3)
-		{
-			data->cmd_list = data->cmd_list->next;
-			/*if(data->cmd_list->id == 14)
-				data->cmd_list = data->cmd_list->next;*/
-			pid = open(data->cmd_list->cmd, O_RDWR | O_CREAT | O_APPEND , 0777);
-			if (pid < 0)
-				return (0) ;
-			data->out = dup(pid);
-			close(pid);
-			status = 1;
-		}
+			status = write_in(data, 1);
 		else if(data->cmd_list->id == 1)
-		{
-			data->cmd_list = data->cmd_list->next;
-			if(data->cmd_list->id == 14)
-				data->cmd_list = data->cmd_list->next;
-			pid = open(data->cmd_list->cmd, O_RDONLY);
-			dup2(pid, STDIN_FILENO);
-			close(pid);
-		}
+			status = read_from(data);
 		else if ((data->cmd_list->id == 0 || data->cmd_list->id == 6 || data->cmd_list->id == 9 || data->cmd_list->id == 7))
 		{
 			//write (2, "here\n", 5);
@@ -115,7 +84,7 @@ int	cmd_create(t_data *data)
 		// 		temp = temp->next;
 		// 		if(temp->id == 14)
 		// 			temp = temp->next;
-		// 		pid = open(temp->cmd, O_RDWR | O_CREAT | O_TRUNC, 0777);
+		// 		data->pid = open(temp->cmd, O_RDWR | O_CREAT | O_TRUNC, 0777);
 		// 		if (pid < 0)
 		// 		{
 		// 			perror("minishell");

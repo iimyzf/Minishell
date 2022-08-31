@@ -14,6 +14,8 @@
 
 int	is_buildin(char *cmd)
 {
+	if (!cmd)
+		return (0);
 	if (!ft_strcmp(cmd, "echo"))
 		return (1);
 	else if (!ft_strcmp(cmd, "cd"))

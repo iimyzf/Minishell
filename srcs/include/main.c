@@ -30,7 +30,6 @@ int	process(char *path, t_data *data)
 		ft_execve(data, path);
 		exit(0);
 	}
-
 	close(data->out);
 	dup2(data->in, STDIN_FILENO);
 	close (data->in);
@@ -59,7 +58,9 @@ void	ft_parce(t_data *data)
 		data->in = data->fd[0];
 		cmd_create(data);
 		if (is_buildin(data->full_cmd[0]) && data->cmd_list->id != 8 && status == -1)
-		{
+		{	
+			if (data->redirect)
+				dup2(data->out, STDOUT_FILENO);
 			ft_execve(data, path);
 			close(data->in);
 			close(data->out);
@@ -77,7 +78,7 @@ void	ft_parce(t_data *data)
 		}
 		if (data->cmd_list->id != -1)
 			data->cmd_list = data->cmd_list->next;
-		if (data->cmd_list && data->cmd_list->id == -1)
+		if (data->cmd_list && data->cmd_list->id == -1 && !data->redirect)
 		{
 			data->out = 1;
 			close (data->fd[1]);
