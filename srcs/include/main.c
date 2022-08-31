@@ -47,9 +47,7 @@ void	ft_parce(t_data *data)
 	status = -1;
 	fill_data_list(data);
 	temp = (data)->cmd_list;
-	if (!syntax_checker(temp))
-		return ;
-	if (!check_heredoc(data))
+	if (!syntax_checker(temp) || !check_heredoc(data))
 		return ;
 	data->saved_out = dup(STDOUT_FILENO);
 	data->saved_in = dup(STDIN_FILENO);
@@ -68,7 +66,7 @@ void	ft_parce(t_data *data)
 			break ;
 		}
 		status = 0;
-		path = path_checker(data->full_cmd[0], data->env);
+		path = path_checker(data, data->full_cmd[0], data->env);
 		if (data->full_cmd[0] && (!path && !is_buildin(data->full_cmd[0])))
 		{
 			data->exit_code = 127;
@@ -81,8 +79,8 @@ void	ft_parce(t_data *data)
 			data->cmd_list = data->cmd_list->next;
 		if (data->cmd_list && data->cmd_list->id == -1)
 		{
-				data->out = 1;
-				close (data->fd[1]);
+			data->out = 1;
+			close (data->fd[1]);
 		}
 		if (data->full_cmd[0] != NULL)
 		{

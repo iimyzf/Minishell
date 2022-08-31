@@ -42,6 +42,7 @@ typedef struct s_data
 	int				active_proc;
 	int				is_last;
 	int				fd[2];
+	char			**complete_path;
 	int				here_fd[2];
 	char			*input;
 	char			**full_cmd;
@@ -92,7 +93,7 @@ int		cmd_create(t_data *data);
 void	lexer_skip_white_spaces(t_lexer *lexer);
 void	free_all(t_lexer *lexer);
 char	*ft_strjoin(char const *s1, char const *s2);
-char	*path_checker(char *cmd, char **env);
+char	*path_checker(t_data *data, char *cmd, char **env);
 char	*check_env(t_data *data, char *cmd);
 t_cmd	*ft_lstnew(char *value, int id, char *saved);
 void	lstadd_back(t_cmd **cmd_list, t_cmd *cmd);

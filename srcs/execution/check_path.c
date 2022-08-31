@@ -39,9 +39,8 @@ int is_dir(char *cmd)
 	return (0);
 }
 
-char	*path_checker(char *cmd, char **env)
+char	*path_checker(t_data *data, char *cmd, char **env)
 {
-	char	**complete_path;
 	char	*cmd_path;
 	char	*part_of_path;
 	int		i;
@@ -54,17 +53,18 @@ char	*path_checker(char *cmd, char **env)
 		i++;
 	if (env[i] == NULL)
 		return (NULL);
-	complete_path = ft_split(env[i] + 5, ':');
+	data->complete_path = ft_split(env[i] + 5, ':');
 	i = 0;
-	while (complete_path[i])
+	while (data->complete_path[i])
 	{
-		part_of_path = ft_strjoin(complete_path[i], "/");
+		part_of_path = ft_strjoin(data->complete_path[i], "/");
 		cmd_path = ft_strjoin(part_of_path, cmd);
 		free(part_of_path);
 		if (access(cmd_path, F_OK) == 0)
 			return (cmd_path);
 		else if (is_dir(cmd) && !stat(cmd, &buf))
 			return(ft_strjoin(cmd, ""));
+		free(cmd_path);
 		i++;
 	}
 	return (NULL);
