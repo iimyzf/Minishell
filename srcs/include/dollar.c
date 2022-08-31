@@ -6,7 +6,7 @@
 /*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 17:11:22 by azabir            #+#    #+#             */
-/*   Updated: 2022/08/22 16:26:36 by azabir           ###   ########.fr       */
+/*   Updated: 2022/08/30 22:21:45 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*check_env(t_data *data, char *cmd)
 	value = NULL;
 	if (*cmd == '?')
 	{
-		value = ft_itoa(data->exit_code);
+		value = ft_itoa(g_exit_code);
 		return (ft_strjoin(value, cmd + 1));
 	}
 	while (data->env[i])

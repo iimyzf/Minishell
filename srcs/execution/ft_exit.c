@@ -6,7 +6,7 @@
 /*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 19:21:35 by azabir            #+#    #+#             */
-/*   Updated: 2022/08/17 17:44:29 by azabir           ###   ########.fr       */
+/*   Updated: 2022/08/30 22:25:40 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,23 +30,25 @@ int	ft_is_all_num(char *str)
 
 int	error_print(t_data *data, char *str, int code)
 {
+	(void) data;
 	write(2, str, strlen(str));
-	data->exit_code = code;
+	g_exit_code = code;
 	return (code);
 }
 
 void	just_exit(t_data *data)
 {
 	write(2, "exit\n", 5);
+	(void) data;
 	if (atoi(data->full_cmd[1]) >= 0 && (long) atoi(data->full_cmd[1]) < __LONG_MAX__)
 	{
-		data->exit_code = (unsigned int)atoi(data->full_cmd[1]) % 255;
-		exit(data->exit_code);
+		g_exit_code = (unsigned int)atoi(data->full_cmd[1]) % 255;
+		exit(g_exit_code);
 	}
 	else
 	{
-		data->exit_code = (unsigned int)atoi(data->full_cmd[1]) % 255;
-		exit(data->exit_code);
+		g_exit_code = (unsigned int)atoi(data->full_cmd[1]) % 255;
+		exit(g_exit_code);
 	}
 }
 
@@ -58,7 +60,7 @@ int	ft_exit(t_data *data)
 	if (!data->full_cmd[1])
 	{
 		printf("exit\n");
-		exit(data->exit_code);
+		exit(g_exit_code);
 	}
 	if (!ft_is_all_num(data->full_cmd[1]))
 	{
@@ -73,7 +75,7 @@ int	ft_exit(t_data *data)
 	else
 	{
 		just_exit(data);
-		printf("exit code : %d\n", data->exit_code);
+		printf("exit code : %d\n", g_exit_code);
 	}
 	return (1);
 }
@@ -86,7 +88,7 @@ int	ft_exit(t_data *data)
 // 	i = 0;
 // 	data = (t_data*)malloc(sizeof(t_data));
 // 	data->full_cmd = av;
-// 	data->exit_code = 0;
+// 	g_exit_code = 0;
 // 	ft_exit(data);
 // 	return (0);
 // }

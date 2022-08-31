@@ -6,7 +6,7 @@
 /*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 10:38:45 by azabir            #+#    #+#             */
-/*   Updated: 2022/08/30 21:39:44 by azabir           ###   ########.fr       */
+/*   Updated: 2022/08/31 00:43:27 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,14 @@ typedef struct s_data
 	int				in;
 	int				out;
 	int				active_proc;
+	int				is_last;
 	int				fd[2];
 	int				here_fd[2];
 	char			*input;
 	char			**full_cmd;
 	char			**env;
-	int				p;
+	int				p[263];
+	int				counter;
 	char			*saved;
 	char			**exp;
 	int				exit_code;
@@ -71,10 +73,11 @@ typedef struct s_lexer
 	char			*data;
 }	t_lexer;
 
-t_data g_data;
+int	g_exit_code;
 
 t_lexer	*lexer_init(char *data);
 char	*ft_itoa(int r);
+void	ft_wait(t_data *data);
 t_token	*lexer_get_next_token(t_lexer *lexer, t_data *data);
 t_token	*lexer_collect_string(t_lexer *lexer, char c, int token);
 t_token	*lexer_collect_dq_string(t_lexer *lexer, char c, t_data *data);
@@ -99,7 +102,7 @@ int		unclosed_quotes(char	*input);
 void	child_sighand(int sig);
 char	*check_path(char	*cmd);
 char	**ft_split(char *s, char c);
-void	ft_execve(char **cmd, char **env, char *path, t_data *data);
+void	ft_execve(t_data *data, char *path);
 char	*ft_strjoin2(char *s1, char *s2);
 void	heredoc(char *cmd, t_data *data, int exp, int is_last_here);
 int		is_last_heredoc(t_cmd	*cmd);

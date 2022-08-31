@@ -1,0 +1,30 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parce_utils.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/08/31 19:37:34 by azabir            #+#    #+#             */
+/*   Updated: 2022/08/31 19:37:39 by azabir           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "minishell.h"
+
+void	ft_wait(t_data *data)
+{
+	int	status;
+
+	while(data->active_proc > 0)
+	{
+		waitpid(-1, &status, 0);
+		data->active_proc --;
+		WIFEXITED(status);
+		data->exit_code = (WEXITSTATUS(status));
+	}
+	dup2(data->saved_out, STDOUT_FILENO);
+	dup2(data->saved_in, STDIN_FILENO);
+	close (data->saved_out);
+	close (data->saved_in);
+}

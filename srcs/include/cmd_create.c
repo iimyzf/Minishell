@@ -6,7 +6,7 @@
 /*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 21:02:25 by azabir            #+#    #+#             */
-/*   Updated: 2022/08/30 21:38:36 by azabir           ###   ########.fr       */
+/*   Updated: 2022/08/30 22:12:27 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,10 @@ int	cmd_create(t_data *data)
 	temp = data->cmd_list;
 	index = 0;
 	data->full_cmd = calloc((cmd_parts_count(temp) + 1), sizeof(char *));
-	fprintf(stderr ,"out cmd = [%s] >>>>>> id = %d\n", data->cmd_list->cmd, data->cmd_list->id);
+	//fprintf(stderr ,"out cmd = [%s] >>>>>> id = %d\n", data->cmd_list->cmd, data->cmd_list->id);
 	while (data->cmd_list->id != -1 && data->cmd_list->id != 8)
 	{
-		fprintf(stderr ,"cmd = [%s] >>>>>> id = %d\n", data->cmd_list->cmd, data->cmd_list->id);
+		//fprintf(stderr ,"cmd = [%s] >>>>>> id = %d\n", data->cmd_list->cmd, data->cmd_list->id);
 		if (data->cmd_list->id == 4)
 		{
 			if (data->cmd_list->next->id == 14)

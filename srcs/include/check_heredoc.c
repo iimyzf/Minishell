@@ -6,7 +6,7 @@
 /*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 15:41:34 by azabir            #+#    #+#             */
-/*   Updated: 2022/08/26 23:33:15 by azabir           ###   ########.fr       */
+/*   Updated: 2022/08/30 22:22:28 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	exuc_heredoc(t_cmd	**temp, t_data *data)
 		*temp = (*temp)->next;
 	if ((*temp)->next->id == -1)
 	{
-		g_data.exit_code = 258;
+		g_exit_code = 258;
 		return(258);
 	}
 	heredoc(del_maker(*temp, &exp), data, exp, is_last_heredoc(*temp));

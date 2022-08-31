@@ -67,5 +67,5 @@ char	*path_checker(char *cmd, char **env)
 			return(ft_strjoin(cmd, ""));
 		i++;
 	}
-	return (0);
+	return (NULL);
 }

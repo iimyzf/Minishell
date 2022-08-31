@@ -6,7 +6,7 @@
 /*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/31 22:04:27 by azabir            #+#    #+#             */
-/*   Updated: 2022/08/29 19:45:15 by azabir           ###   ########.fr       */
+/*   Updated: 2022/08/30 22:22:28 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,14 +57,14 @@ int	syntax_checker(t_cmd *cmd)
 	if (temp->id == 8)
 	{
 		printf("minishell: syntax error near unexpected token `%s'\n", temp->cmd);
-		g_data.exit_code = 258;
+		g_exit_code = 258;
 		return (0);
 	}
 	while (temp->id != -1)
 	{
 		if ((is_del(temp->id) || temp->id == 8) && !check_next(&(temp->next), temp->id))
 		{
-				g_data.exit_code = 258;
+				g_exit_code = 258;
 				return (0);
 		}
 		temp = temp->next;
