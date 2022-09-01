@@ -101,6 +101,8 @@ void	ft_parce(t_data *data)
 			}
 			free(path);
 		}
+		else if (data->cmd_list->id != -1)
+			data->cmd_list = data->cmd_list->next;
 		free_array(data->full_cmd);
 	}
 	ft_wait(data);
@@ -136,22 +138,21 @@ int main(int ac, char **av, char **env)
 /*  TO DO */
 
 /*
-	# << ok <<
 	# leaks handle
 	# permissions
-	# pwd | ls | ls -la | cat > $PWD | chokran ela had | echo "Hello| World" (ikhan)
-	# protect open
-	# '   gbghggh | ghgh ' (seg) --> done
-	# '' or "" should print cmd not found!
-	# echo ">>" ''| ls >> l (hhhhhhhhh) --> HAHAHA DONE
 	# echo -n  bbb hello>>g (hhh)
 	# exit status
 	# memory protections
 	# errors handle
-	# $PWD
-	# echo dd > "ff"ff (collect file name)
-	# readline + CTRL-C
+	# $PWD then $?
 	# remove forbiden funcs like calloc and fprintf
+	# readline + CTRL-C -- > done
+	# echo dd > "ff"ff (collect file name) --> done
+	# pwd | ls | ls -la | cat > $PWD | chokran ela had | echo "Hello| World" (ikhan) --> done
+	# protect open --> done
+	# '   gbghggh | ghgh ' (seg) --> done
+	# '' or "" should print cmd not found! --> done
+	# echo ">>" ''| ls >> l (hhhhhhhhh) --> HAHAHA DONE
 	# cat<<$USER"" (expand in heredoc) --> done
 	#  echo $USER$USER$USER --> done
 	# unclosed qoutes protect --> done

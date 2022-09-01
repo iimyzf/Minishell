@@ -41,8 +41,7 @@ int	write_in(t_data *data, int append)
 		free(name);
 	if (data->pid < 0)
 	{
-		write(2, "minishell: ", 11);
-		perror(name);
+		perror("minishell");
 		g_exit_code = errno;
 		return (0) ;
 	}
