@@ -18,6 +18,7 @@ int	redirec(int id)
 		return (1);
 	return (0);
 }
+
 void	join_cmd(t_data *data, int	*index)
 {
 	while (is_cmd(data->cmd_list->id))
@@ -52,72 +53,3 @@ int	cmd_create(t_data *data)
 	data->full_cmd[index] = NULL;
 	return (status);
 }
-
-// data->full_cmd = calloc((cmd_parts_count(temp) + 1), sizeof(char *));
-		// while (temp->id != -1 && (temp->id != 8))
-		// {
-		// 	fprintf(stderr ,"cmd = [%s] >>>>>> id = %d\n", temp->cmd, temp->id);
-		// 	if (temp->id == 4)
-		// 	{
-		// 		if (temp->next->id == 14)
-		// 			temp = temp->next;
-		// 		if (is_last_heredoc(temp))
-		// 		{
-		// 			dup2(temp->in, STDIN_FILENO);
-		// 			close (temp->in);
-		// 		}
-		// 		temp = temp->next;
-		// 		while (!(temp->id >= 1 && temp->id <= 4) && temp->id != -1 && temp->id != 14)
-		// 			temp = temp->next;
-		// 	}
-		// 	else if(temp->id == 2)
-		// 	{
-		// 		temp = temp->next;
-		// 		if(temp->id == 14)
-		// 			temp = temp->next;
-		// 		data->pid = open(temp->cmd, O_RDWR | O_CREAT | O_TRUNC, 0777);
-		// 		if (pid < 0)
-		// 		{
-		// 			perror("minishell");
-		// 			return ;
-		// 		}
-		// 		data->out = dup(pid);
-		// 		close(pid);
-		// 		status = 1;
-		// 	}
-		// 	else if(temp->id == 3)
-		// 	{
-		// 		temp = temp->next;
-		// 		/*if(temp->id == 14)
-		// 			temp = temp->next;*/
-		// 		pid = open(temp->cmd, O_RDWR | O_CREAT | O_APPEND , 0777);
-		// 		if (pid < 0)
-		// 			return ;
-		// 		data->out = dup(pid);
-		// 		close(pid);
-		// 		status = 1;
-		// 	}
-		// 	else if(temp->id == 1)
-		// 	{
-		// 		temp = temp->next;
-		// 		if(temp->id == 14)
-		// 			temp = temp->next;
-		// 		pid = open(temp->cmd, O_RDONLY);
-		// 		dup2(pid, STDIN_FILENO);
-		// 		close(pid);
-		// 	}
-		// 	else if ((temp->id == 0 || temp->id == 6 || temp->id == 9 || temp->id == 7))
-		// 	{
-		// 		//write (2, "here\n", 5);
-		// 		while ((temp->id == 0 || temp->id == 6 || temp->id == 9 || temp->id == 7))
-		// 		{
-		// 			data->full_cmd[j] = ft_strjoin(data->full_cmd[j], temp->cmd);
-		// 			temp = temp->next;
-		// 		}
-		// 		j++;
-		// 	}
-		// 	if (temp->id != 1 && temp->id != 2 && temp->id != 3 && temp->id != 4 && temp->id != -1 && temp->id != 8)
-		// 		temp = temp->next;
-		// 	// temp->id != 8 ADDED
-		// }
-		// data->full_cmd[j] = NULL;

@@ -12,6 +12,16 @@
 
 #include "minishell.h"
 
+void	exuce_built(t_data *data)
+{
+	if (data->redirect)
+		dup2(data->out, STDOUT_FILENO);
+	ft_execve(data, NULL);
+	close(data->in);
+	close(data->out);
+	ft_wait(data);
+}
+
 int	process(char *path, t_data *data)
 {
 	pid_t	pid;
@@ -36,6 +46,7 @@ int	process(char *path, t_data *data)
 	return (1);
 }
 
+
 void	ft_parce(t_data *data)
 {
 
@@ -56,45 +67,40 @@ void	ft_parce(t_data *data)
 		pipe(data->fd);
 		data->out = data->fd[1];
 		data->in = data->fd[0];
-		cmd_create(data);
-		if (is_buildin(data->full_cmd[0]) && data->cmd_list->id != 8 && status == -1)
-		{	
-			if (data->redirect)
-				dup2(data->out, STDOUT_FILENO);
-			ft_execve(data, path);
-			close(data->in);
-			close(data->out);
-			break ;
-		}
-		status = 0;
-		path = path_checker(data, data->full_cmd[0], data->env);
-		if (data->full_cmd[0] && (!path && !is_buildin(data->full_cmd[0])))
+		if (cmd_create(data))
 		{
-			g_exit_code = 127;
-			if (check_char(data->full_cmd[0], '/'))
-				printf("minishell: %s: No such file or directory\n", data->full_cmd[0]);
-			else
-				printf("minishell: %s: command not found\n", data->full_cmd[0]);
-		}
-		if (data->cmd_list->id != -1)
-			data->cmd_list = data->cmd_list->next;
-		if (data->cmd_list && data->cmd_list->id == -1 && !data->redirect)
-		{
-			data->out = 1;
-			close (data->fd[1]);
-		}
-		if (data->full_cmd[0] != NULL)
-		{
-			if (process(path, data))
-				data->active_proc += 1;
-			else
+			if (is_buildin(data->full_cmd[0]) && data->cmd_list->id != 8 && status == -1)
+			return (exuce_built(data));
+			status = 0;
+			path = path_checker(data, data->full_cmd[0], data->env);
+			if (!path)
 			{
-				free(path);
-				free_array(data->full_cmd);
-				break ;
+				g_exit_code = 127;
+				if (check_char(data->full_cmd[0], '/'))
+					printf("minishell: %s: No such file or directory\n", data->full_cmd[0]);
+				else
+					printf("minishell: %s: command not found\n", data->full_cmd[0]);
 			}
+			if (data->cmd_list->id != -1)
+				data->cmd_list = data->cmd_list->next;
+			if (data->cmd_list && data->cmd_list->id == -1 && !data->redirect)
+			{
+				data->out = 1;
+				close (data->fd[1]);
+			}
+			if (data->full_cmd[0] != NULL)
+			{
+				if (process(path, data))
+					data->active_proc += 1;
+				else
+				{
+					free(path);
+					free_array(data->full_cmd);
+					break ;
+				}
+			}
+			free(path);
 		}
-		free(path);
 		free_array(data->full_cmd);
 	}
 	ft_wait(data);

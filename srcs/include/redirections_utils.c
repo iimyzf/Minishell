@@ -41,7 +41,8 @@ int	write_in(t_data *data, int append)
 		free(name);
 	if (data->pid < 0)
 	{
-		perror("minishell");
+		write(2, "minishell: ", 11);
+		perror(name);
 		g_exit_code = errno;
 		return (0) ;
 	}
@@ -79,10 +80,7 @@ int		read_from_here(t_data *data)
 	if (data->cmd_list->next->id == 14)
 		data->cmd_list = data->cmd_list->next;
 	if (is_last_heredoc(data->cmd_list))
-	{
 		dup2(data->cmd_list->in, STDIN_FILENO);
-		close (data->cmd_list->in);
-	}
 	data->cmd_list = data->cmd_list->next;
 	while (!(data->cmd_list->id >= 1 && data->cmd_list->id <= 4) &&
 			data->cmd_list->id != -1 && data->cmd_list->id != 14)
