@@ -143,6 +143,8 @@ int main(int ac, char **av, char **env)
 	# echo -n  bbb hello>>g (hhh)
 	# exit status
 	# memory protections
+	# removing Leaks from prcing --> doing
+	# removing Leaks from exuc
 	# errors handle
 	# $PWD then $?
 	# remove forbiden funcs like calloc and fprintf
