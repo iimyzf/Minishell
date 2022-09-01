@@ -12,54 +12,45 @@
 
 #include "minishell.h"
 
+int	redirec(int id)
+{
+	if(id >= 1 && id <= 4)
+		return (1);
+	return (0);
+}
+void	join_cmd(t_data *data, int	*index)
+{
+	while (is_cmd(data->cmd_list->id))
+	{
+		data->full_cmd[*index] =\
+			ft_strjoin2(data->full_cmd[*index], data->cmd_list->cmd);
+		data->cmd_list = data->cmd_list->next;
+	}
+	*index += 1;
+}
+
 int	cmd_create(t_data *data)
 {
-	t_cmd	*temp;
 	int		index;
 	int		status;
+	t_cmd	*temp;
 
-	temp = data->cmd_list;
 	index = 0;
 	data->redirect = 0;
+	status = 1;
+	temp = data->cmd_list;
 	data->full_cmd = calloc((cmd_parts_count(temp) + 1), sizeof(char *));
 	while (data->cmd_list->id != -1 && data->cmd_list->id != 8)
 	{
-		fprintf(stderr ,"cmd = [%s] >>>>>> id = %d\n", data->cmd_list->cmd, data->cmd_list->id);
-		if (data->cmd_list->id == 4)
-		{
-			if (data->cmd_list->next->id == 14)
-				data->cmd_list = data->cmd_list->next;
-			if (is_last_heredoc(data->cmd_list))
-			{
-				dup2(data->cmd_list->in, STDIN_FILENO);
-				close (data->cmd_list->in);
-			}
+		if (redirec( data->cmd_list->id))
+			status = is_redirec(data);
+		else if (is_cmd(data->cmd_list->id) && status)
+			join_cmd(data, &index);
+		if (is_cmd(data->cmd_list->id) || data->cmd_list->id == 14)
 			data->cmd_list = data->cmd_list->next;
-			while (!(data->cmd_list->id >= 1 && data->cmd_list->id <= 4) && data->cmd_list->id != -1 && data->cmd_list->id != 14)
-				data->cmd_list = data->cmd_list->next;
-		}
-		else if(data->cmd_list->id == 2)
-			status = write_in(data, 0);
-		else if(data->cmd_list->id == 3)
-			status = write_in(data, 1);
-		else if(data->cmd_list->id == 1)
-			status = read_from(data);
-		else if ((data->cmd_list->id == 0 || data->cmd_list->id == 6 || data->cmd_list->id == 9 || data->cmd_list->id == 7))
-		{
-			//write (2, "here\n", 5);
-			while ((data->cmd_list->id == 0 || data->cmd_list->id == 6 || data->cmd_list->id == 9 || data->cmd_list->id == 7))
-			{
-				data->full_cmd[index] = ft_strjoin(data->full_cmd[index], data->cmd_list->cmd);
-				data->cmd_list = data->cmd_list->next;
-			}
-			index++;
-		}
-		if (data->cmd_list->id != 1 && data->cmd_list->id != 2 && data->cmd_list->id != 3 && data->cmd_list->id != 4 && data->cmd_list->id != -1 && data->cmd_list->id != 8)
-			data->cmd_list = data->cmd_list->next;
-		// temp->id != 8 ADDED
 	}
 	data->full_cmd[index] = NULL;
-	return (1);
+	return (status);
 }
 
 // data->full_cmd = calloc((cmd_parts_count(temp) + 1), sizeof(char *));

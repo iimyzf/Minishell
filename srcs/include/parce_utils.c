@@ -21,10 +21,17 @@ void	ft_wait(t_data *data)
 		waitpid(-1, &status, 0);
 		data->active_proc --;
 		WIFEXITED(status);
-		data->exit_code = (WEXITSTATUS(status));
+		g_exit_code = (WEXITSTATUS(status));
 	}
 	dup2(data->saved_out, STDOUT_FILENO);
 	dup2(data->saved_in, STDIN_FILENO);
 	close (data->saved_out);
 	close (data->saved_in);
+}
+
+int	is_cmd(int id)
+{
+	if((id == 0 || id == 6 || id == 9 || id == 7))
+		return (1);
+	return (0);
 }

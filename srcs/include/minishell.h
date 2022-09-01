@@ -79,10 +79,12 @@ int	g_exit_code;
 
 t_lexer	*lexer_init(char *data);
 char	*ft_itoa(int r);
-int		is_redirec(int	id);
+int		is_redirec(t_data *data);
 int		write_in(t_data *data, int append);
 int		read_from(t_data *data);
 void	ft_wait(t_data *data);
+int		is_cmd(int id);
+int		read_from_here(t_data *data);
 t_token	*lexer_get_next_token(t_lexer *lexer, t_data *data);
 t_token	*lexer_collect_string(t_lexer *lexer, char c, int token);
 t_token	*lexer_collect_dq_string(t_lexer *lexer, char c, t_data *data);

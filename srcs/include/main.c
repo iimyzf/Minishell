@@ -70,7 +70,7 @@ void	ft_parce(t_data *data)
 		path = path_checker(data, data->full_cmd[0], data->env);
 		if (data->full_cmd[0] && (!path && !is_buildin(data->full_cmd[0])))
 		{
-			data->exit_code = 127;
+			g_exit_code = 127;
 			if (check_char(data->full_cmd[0], '/'))
 				printf("minishell: %s: No such file or directory\n", data->full_cmd[0]);
 			else
@@ -85,13 +85,14 @@ void	ft_parce(t_data *data)
 		}
 		if (data->full_cmd[0] != NULL)
 		{
-			if (!process(path, data))
+			if (process(path, data))
+				data->active_proc += 1;
+			else
 			{
 				free(path);
 				free_array(data->full_cmd);
 				break ;
 			}
-			data->active_proc += 1;
 		}
 		free(path);
 		free_array(data->full_cmd);
