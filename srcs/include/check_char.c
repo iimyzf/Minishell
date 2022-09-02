@@ -17,7 +17,7 @@ int	check_char(char *cmd, char c)
 	int	i;
 
 	i = 0;
-	while (cmd[i])
+	while (cmd && cmd[i])
 	{
 		if (cmd[i] == c)
 			return (1);

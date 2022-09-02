@@ -24,7 +24,7 @@ t_cmd	*ft_lstnew(char	*value, int id, char *saved)
 	if (id == 9 || (id == 6 && *saved))
 		head->saved = saved;
 	else
-		head->saved = value;
+	 	head->saved = value;
 	head -> next = NULL;
 	return (head);
 }

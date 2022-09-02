@@ -161,14 +161,6 @@ t_token	*lexer_collect_id(t_lexer *lexer, t_data *data)
 	value[0] = '\0';
 	while (lexer->c && !is_special(lexer->c))
 	{
-		/*if (lexer->c == '\'')
-			str = lexer_collect_string(lexer, lexer->c, TOKEN_SQUOTES)->value;
-		else if (lexer->c == '"')
-			str = lexer_collect_dq_string(lexer, lexer->c, data)->value;
-		else if (lexer->c == '$')
-			str = lexer_collect_env_string(lexer, data, TOKEN_DOLLAR)->value;
-		else*/
-			//str = lexer_get_current_char_as_string(lexer);
 		str = lexer_get_current_char_as_string(lexer);
 		tmp = ft_strjoin(value, str);
 		free(value);

@@ -19,28 +19,28 @@ int	is_del(int id)
 	return (0);
 }
 
-int	check_next(t_cmd **temp, int id)
+int	check_next(t_cmd *temp, int id)
 {
-	if ((*temp)->id == 14)
-		*temp = (*temp)->next;
+	if ((temp)->id == 14)
+		temp = (temp)->next;
 	if (id == 8 || is_del(id))
 	{
-		if ((*temp)->id == -1)
+		if ((temp)->id == -1)
 		{
 			printf("minishell: syntax error near unexpected token `newline\n");
 			return (0);
 		}
-		if ((*temp)->id == 8)
+		if ((temp)->id == 8)
 		{
-			printf("minishell: syntax error near unexpected token `%s'\n", (*temp)->cmd);
+			printf("minishell: syntax error near unexpected token `%s'\n", (temp)->cmd);
 			return (0);
 		}
 	}
 	if (is_del(id))
 	{
-		if ((*temp)->id == 8 || is_del((*temp)->id))
+		if ((temp)->id == 8 || is_del((temp)->id))
 		{
-			printf("minishell: syntax error near unexpected token `%s'\n", (*temp)->cmd);
+			printf("minishell: syntax error near unexpected token `%s'\n", (temp)->cmd);
 			return (0);
 		}
 	}
@@ -62,7 +62,7 @@ int	syntax_checker(t_cmd *cmd)
 	}
 	while (temp->id != -1)
 	{
-		if ((is_del(temp->id) || temp->id == 8) && !check_next(&(temp->next), temp->id))
+		if ((is_del(temp->id) || temp->id == 8) && !check_next((temp->next), temp->id))
 		{
 				g_exit_code = 258;
 				return (0);

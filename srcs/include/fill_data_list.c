@@ -32,6 +32,7 @@ void	fill_data_list(t_data *data)
 {
 	t_lexer	*lexer;
 	t_token	*token;
+	t_cmd	*temp;
 
 	lexer = lexer_init(data->input);
 	(data)->cmd_list = NULL;
@@ -43,11 +44,19 @@ void	fill_data_list(t_data *data)
 		else
 			lstadd_back(&(data)->cmd_list, ft_lstnew(token->value, token->type, \
 						data->saved));
+		//free(token->value);
 		free(token);
 		//free (data->saved);
 		token = lexer_get_next_token(lexer, data);
 	}
 	lstadd_back(&(data)->cmd_list, ft_lstnew("", -1, data->saved));
+	temp = (data)->cmd_list;
+	// while (temp)
+	// {
+	// 	fprintf(stderr, "check [%s] of id[%d]\n", temp->cmd, temp->id);
+	// 	temp = temp->next;
+	// }
+	//temp = data->cmd_list;
 	free(lexer);
 	free (token);
 }

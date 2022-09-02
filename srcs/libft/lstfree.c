@@ -16,11 +16,13 @@ void	lstfree(t_cmd *lst)
 {
 	t_cmd	*p;
 
-	while (lst != NULL)
+	while (lst->id != -1)
 	{
 		p = (lst)-> next;
-		free((lst)->cmd);
+		fprintf(stderr, "free [%s] of id[%d]\n", lst->cmd, lst->id);
+		free(lst->cmd);
 		free(lst);
 		lst = p;
 	}
+	free(lst);
 }

@@ -16,11 +16,9 @@ char	*make_path(char *path, char *cmd)
 {
 	char		*cmd_path;
 	struct stat	buf;
-
-	if(cmd_path = ft_strjoin(path, cmd), !stat(cmd_path, &buf))
-	{
+	cmd_path = ft_strjoin(path, cmd);
+	if(!stat(cmd_path, &buf))
 		return(cmd_path);
-	}
 	free(cmd_path);
 	return(NULL);
 }
@@ -61,11 +59,15 @@ char	*path_checker(t_data *data, char *cmd, char **env)
 		cmd_path = ft_strjoin(part_of_path, cmd);
 		free(part_of_path);
 		if (access(cmd_path, F_OK) == 0)
+		{
+			free_array(data->complete_path);
 			return (cmd_path);
+		}
 		else if (is_dir(cmd) && !stat(cmd, &buf))
 			return(ft_strjoin(cmd, ""));
 		free(cmd_path);
 		i++;
 	}
+	free_array(data->complete_path);
 	return (NULL);
 }

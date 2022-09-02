@@ -46,10 +46,8 @@ int	process(char *path, t_data *data)
 	return (1);
 }
 
-
 void	ft_parce(t_data *data)
 {
-
 	t_cmd	*temp;
 	char	*path;
 	int		status;
@@ -57,8 +55,17 @@ void	ft_parce(t_data *data)
 	status = -1;
 	fill_data_list(data);
 	temp = (data)->cmd_list;
-	if (!syntax_checker(temp) || !check_heredoc(data))
+	/*while (temp->id != -1)
+	{
+		fprintf(stderr, "check [%s] of id[%d]\n", temp->cmd, temp->id);
+		temp = temp->next;
+	}*/
+	if (!syntax_checker((data)->cmd_list) || !check_heredoc(data))
+	{
+		lstfree(temp);
 		return ;
+	}
+	//(data)->cmd_list = temp;
 	data->saved_out = dup(STDOUT_FILENO);
 	data->saved_in = dup(STDIN_FILENO);
 	data->active_proc = 0;
@@ -96,7 +103,11 @@ void	ft_parce(t_data *data)
 				{
 					free(path);
 					free_array(data->full_cmd);
-					break ;
+					dup2(data->saved_out, STDOUT_FILENO);
+					dup2(data->saved_in, STDIN_FILENO);
+					close (data->saved_out);
+					close (data->saved_in);
+					break;
 				}
 			}
 			free(path);
@@ -106,6 +117,7 @@ void	ft_parce(t_data *data)
 		free_array(data->full_cmd);
 	}
 	ft_wait(data);
+	lstfree(temp);
 }
 
 int main(int ac, char **av, char **env)
@@ -138,13 +150,12 @@ int main(int ac, char **av, char **env)
 /*  TO DO */
 
 /*
-	# leaks handle
+	# removing Leaks from prcing --> doing
+	# removing Leaks from exuc
 	# permissions
 	# echo -n  bbb hello>>g (hhh)
 	# exit status
-	# memory protections
-	# removing Leaks from prcing --> doing
-	# removing Leaks from exuc
+	# test memory protections
 	# errors handle
 	# $PWD then $?
 	# remove forbiden funcs like calloc and fprintf
@@ -173,6 +184,6 @@ int main(int ac, char **av, char **env)
 	# grep not woking --> done
 	# handel last pipewith no cmd --> done
 	# handel error syntax (special carrachters with no options) --> done
-	# exuce minishell in  minishell --> done
+	# exuce minishell in  minishell --> done 
 	# (ls | top) hang --> done
 */
