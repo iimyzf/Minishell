@@ -20,7 +20,10 @@ void	lstfree(t_cmd *lst)
 	{
 		p = (lst)-> next;
 		fprintf(stderr, "free [%s] of id[%d]\n", lst->cmd, lst->id);
-		free(lst->cmd);
+		if ((lst->id == 9 && *(lst->saved)) || (lst->id == 6 && *(lst->saved)))
+		 	free(lst->saved);
+		if (*lst->cmd)
+			free(lst->cmd);
 		free(lst);
 		lst = p;
 	}

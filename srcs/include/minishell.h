@@ -128,7 +128,7 @@ void	ft_export(char **path, t_data *data);
 void	ft_add_env(t_data *data, char **env);
 void	ft_strswap(char **str1, char **str2);
 void	ft_unset(t_data *data, char **str);
-t_token	*lexer_collect_alnum(t_lexer *lexer);
+char	*lexer_collect_alnum(t_lexer *lexer);
 char	**cpy_env(char **env);
 void	sort_this(char **tab);
 int		is_buildin(char *cmd);

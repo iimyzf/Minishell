@@ -29,7 +29,11 @@ char	*check_env(t_data *data, char *cmd)
 	{
 		env2 = ft_split(data->env[i], '=');
 		if (!ft_strcmp(env2[0], cmd))
-			return (env2[1]);
+		{
+			value = ft_strdup(env2[1]);
+			free_array(env2);
+			return (value);
+		}
 		free_array(env2);
 		i++;
 	}

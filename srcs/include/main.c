@@ -12,13 +12,15 @@
 
 #include "minishell.h"
 
-void	exuce_built(t_data *data)
+void	exuce_built(t_data *data,t_cmd *temp)
 {
 	if (data->redirect)
 		dup2(data->out, STDOUT_FILENO);
 	ft_execve(data, NULL);
 	close(data->in);
 	close(data->out);
+	lstfree(temp);
+	free_array(data->full_cmd);
 	ft_wait(data);
 }
 
@@ -77,7 +79,7 @@ void	ft_parce(t_data *data)
 		if (cmd_create(data))
 		{
 			if (is_buildin(data->full_cmd[0]) && data->cmd_list->id != 8 && status == -1)
-			return (exuce_built(data));
+				return (exuce_built(data, temp));
 			status = 0;
 			path = path_checker(data, data->full_cmd[0], data->env);
 			if (!path)
@@ -116,6 +118,7 @@ void	ft_parce(t_data *data)
 			data->cmd_list = data->cmd_list->next;
 		free_array(data->full_cmd);
 	}
+	//free (data->saved);
 	ft_wait(data);
 	lstfree(temp);
 }

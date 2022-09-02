@@ -102,17 +102,20 @@ t_token	*lexer_collect_env_string(t_lexer *lexer,t_data *data, int token)
 
 	data->saved = lexer_get_current_char_as_string(lexer);
 	lexer_advance(lexer, 1);
-	value = calloc(1, sizeof(char));
+	value = "";
 	if (lexer->c == '?')
 		data->saved = ft_strjoin(data->saved, "?");
 	if (ft_isalnum(lexer->c) || lexer->c == '?')
 	{
 		if (lexer->c == '?')
 			lexer_advance(lexer, 1);
-		data->saved = ft_strjoin(data->saved, lexer_collect_alnum(lexer)->value);
+		str = lexer_collect_alnum(lexer);
+		data->saved = ft_strjoin2(data->saved, str);
+		free(str);
 		str = check_env(data, data->saved + 1);
-		//fprintf(stderr, "[%s]\n", data->saved + 1);
-		value = ft_strjoin2(value, str);
+		value = ft_strjoin(value, str);
+		if (str && *str)
+			free(str);
 	}
 	else if (lexer->c != '\'' && lexer->c != '"')
 		value = data->saved;
@@ -171,7 +174,7 @@ t_token	*lexer_collect_id(t_lexer *lexer, t_data *data)
 	}
 	return token_init(TOKEN_ID, value);
 }
-t_token	*lexer_collect_alnum(t_lexer *lexer)
+char	*lexer_collect_alnum(t_lexer *lexer)
 {
 	char	*value;
 	char	*tmp;
@@ -188,7 +191,7 @@ t_token	*lexer_collect_alnum(t_lexer *lexer)
 		value = tmp;
 		lexer_advance(lexer, 1);
 	}
-	return token_init(TOKEN_ID, value);
+	return (value);
 }
 
 t_token	*lexer_advance_with_token(t_lexer *lexer, t_token *token, int count)

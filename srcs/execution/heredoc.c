@@ -87,5 +87,4 @@ void	heredoc(char *cmd, t_data *data, int exp,int is_last_here)
 			}
 		}
 	}
-	free(cmd);
 }

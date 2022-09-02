@@ -23,7 +23,6 @@ char	*del_maker(t_cmd *temp, int *is_expand)
 	{
 		if (temp->id == 6)
 			*is_expand = 0;
-		//fprintf(stderr ,"exp = %d\n", *is_expand);
 		del = ft_strjoin(del, temp->saved);
 		temp = temp->next;
 	}
@@ -34,6 +33,7 @@ int	exuc_heredoc(t_cmd	**temp, t_data *data)
 {
 	int		status;
 	int		exp;
+	char	*del;
 
 	//expand = check_char((*temp)->next->cmd);
 	if (is_last_heredoc(*temp))
@@ -45,7 +45,9 @@ int	exuc_heredoc(t_cmd	**temp, t_data *data)
 		g_exit_code = 258;
 		return(258);
 	}
-	heredoc(del_maker(*temp, &exp), data, exp, is_last_heredoc(*temp));
+	del = del_maker(*temp, &exp);
+	heredoc(del , data, exp, is_last_heredoc(*temp));
+	free(del);
 	waitpid(-1, &status, 0);
 	WIFEXITED(status);
 	return (WEXITSTATUS(status));
