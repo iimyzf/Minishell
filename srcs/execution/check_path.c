@@ -35,6 +35,7 @@ int is_dir(char *cmd)
 		i++;
 	}
 	return (0);
+	
 }
 
 char	*path_checker(t_data *data, char *cmd, char **env)
