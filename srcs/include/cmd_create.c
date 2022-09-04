@@ -23,8 +23,9 @@ void	join_cmd(t_data *data, int	*index)
 {
 	while (is_cmd(data->cmd_list->id))
 	{
-		data->full_cmd[*index] =\
-			ft_strjoin2(data->full_cmd[*index], data->cmd_list->cmd);
+		if (*data->cmd_list->cmd)
+			data->full_cmd[*index] =\
+				ft_strjoin2(data->full_cmd[*index], data->cmd_list->cmd);
 		data->cmd_list = data->cmd_list->next;
 	}
 	*index += 1;
