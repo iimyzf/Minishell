@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yagnaou <yagnaou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/29 13:29:16 by yagnaou           #+#    #+#             */
-/*   Updated: 2022/07/28 17:47:07 by yagnaou          ###   ########.fr       */
+/*   Updated: 2022/09/04 14:49:35 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ char	*ft_strcat(char *str1, char *str2);
 int		ft_strcmp(char *str1, char *str2);
 int		ft_isalnum(char c);
 char	get_next_char(int pid);
-void	ft_putendl_fd(char *s, int fd);
+char	*ft_strnstr(char *h, char *n, int l);
 void	ft_lstadd_back_new(t_lst **lst, t_lst *new);
 t_lst	*ft_lstnew_new(char *content);
 int		ft_isdigit(int c);

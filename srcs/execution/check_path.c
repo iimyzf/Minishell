@@ -6,7 +6,7 @@
 /*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 10:35:58 by azabir            #+#    #+#             */
-/*   Updated: 2022/08/30 22:00:02 by azabir           ###   ########.fr       */
+/*   Updated: 2022/09/04 14:48:05 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int is_dir(char *cmd)
 		i++;
 	}
 	return (0);
-	
+
 }
 
 char	*path_checker(t_data *data, char *cmd, char **env)
@@ -48,7 +48,7 @@ char	*path_checker(t_data *data, char *cmd, char **env)
 	i = 0;
 	if (!cmd || !*cmd)
 		return (NULL);
-	while (env[i] && strnstr(env[i], "PATH", 4) == 0)
+	while (env[i] && ft_strnstr(env[i], "PATH", 4) == 0)
 		i++;
 	if (env[i] == NULL)
 		return (NULL);
