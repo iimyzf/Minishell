@@ -20,7 +20,7 @@ char	*collect_file_name(t_data *data)
 	name = NULL;
 	while (is_cmd(data->cmd_list->id))
 	{
-		name = ft_strjoin(name, data->cmd_list->cmd);
+		name = ft_strjoin2(name, data->cmd_list->cmd);
 		data->cmd_list = data->cmd_list->next;
 	}
 	return (name);
