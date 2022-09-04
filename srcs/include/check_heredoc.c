@@ -23,7 +23,7 @@ char	*del_maker(t_cmd *temp, int *is_expand)
 	{
 		if (temp->id == 6)
 			*is_expand = 0;
-		del = ft_strjoin(del, temp->saved);
+		del = ft_strjoin2(del, temp->saved);
 		temp = temp->next;
 	}
 	return(del);
