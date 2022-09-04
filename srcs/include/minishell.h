@@ -84,6 +84,7 @@ int		write_in(t_data *data, int append);
 int		read_from(t_data *data);
 void	ft_wait(t_data *data);
 int		is_cmd(int id);
+char	*lexer_collect_env_value(t_lexer *lexer, t_data *data);
 int		redirec(int id);
 int		read_from_here(t_data *data);
 t_token	*lexer_get_next_token(t_lexer *lexer, t_data *data);

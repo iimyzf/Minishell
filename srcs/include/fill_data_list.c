@@ -16,16 +16,22 @@ void	fill_list_from_env(t_data *data, char *value)
 {
 	char	**arr;
 
-	arr = ft_split(value, ' ');
-	if (value == NULL)
-		lstadd_back(&(data)->cmd_list, ft_lstnew("", 9, data->saved));
-	while (*arr != NULL)
+	if (value && check_char(value, ' '))
 	{
-		lstadd_back(&(data)->cmd_list, ft_lstnew(*arr, 9, data->saved));
-		arr++;
-		if (*arr != NULL)
-			lstadd_back(&(data)->cmd_list, ft_lstnew(" ", 14, data->saved));
+		arr = ft_split(value, ' ');
+		while (*arr != NULL)
+		{
+			lstadd_back(&(data)->cmd_list, ft_lstnew(*arr, 9, data->saved));
+			free(*arr);
+			arr++;
+			if (*arr != NULL)
+				lstadd_back(&(data)->cmd_list, ft_lstnew(" ", 14, data->saved));
+		}
 	}
+	else if (value == NULL)
+		lstadd_back(&(data)->cmd_list, ft_lstnew("", 9, data->saved));
+	else
+		lstadd_back(&(data)->cmd_list, ft_lstnew(value, 9, data->saved));
 }
 
 void	fill_data_list(t_data *data)

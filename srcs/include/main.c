@@ -118,7 +118,7 @@ void	ft_parce(t_data *data)
 			data->cmd_list = data->cmd_list->next;
 		free_array(data->full_cmd);
 	}
-	//free (data->saved);
+	free (data->saved);
 	ft_wait(data);
 	lstfree(temp);
 }

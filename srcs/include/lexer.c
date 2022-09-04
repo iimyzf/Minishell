@@ -67,7 +67,6 @@ t_token	*lexer_get_next_token(t_lexer *lexer, t_data *data)
 		else if (lexer->c == '$')
 			return (lexer_collect_env_string(lexer, data, TOKEN_DOLLAR));
 		return (lexer_collect_id(lexer, data));
-		//write (2, "hh\n", 3);
 		lexer_advance(lexer, 1);
 	}
 	return (NULL);
@@ -118,8 +117,35 @@ t_token	*lexer_collect_env_string(t_lexer *lexer,t_data *data, int token)
 			free(str);
 	}
 	else if (lexer->c != '\'' && lexer->c != '"')
-		value = data->saved;
+		value = ft_strdup(data->saved);
 	return token_init(token, value);
+}
+
+char	*lexer_collect_env_value(t_lexer *lexer, t_data *data)
+{
+	char	*value;
+	char	*str;
+
+	data->saved = lexer_get_current_char_as_string(lexer);
+	lexer_advance(lexer, 1);
+	value = "";
+	if (lexer->c == '?')
+		data->saved = ft_strjoin(data->saved, "?");
+	if (ft_isalnum(lexer->c) || lexer->c == '?')
+	{
+		if (lexer->c == '?')
+			lexer_advance(lexer, 1);
+		str = lexer_collect_alnum(lexer);
+		data->saved = ft_strjoin2(data->saved, str);
+		free(str);
+		str = check_env(data, data->saved + 1);
+		value = ft_strjoin(value, str);
+		if (str && *str)
+			free(str);
+	}
+	else if (lexer->c != '\'' && lexer->c != '"')
+		value = ft_strdup(data->saved);
+	return (value);
 }
 
 t_token	*lexer_collect_dq_string(t_lexer *lexer, char c, t_data *data)
@@ -129,24 +155,21 @@ t_token	*lexer_collect_dq_string(t_lexer *lexer, char c, t_data *data)
 	char	*str;
 
 	lexer_advance(lexer, 1);
-	value = calloc(1, sizeof(char));
-	value[0] = '\0';
+	value = "";
 	data->saved = value;
 	while (lexer->c != c && lexer->c != '\0' && lexer->c != '\n')
 	{
 		if (lexer->c == '$' && (ft_isalnum(lexer->next_c) || lexer->next_c == '?'))
-			str = lexer_collect_env_string(lexer, data, TOKEN_DOLLAR)->value;
+			return token_init(TOKEN_DQUOTES, value);
 		else
 		{
 			str = lexer_get_current_char_as_string(lexer);
 			lexer_advance(lexer, 1);
 		}
 		if (str != NULL)
-			tmp = ft_strjoin(value, str);
+			tmp = ft_strjoin2(value, str);
 		else
 			tmp = value;
-		/*if (str != NULL)
-			free (value);*/
 		free(str);
 		value = tmp;
 	}
