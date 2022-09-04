@@ -16,7 +16,7 @@ t_lexer	*lexer_init(char *data)
 {
 	t_lexer	*lexer;
 
-	lexer = calloc(1, sizeof(t_lexer));
+	lexer = ft_calloc(1, sizeof(t_lexer));
 	lexer->data = data;
 	lexer->index = 0;
 	lexer->c = data[lexer->index];
@@ -79,13 +79,11 @@ t_token	*lexer_collect_string(t_lexer *lexer, char c, int token)
 	char	*str;
 
 	lexer_advance(lexer, 1);
-	value = calloc(1, sizeof(char));
-	value[0] = '\0';
+	value = "";
 	while (lexer->c != c && lexer->c != '\0')
 	{
 		str = lexer_get_current_char_as_string(lexer);
-		tmp = ft_strjoin(value, str);
-		free (value);
+		tmp = ft_strjoin2(value, str);
 		free(str);
 		value = tmp;
 		lexer_advance(lexer, 1);
@@ -183,7 +181,7 @@ t_token	*lexer_collect_id(t_lexer *lexer, t_data *data)
 	char	*tmp;
 	char	*str;
 	(void)	data;
-	value = calloc(1, sizeof(char));
+	value = ft_calloc(1, sizeof(char));
 	value[0] = '\0';
 	while (lexer->c && !is_special(lexer->c))
 	{
@@ -203,7 +201,7 @@ char	*lexer_collect_alnum(t_lexer *lexer)
 	char	*tmp;
 	char	*str;
 
-	value = calloc(1, sizeof(char));
+	value = ft_calloc(1, sizeof(char));
 	value[0] = '\0';
 	while (lexer->c && ft_isalnum(lexer->c))
 	{
@@ -227,7 +225,7 @@ char	*lexer_get_current_char_as_string(t_lexer *lexer)
 {
 	char	*str;
 
-	str = calloc(2, sizeof(char));
+	str = ft_calloc(2, sizeof(char));
 	if (!str)
 		return (NULL);
 	str[0] = lexer->c;
@@ -239,7 +237,7 @@ char	*lexer_get_current_char_as_two_strings(t_lexer *lexer)
 {
 	char	*str;
 
-	str = calloc(3, sizeof(char));
+	str = ft_calloc(3, sizeof(char));
 	if (!str)
 		return (NULL);
 	str[0] = lexer->c;

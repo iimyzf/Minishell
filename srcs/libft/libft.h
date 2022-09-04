@@ -27,6 +27,7 @@ char	*ft_strcat(char *str1, char *str2);
 int		ft_strcmp(char *str1, char *str2);
 int		ft_isalnum(char c);
 char	*ft_strchr(char *s, int c);
+void	*ft_calloc(int i, int s);
 char	get_next_char(int pid);
 char	*ft_strnstr(char *h, char *n, int l);
 void	ft_lstadd_back_new(t_lst **lst, t_lst *new);

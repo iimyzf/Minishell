@@ -37,7 +37,7 @@ int	write_in(t_data *data, int append)
 		data->pid = open(name, O_RDWR | O_CREAT | O_APPEND, 0777);
 	else
 		data->pid = open(name, O_RDWR | O_CREAT | O_TRUNC, 0777);
-	if (name)
+	
 		free(name);
 	if (data->pid < 0)
 	{

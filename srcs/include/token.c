@@ -16,7 +16,7 @@ t_token	*token_init(int type, char *value)
 {
 	t_token	*token;
 
-	token = calloc(1, sizeof(t_token));
+	token = ft_calloc(1, sizeof(t_token));
 	if (!token)
 		return (NULL);
 	token->type = type;

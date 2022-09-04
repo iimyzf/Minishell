@@ -162,7 +162,7 @@ int main(int ac, char **av, char **env)
 	# test memory protections
 	# errors handle
 	# $PWD then $?
-	# remove forbiden funcs like calloc and fprintf
+	# remove forbiden funcs like ft_calloc and fprintf
 	# readline + CTRL-C -- > done
 	# echo dd > "ff"ff (collect file name) --> done
 	# pwd | ls | ls -la | cat > $PWD | chokran ela had | echo "Hello| World" (ikhan) --> done
