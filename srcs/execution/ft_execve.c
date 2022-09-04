@@ -3,41 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   ft_execve.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
+/*   By: yagnaou <yagnaou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 11:34:29 by azabir            #+#    #+#             */
-/*   Updated: 2022/08/25 21:59:36 by azabir           ###   ########.fr       */
+/*   Updated: 2022/09/04 16:00:58 by yagnaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-/*int	is_builtin(char	*cmd)
-{
-	if (!ft_strcmp(cmd, "echo"))
-		return (1);
-	else if (!ft_strcmp(cmd, "cd"))
-		return (2);
-	else if (!ft_strcmp(cmd, "pwd"))
-		return (3);
-	else if (!ft_strcmp(cmd, "export"))
-		return (4);
-	else if (!ft_strcmp(cmd, "unset"))
-		return (5);
-	else if (!ft_strcmp(cmd, "env"))
-		return (6);
-	else if (!ft_strcmp(cmd, "exit"))
-		return (7);
-	if (!ft_strcmp(cmd, "<<"))
-		return (8);
-	return (0);
-}*/
 
 void	ft_execve(t_data *data, char *path)
 {
 	if (!ft_strcmp(data->full_cmd[0], "pwd") || !ft_strcmp(data->full_cmd[0], "PWD"))
-		ft_pwd();
+		ft_pwd(data);
 	else if (!ft_strcmp(data->full_cmd[0], "echo") || !ft_strcmp(data->full_cmd[0], "ECHO"))
-		ft_echo(data->full_cmd);
+		ft_echo(data->full_cmd + 1);
 	else if ((!ft_strcmp(data->full_cmd[0], "env") || !ft_strcmp(data->full_cmd[0], "ENV")) && data->full_cmd[1] == NULL)
 		ft_env(data->env);
 	else if (!ft_strcmp(data->full_cmd[0], "export") || !ft_strcmp(data->full_cmd[0], "EXPORT"))
@@ -51,16 +31,3 @@ void	ft_execve(t_data *data, char *path)
 	else
 		execve(path, data->full_cmd, data->env);
 }
-
-/*void	execution(char **lst)
-{
-	//t_env	*tmp;
-
-	// tmp = *lst;
-	printf("%s\n", lst[0]);
-	if (!(ft_strcmp(lst[0], "pwd")))
-	{
-		write(2, "IM HERE\n", 9);
-		ft_pwd();
-	}
-}*/

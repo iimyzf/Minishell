@@ -12,7 +12,7 @@
 
 NAME = minishell
 
-CFLAGS = -Wall -Werror -Wextra -lreadline -L /Users/azabir/.brew/Cellar/readline/8.1.2/lib -I /Users/azabir/.brew/Cellar/readline/8.1.2/include #-fsanitize=address -g3 
+CFLAGS = -Wall -Werror -Wextra -lreadline -L /Users/azabir/.brew/Cellar/readline/8.1.2/lib -I /Users/azabir/.brew/Cellar/readline/8.1.2/include -fsanitize=address -g3 
 
 SRCS =	srcs/include/*.c\
 		srcs/libft/*.c\

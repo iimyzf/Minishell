@@ -6,7 +6,7 @@
 /*   By: yagnaou <yagnaou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 19:21:55 by azabir            #+#    #+#             */
-/*   Updated: 2022/07/23 21:24:17 by yagnaou          ###   ########.fr       */
+/*   Updated: 2022/09/04 14:58:20 by yagnaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,9 @@ int	ft_env(char	**env)
 
 	i = -1;
 	while (env[++i])
-		printf("%s\n", env[i]);
-	return(0);
+	{
+		if (ft_strchr(env[i], '='))
+			printf("%s\n", env[i]);
+	}
+	return (0);
 }

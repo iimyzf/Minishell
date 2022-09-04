@@ -118,7 +118,7 @@ int		is_last_heredoc(t_cmd	*cmd);
 char	*cmd_array_join(char *cmd_part);
 void	execution(char **lst);
 int		check_heredoc(t_data *data);
-int		ft_pwd(void);
+int		ft_pwd(t_data *data);
 int		cmd_parts_count(t_cmd *cmd);
 int		ft_echo(char **env);
 void	fill_data_list(t_data *data);
