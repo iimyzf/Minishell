@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
+/*   By: yagnaou <yagnaou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/22 12:14:54 by yagnaou           #+#    #+#             */
-/*   Updated: 2022/08/24 19:10:28 by azabir           ###   ########.fr       */
+/*   Updated: 2022/09/04 16:27:44 by yagnaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ char	**cpy_env(char **env)
 	i = 0;
 	while (env[i])
 		i++;
-	if (!(str = malloc(sizeof(char *) * (i + 1))))
+	str = malloc(sizeof(char *) * (i + 1));
+	if (!str)
 		return (NULL);
 	i = 0;
 	while (env[i])
@@ -41,11 +42,45 @@ char	**cpy_env(char **env)
 	return (str);
 }
 
+void	add_print_qoutes(char **env, int i)
+{
+	int	j;
+
+	j = 0;
+	printf("declare -x ");
+	while (env[i][j])
+	{
+		if (env[i][j] == '=')
+		{
+			printf("%c", env[i][j]);
+			break ;
+		}
+		printf("%c", env[i][j]);
+		j++;
+	}
+	printf("%c%s%c\n", '"', env[i] + j + 1, '"');
+}
+
+void	add_print_declare(char **env)
+{
+	int		i;
+
+	i = 0;
+	while (env[i])
+	{
+		if (!ft_strchr(env[i], '='))
+			printf("declare -x %s\n", env[i]);
+		else
+			add_print_qoutes(env, i);
+		free(env[i]);
+		i++;
+	}
+}
+
 void	sort_this(char **tab)
 {
 	int		i;
 	int		j;
-	char	**tmp;
 
 	i = 0;
 	while (tab[i])
@@ -59,13 +94,7 @@ void	sort_this(char **tab)
 		}
 		i++;
 	}
-	i = 0;
-	while (tab[i])
-	{
-		tmp = ft_split(tab[i], '=');
-		printf("declare -x %s=\"%s\"\n", tmp[0], tmp[1]);
-		i++;
-	}
+	add_print_declare(tab);
 }
 
 void	ft_print_sorted_env(char **env)

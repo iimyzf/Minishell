@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
+/*   By: yagnaou <yagnaou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 19:21:35 by azabir            #+#    #+#             */
-/*   Updated: 2022/08/30 22:25:40 by azabir           ###   ########.fr       */
+/*   Updated: 2022/09/04 14:59:11 by yagnaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-#include "string.h"
 
 int	ft_is_all_num(char *str)
 {
@@ -20,18 +19,17 @@ int	ft_is_all_num(char *str)
 	i = 0;
 	while (str[i])
 	{
-		if (!(str[i] >= '0' && str[i] <= '9')
-			&& str[i] != '-' && str[i] != '+')
+		if (!(str[i] >= '0' && str[i] <= '9' && str[i] != '-'
+			&& str[i] != '+' && str[i] != '#'))
 			return (0);
 		i++;
 	}
 	return (1);
 }
 
-int	error_print(t_data *data, char *str, int code)
+int	error_print(char *str, int code)
 {
-	(void) data;
-	write(2, str, strlen(str));
+	write(2, str, ft_strlen(str));
 	g_exit_code = code;
 	return (code);
 }
@@ -39,15 +37,15 @@ int	error_print(t_data *data, char *str, int code)
 void	just_exit(t_data *data)
 {
 	write(2, "exit\n", 5);
-	(void) data;
-	if (atoi(data->full_cmd[1]) >= 0 && (long) atoi(data->full_cmd[1]) < __LONG_MAX__)
+	if (atoi(data->full_cmd[1]) >= 0
+		&& (long) atoi(data->full_cmd[1]) < __LONG_MAX__)
 	{
-		g_exit_code = (unsigned int)atoi(data->full_cmd[1]) % 255;
+		g_exit_code = (unsigned int)atoi(data->full_cmd[1]) % 256;
 		exit(g_exit_code);
 	}
 	else
 	{
-		g_exit_code = (unsigned int)atoi(data->full_cmd[1]) % 255;
+		g_exit_code = (unsigned int)atoi(data->full_cmd[1]) % 256;
 		exit(g_exit_code);
 	}
 }
@@ -62,33 +60,20 @@ int	ft_exit(t_data *data)
 		printf("exit\n");
 		exit(g_exit_code);
 	}
-	if (!ft_is_all_num(data->full_cmd[1]))
+	if (!ft_is_all_num(data->full_cmd[1]) && (data->full_cmd[1][1] == '\0'
+		|| data->full_cmd[1][1] == '-' || data->full_cmd[1][1] == '+'
+		|| !(data->full_cmd[1][1] >= '0' && data->full_cmd[1][1] <= '9')))
 	{
 		printf("exit\n");
-		printf("minishell: exit: %s: numeric argument required\n", data->full_cmd[1]);
+		printf("minishell: exit: %s: numeric argument required\n",
+			data->full_cmd[1]);
 		exit(255);
 	}
 	while (data->full_cmd[i])
 		i++;
 	if (i != 2)
-		return (error_print(data, "minishell: exit: too many arguments\n", 1));
+		return (error_print("minishell: exit: too many arguments\n", 1));
 	else
-	{
 		just_exit(data);
-		printf("exit code : %d\n", g_exit_code);
-	}
 	return (1);
 }
-
-// int	main(int ac, char **av)
-// {
-// 	t_data	*data;
-// 	int		i;
-
-// 	i = 0;
-// 	data = (t_data*)malloc(sizeof(t_data));
-// 	data->full_cmd = av;
-// 	g_exit_code = 0;
-// 	ft_exit(data);
-// 	return (0);
-// }

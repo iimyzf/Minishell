@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
+/*   By: yagnaou <yagnaou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 19:21:07 by azabir            #+#    #+#             */
-/*   Updated: 2022/08/24 19:09:46 by azabir           ###   ########.fr       */
+/*   Updated: 2022/09/04 16:59:27 by yagnaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,19 @@ int	check_if_exist(t_data *data, char *path)
 		env2 = ft_split(data->env[i], '=');
 		if (!ft_strcmp(env2[0], env_path[0]))
 		{
-			//free(env_path);
-			//free(env2);
-			//free(data->env[i]);
+			free(env_path[i]);
+			free(env2[i]);
+			free(data->env[i]);
 			data->env[i] = str;
 			return (1);
 		}
+		//free(env_path[i]);
+		//free(env2[i]);
 		i++;
 	}
+	free(str);
+	free_array(env_path);
+	free_array(env2);
 	return (0);
 }
 
@@ -53,16 +58,14 @@ char	**add_to_list(t_data *data, char *str)
 	while (data->env[i])
 	{
 		new_env[i] = ft_strdup(data->env[i]);
-		//free(data->env[i]);
 		i++;
 	}
 	new_env[i] = string;
 	new_env[i + 1] = NULL;
-	//free(data->env);f
 	return (new_env);
 }
 
-int check_syntax(char *str)
+int	check_syntax(char *str)
 {
 	char	**string;
 	int		i;
@@ -71,18 +74,19 @@ int check_syntax(char *str)
 	string = ft_split(str, '=');
 	if (string[0] == NULL || (ft_isdigit(string[0][0]) && string[0][0] != '_'))
 	{
-		//free(string);
+		free_array(string);
 		return (0);
 	}
 	while (string[0][i])
 	{
-		if ((!ft_isalnum2(string[0][i]) && string[0][i] != '_'))
+		if ((!ft_isalnum(string[0][i]) && string[0][i] != '_'))
 		{
-			//free(string);
+			free_array(string);
 			return (0);
 		}
 		i++;
 	}
+	free_array(string);
 	return (1);
 }
 
@@ -106,11 +110,5 @@ void	ft_export(char **path, t_data *data)
 				data->env = add_to_list(data, path[i]);
 		}
 		i++;
-}
-	// i = 0;
-	// while (data->env[i])
-	// {
-	// 	printf("%s\n", data->env[i]);
-	// 	i++;
-	// }
+	}
 }

@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
+/*   By: yagnaou <yagnaou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 19:20:49 by azabir            #+#    #+#             */
-/*   Updated: 2022/08/24 18:57:53 by azabir           ###   ########.fr       */
+/*   Updated: 2022/09/04 14:56:45 by yagnaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-#include <string.h>
 
 void	set_old_pwd(t_data *data)
 {
@@ -80,7 +79,10 @@ void	go_to_env(t_data *data, char *path)
 	tmp = path;
 	ret = chdir(tmp);
 	if (ret == -1)
+	{
 		printf("minishel: cd: no such file or directory\n");
+		g_exit_code = 1;
+	}
 	set_new_pwd(data);
 }
 
@@ -106,58 +108,3 @@ void	ft_cd(t_data *data, char *path)
 	else
 		go_to_env(data, path);
 }
-
-// void	ft_cd(char *path)
-// {
-// 	char	*buffer;
-// 	char	*newdir;
-
-// 	buffer = NULL;
-// 	buffer = getcwd(buffer, 1024);
-// 	printf("This is the old PWD: %s\n", buffer);
-// 	newdir = path;
-// 	if (chdir(newdir) == -1)
-// 		printf("No such file or directory\n");
-// 	else
-// 	{
-// 		buffer = getcwd(buffer, 1024);
-// 		printf("This is the new PWD: %s\n", buffer);
-// 	}
-// }
-
-// int	main(int ac, char **av)
-// {
-// 	char	*path;
-// 	t_data	*data;
-// 	int		i;
-
-// 	i = 0;
-// 	if (ac == 1)
-// 		ft_cd(data, "~");
-// 	else
-// 	{
-// 		path = av[1];
-// 		ft_cd(data, path);
-// 	}
-// 	return (0);
-// 	// char	*buffer;
-// 	// char	*newdir;
-
-// 	// if (ac == 1)
-// 	// {
-// 	// 	buffer = getcwd(buffer, 1024);
-// 	// 	printf("%s\n", buffer);
-// 	// }
-// 	// else if (ac == 2)
-// 	// {
-// 	// 	newdir = av[1];
-// 	// 	if (chdir(newdir) == -1)
-// 	// 		printf("Error\n");
-// 	// 	else
-// 	// 	{
-// 	// 		buffer = getcwd(buffer, 1024);
-// 	// 		printf("%s\n", buffer);
-// 	// 	}
-// 	// }
-// 	// return (0);
-// }

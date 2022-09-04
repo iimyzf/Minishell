@@ -3,30 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
+/*   By: yagnaou <yagnaou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 19:21:25 by azabir            #+#    #+#             */
-/*   Updated: 2022/08/17 17:45:59 by azabir           ###   ########.fr       */
+/*   Updated: 2022/09/04 15:58:58 by yagnaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int check_syntax_unset(char *str)
+int	check_syntax_unset(char *str)
 {
-	int		i;
+	int	i;
 
 	i = 1;
 	if (ft_isdigit(str[0]) && str[0] != '_')
 	{
-		//free(str);
+		free(str);
 		return (0);
 	}
 	while (str[i])
 	{
-		if ((!ft_isalnum2(str[i]) && str[i] != '_'))
+		if ((!ft_isalnum(str[i]) && str[i] != '_'))
 		{
-			//free(string);
+			free(str);
 			return (0);
 		}
 		i++;
@@ -62,7 +62,6 @@ char	**delete_it(t_data *data, int index)
 	if (!new)
 		return (NULL);
 	i = 0;
-	printf("---------------------------> INDEX: %d\n", index);
 	while (data->env[i])
 	{
 		if (i != index)
