@@ -6,7 +6,7 @@
 /*   By: yagnaou <yagnaou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 19:20:49 by azabir            #+#    #+#             */
-/*   Updated: 2022/09/05 15:10:16 by yagnaou          ###   ########.fr       */
+/*   Updated: 2022/09/05 21:49:02 by yagnaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,13 @@ void	set_old_pwd(t_data *data)
 		tmp2[0] = "OLDPWD=";
 		tmp2[1] = NULL;
 		ft_export(tmp2, data);
-		free_array(tmp2);
-		free(old_pwd);
+		free(tmp2);
 		index = return_index(data->env, "OLDPWD");
 	}
-	tmp = ft_strjoin("OLDPWD=", old_pwd);
+	if (old_pwd)
+		tmp = ft_strjoin("OLDPWD=", old_pwd);
+	else
+		tmp = ft_strjoin("OLDPWD=", data->env[index] + 7);
 	free(data->env[index]);
 	data->env[index] = ft_strdup(tmp);
 	free(old_pwd);
@@ -53,11 +55,13 @@ void	set_new_pwd(t_data *data)
 		tmp2[0] = "PWD=";
 		tmp2[1] = NULL;
 		ft_export(tmp2, data);
-		free_array(tmp2);
-		free(new_pwd);
+		free(tmp2);
 		index = return_index(data->env, "PWD");
 	}
-	tmp = ft_strjoin("PWD=", new_pwd);
+	if (new_pwd)
+		tmp = ft_strjoin("PWD=", new_pwd);
+	else
+		tmp = ft_strjoin("PWD=", data->env[index] + 4);
 	free(data->env[index]);
 	data->env[index] = ft_strdup(tmp);
 	free(new_pwd);
@@ -81,11 +85,9 @@ char	*get_from_env(t_data *data, char *str, int size, int start)
 void	go_to_env(t_data *data, char *path)
 {
 	int		ret;
-	char	*tmp;
 
 	set_old_pwd(data);
-	tmp = path;
-	ret = chdir(tmp);
+	ret = chdir(path);
 	if (ret == -1)
 	{
 		printf("minishel: cd: no such file or directory\n");
@@ -114,5 +116,7 @@ void	ft_cd(t_data *data, char *path)
 		go_to_env(data, env);
 	}
 	else
+	{
 		go_to_env(data, path);
+	}
 }
