@@ -42,7 +42,7 @@ int	write_in(t_data *data, int append)
 	if (data->pid < 0)
 	{
 		perror("minishell");
-		g_exit_code = errno;
+		g_exit_code = 1;
 		return (0) ;
 	}
 	data->redirect = 1;
@@ -66,7 +66,7 @@ int		read_from(t_data *data)
 	if (data->pid < 0)
 	{
 		perror("minishell");
-		g_exit_code = errno;
+		g_exit_code = 1;
 		return (0) ;
 	}
 	dup2(data->pid, STDIN_FILENO);

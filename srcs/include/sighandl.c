@@ -16,7 +16,7 @@ void	sighandl(int sig)
 {
 	if (sig == SIGINT)
 	{
-		//fprintf(stderr, "from main %d\n", getpid());
+		g_exit_code = 1;
 		write(1, "\n", 1);
 		rl_replace_line("", 0);
 		rl_on_new_line();

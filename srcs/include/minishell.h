@@ -82,7 +82,7 @@ char	*ft_itoa(int r);
 int		is_redirec(t_data *data);
 int		write_in(t_data *data, int append);
 int		read_from(t_data *data);
-void	ft_wait(t_data *data);
+void	ft_wait(t_data *data, t_cmd *temp);
 int		is_cmd(int id);
 char	*lexer_collect_env_value(t_lexer *lexer, t_data *data);
 int		redirec(int id);

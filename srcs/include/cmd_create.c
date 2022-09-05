@@ -23,7 +23,6 @@ void	join_cmd(t_data *data, int	*index)
 {
 	while (is_cmd(data->cmd_list->id))
 	{
-		// if (*data->cmd_list->cmd)
 			data->full_cmd[*index] =\
 				ft_strjoin3(data->full_cmd[*index], data->cmd_list->cmd);
 		data->cmd_list = data->cmd_list->next;
@@ -44,7 +43,6 @@ int	cmd_create(t_data *data)
 	data->full_cmd = ft_calloc((cmd_parts_count(temp) + 1), sizeof(char *));
 	while (data->cmd_list->id != -1 && data->cmd_list->id != 8)
 	{
-		fprintf(stderr, "cmd = [%s] >>> id = [%d]\n", data->cmd_list->cmd, data->cmd_list->id);
 		if (redirec( data->cmd_list->id))
 			status = is_redirec(data);
 		else if (is_cmd(data->cmd_list->id) && status)

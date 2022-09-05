@@ -151,16 +151,18 @@ t_token	*lexer_collect_dq_string(t_lexer *lexer, char c, t_data *data, int token
 	char	*value;
 	char	*tmp;
 	char	*str;
+	char	*saved;
 
 	lexer_advance(lexer, 1);
 	value = "";
-	data->saved = value;
 	while (lexer->c != c && lexer->c != '\0' && lexer->c != '\n')
 	{
 		if (lexer->c == '$' && (ft_isalnum(lexer->next_c) || lexer->next_c == '?'))
 		{
 			token = TOKEN_DOLLAR;
 			str = lexer_collect_env_value(lexer, data);
+			saved = ft_strjoin2(saved, data->saved);
+			free (data->saved);
 		}
 		else
 		{
@@ -174,6 +176,7 @@ t_token	*lexer_collect_dq_string(t_lexer *lexer, char c, t_data *data, int token
 		free(str);
 		value = tmp;
 	}
+	data->saved = saved;
 	lexer_advance(lexer, 1);
 	return token_init(token, value);
 }

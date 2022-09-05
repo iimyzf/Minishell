@@ -19,9 +19,8 @@ void	exuce_built(t_data *data,t_cmd *temp)
 	ft_execve(data, NULL);
 	close(data->in);
 	close(data->out);
-	lstfree(temp);
 	free_array(data->full_cmd);
-	ft_wait(data);
+	ft_wait(data, temp);
 }
 
 int	process(char *path, t_data *data)
@@ -57,17 +56,11 @@ void	ft_parce(t_data *data)
 	status = -1;
 	fill_data_list(data);
 	temp = (data)->cmd_list;
-	/*while (temp->id != -1)
-	{
-		fprintf(stderr, "check [%s] of id[%d]\n", temp->cmd, temp->id);
-		temp = temp->next;
-	}*/
 	if (!syntax_checker((data)->cmd_list, 0) || !check_heredoc(data))
 	{
 		lstfree(temp);
 		return ;
 	}
-	//(data)->cmd_list = temp;
 	data->saved_out = dup(STDOUT_FILENO);
 	data->saved_in = dup(STDIN_FILENO);
 	data->active_proc = 0;
@@ -81,37 +74,41 @@ void	ft_parce(t_data *data)
 			if (is_buildin(data->full_cmd[0]) && data->cmd_list->id != 8 && status == -1)
 				return (exuce_built(data, temp));
 			status = 0;
+			if (data->cmd_list->id != -1)
+				data->cmd_list = data->cmd_list->next;
 			path = path_checker(data, data->full_cmd[0], data->env);
 			if (!path)
 			{
 				g_exit_code = 127;
 				if (check_char(data->full_cmd[0], '/'))
-					printf("minishell: %s: No such file or directory\n", data->full_cmd[0]);
+				{
+					if (!access(data->full_cmd[0], F_OK))
+					{
+						g_exit_code = 126;
+						printf("minishell: %s: is a directory\n", data->full_cmd[0]);
+					}
+					else
+						printf("minishell: %s: No such file or directory\n", data->full_cmd[0]);
+				}
 				else if (data->full_cmd[0])
 					printf("minishell: %s: command not found\n", data->full_cmd[0]);
-				// else
-				// 	printf("minishell:  : command not found\n");
 			}
-			if (data->cmd_list->id != -1)
-				data->cmd_list = data->cmd_list->next;
-			if (data->cmd_list && data->cmd_list->id == -1 && !data->redirect)
+			else if (data->full_cmd[0] != NULL)
 			{
-				data->out = 1;
-				close (data->fd[1]);
-			}
-			if (data->full_cmd[0] != NULL)
-			{
+				if (data->cmd_list && data->cmd_list->id == -1 && !data->redirect)
+				{
+					data->out = 1;
+					close (data->fd[1]);
+				}
 				if (process(path, data))
 					data->active_proc += 1;
 				else
 				{
 					free(path);
 					free_array(data->full_cmd);
-					dup2(data->saved_out, STDOUT_FILENO);
-					dup2(data->saved_in, STDIN_FILENO);
-					close (data->saved_out);
-					close (data->saved_in);
-					break;
+					ft_wait(data, temp);
+					g_exit_code = 1;
+					return;
 				}
 			}
 			free(path);
@@ -120,8 +117,7 @@ void	ft_parce(t_data *data)
 			data->cmd_list = data->cmd_list->next;
 		free_array(data->full_cmd);
 	}
-	ft_wait(data);
-	lstfree(temp);
+	ft_wait(data, temp);
 }
 
 int main(int ac, char **av, char **env)
@@ -132,6 +128,7 @@ int main(int ac, char **av, char **env)
 		return (1);
 	av[0] = "minishell-1.0$ ";
 	data.env = env;
+	g_exit_code = 0;
 	signal(SIGINT, sighandl);
 	signal(SIGQUIT, SIG_IGN);
 	while (1)
@@ -154,7 +151,8 @@ int main(int ac, char **av, char **env)
 /*  TO DO */
 
 /*
-	# removing Leaks from prcing --> doing
+	# removing Leaks from prcing --> testing
+	# echo "$USER$USER"
 	# removing Leaks from exuc
 	# permissions
 	# echo -n  bbb hello>>g (hhh)
@@ -163,6 +161,7 @@ int main(int ac, char **av, char **env)
 	# errors handle
 	# $PWD then $?
 	# remove forbiden funcs like ft_calloc and fprintf
+	# $PWD --> done
 	# readline + CTRL-C -- > done
 	# echo dd > "ff"ff (collect file name) --> done
 	# pwd | ls | ls -la | cat > $PWD | chokran ela had | echo "Hello| World" (ikhan) --> done

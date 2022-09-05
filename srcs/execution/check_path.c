@@ -43,11 +43,13 @@ char	*path_checker(t_data *data, char *cmd, char **env)
 	char	*cmd_path;
 	char	*part_of_path;
 	int		i;
-	struct stat buf;
+	//struct stat buf;
 
 	i = 0;
 	if (!cmd || !*cmd)
 		return (NULL);
+	if (!access(cmd_path, F_OK) && access(cmd, W_OK) != 0)
+		return(ft_strjoin(cmd, ""));
 	while (env[i] && ft_strnstr(env[i], "PATH", 4) == 0)
 		i++;
 	if (env[i] == NULL)
@@ -64,8 +66,6 @@ char	*path_checker(t_data *data, char *cmd, char **env)
 			free_array(data->complete_path);
 			return (cmd_path);
 		}
-		else if (is_dir(cmd) && !stat(cmd, &buf))
-			return(ft_strjoin(cmd, ""));
 		free(cmd_path);
 		i++;
 	}

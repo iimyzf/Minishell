@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-void	ft_wait(t_data *data)
+void	ft_wait(t_data *data, t_cmd *temp)
 {
 	int	status;
 
@@ -27,6 +27,7 @@ void	ft_wait(t_data *data)
 	dup2(data->saved_in, STDIN_FILENO);
 	close (data->saved_out);
 	close (data->saved_in);
+	lstfree(temp);
 }
 
 int	is_cmd(int id)
