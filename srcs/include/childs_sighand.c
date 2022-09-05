@@ -16,7 +16,8 @@ void	child_sighand(int sig)
 {
 	if (sig == SIGINT)
 	{
-		fprintf(stderr, "from child %d\n", getpid());
+		g_exit_code = 1;
+		write(1, "", 1);
 		exit(1);
 	}
 	else if (sig == SIGQUIT)

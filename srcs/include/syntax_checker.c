@@ -19,6 +19,13 @@ int	is_del(int id)
 	return (0);
 }
 
+void	max_here(void)
+{
+	printf("minishell: maximum here-document count exceeded\n");
+	g_exit_code = 2;
+	exit(2);
+}
+
 int	check_next(t_cmd *temp, int id)
 {
 	if ((temp)->id == 14)
@@ -47,7 +54,7 @@ int	check_next(t_cmd *temp, int id)
 	return (1);
 }
 
-int	syntax_checker(t_cmd *cmd)
+int	syntax_checker(t_cmd *cmd, int	here_count)
 {
 	t_cmd	*temp;
 	
@@ -62,6 +69,8 @@ int	syntax_checker(t_cmd *cmd)
 	}
 	while (temp->id != -1)
 	{
+		if (temp->id == 4 && ++here_count > 16)
+			max_here();
 		if ((is_del(temp->id) || temp->id == 8) && !check_next((temp->next), temp->id))
 		{
 				g_exit_code = 258;

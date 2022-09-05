@@ -62,7 +62,7 @@ void	ft_parce(t_data *data)
 		fprintf(stderr, "check [%s] of id[%d]\n", temp->cmd, temp->id);
 		temp = temp->next;
 	}*/
-	if (!syntax_checker((data)->cmd_list) || !check_heredoc(data))
+	if (!syntax_checker((data)->cmd_list, 0) || !check_heredoc(data))
 	{
 		lstfree(temp);
 		return ;

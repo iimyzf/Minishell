@@ -138,7 +138,7 @@ int		return_index(char **env, char *str);
 int		check_char(char *cmd, char c);
 char	*make_str(t_cmd *temp, int id);
 void	dollar(t_data *data, char **cmd, int id);
-int		syntax_checker(t_cmd *cmd);
+int		syntax_checker(t_cmd *cmd, int	here_count);
 void	ft_print_sorted_env(char **env);
 void	sighandl(int sig);
 void	check_last(t_data *data);
