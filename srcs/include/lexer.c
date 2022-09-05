@@ -49,7 +49,7 @@ t_token	*lexer_get_next_token(t_lexer *lexer, t_data *data)
 		if (lexer->c == ' ' || lexer->c == '\t')
 			lexer_skip_white_spaces(lexer);
 		if (lexer->c == '"')
-			return (lexer_collect_dq_string(lexer, lexer->c, data));
+			return (lexer_collect_dq_string(lexer, lexer->c, data, TOKEN_DQUOTES));
 		if (lexer->c == '\'')
 			return (lexer_collect_string(lexer, lexer->c, TOKEN_SQUOTES));
 		if (lexer->c == '>' && lexer->data[lexer->index + 1] == '>')
@@ -146,7 +146,7 @@ char	*lexer_collect_env_value(t_lexer *lexer, t_data *data)
 	return (value);
 }
 
-t_token	*lexer_collect_dq_string(t_lexer *lexer, char c, t_data *data)
+t_token	*lexer_collect_dq_string(t_lexer *lexer, char c, t_data *data, int token)
 {
 	char	*value;
 	char	*tmp;
@@ -158,7 +158,10 @@ t_token	*lexer_collect_dq_string(t_lexer *lexer, char c, t_data *data)
 	while (lexer->c != c && lexer->c != '\0' && lexer->c != '\n')
 	{
 		if (lexer->c == '$' && (ft_isalnum(lexer->next_c) || lexer->next_c == '?'))
-			return token_init(TOKEN_DQUOTES, value);
+		{
+			token = TOKEN_DOLLAR;
+			str = lexer_collect_env_value(lexer, data);
+		}
 		else
 		{
 			str = lexer_get_current_char_as_string(lexer);
@@ -172,7 +175,7 @@ t_token	*lexer_collect_dq_string(t_lexer *lexer, char c, t_data *data)
 		value = tmp;
 	}
 	lexer_advance(lexer, 1);
-	return token_init(TOKEN_DQUOTES, value);
+	return token_init(token, value);
 }
 
 t_token	*lexer_collect_id(t_lexer *lexer, t_data *data)

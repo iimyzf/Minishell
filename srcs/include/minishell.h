@@ -89,7 +89,7 @@ int		redirec(int id);
 int		read_from_here(t_data *data);
 t_token	*lexer_get_next_token(t_lexer *lexer, t_data *data);
 t_token	*lexer_collect_string(t_lexer *lexer, char c, int token);
-t_token	*lexer_collect_dq_string(t_lexer *lexer, char c, t_data *data);
+t_token	*lexer_collect_dq_string(t_lexer *lexer, char c, t_data *data, int token);
 t_token	*lexer_collect_id(t_lexer *lexer, t_data *data);
 t_token	*lexer_advance_with_token(t_lexer *lexer, t_token *token, int count);
 t_token	*lexer_collect_env_string(t_lexer *lexer, t_data *data, int token);
