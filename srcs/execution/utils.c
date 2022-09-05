@@ -6,7 +6,7 @@
 /*   By: yagnaou <yagnaou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/22 12:14:54 by yagnaou           #+#    #+#             */
-/*   Updated: 2022/09/04 16:27:44 by yagnaou          ###   ########.fr       */
+/*   Updated: 2022/09/04 20:48:52 by yagnaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ void	add_print_declare(char **env)
 			printf("declare -x %s\n", env[i]);
 		else
 			add_print_qoutes(env, i);
-		free(env[i]);
 		i++;
 	}
 }
@@ -95,6 +94,7 @@ void	sort_this(char **tab)
 		i++;
 	}
 	add_print_declare(tab);
+	free_array(tab);
 }
 
 void	ft_print_sorted_env(char **env)
