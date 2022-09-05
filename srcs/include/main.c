@@ -36,6 +36,7 @@ int	process(char *path, t_data *data)
 	}
 	if (pid == 0)
 	{
+		signal(SIGQUIT, SIG_DFL);
 		dup2(data->out, STDOUT_FILENO);
 		close(data->in);
 		ft_execve(data, path);
@@ -127,7 +128,7 @@ int main(int ac, char **av, char **env)
 	if (ac != 1)
 		return (1);
 	av[0] = "minishell-1.0$ ";
-	data.env = env;
+	data.env = cpy_env(env);
 	g_exit_code = 0;
 	signal(SIGINT, sighandl);
 	signal(SIGQUIT, SIG_IGN);
@@ -155,6 +156,7 @@ int main(int ac, char **av, char **env)
 	# echo "$USER$USER"
 	# removing Leaks from exuc
 	# permissions
+	# $xcvbghj ls
 	# echo -n  bbb hello>>g (hhh)
 	# exit status
 	# test memory protections

@@ -20,8 +20,10 @@ void	ft_wait(t_data *data, t_cmd *temp)
 	{
 		waitpid(-1, &status, 0);
 		data->active_proc --;
-		WIFEXITED(status);
-		g_exit_code = (WEXITSTATUS(status));
+		if (WIFEXITED(status))
+			g_exit_code = (WEXITSTATUS(status));
+		if (WIFSIGNALED(status))
+			g_exit_code = WTERMSIG(status) + 128;
 	}
 	dup2(data->saved_out, STDOUT_FILENO);
 	dup2(data->saved_in, STDIN_FILENO);
