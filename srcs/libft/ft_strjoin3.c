@@ -17,7 +17,7 @@ char	*ft_strjoin3(char *s1, char *s2)
 	char	*ptr;
 	size_t	j;
 
-	if (!s1 || *s1 == 0)
+	if (!s1)
 	{
 		s1 = malloc(sizeof(char) * 1);
 		s1[0] = 0;
@@ -34,10 +34,10 @@ char	*ft_strjoin3(char *s1, char *s2)
 		ptr[j] = s1[j];
 		j++;
 	}
-	//ptr[j++] = '	';
 	while (*s2)
 		ptr[j++] = *s2++;
+	//ptr[j++] = '	';
 	ptr[j] = '\0';
-	//free (s1);
+	free (s1);
 	return (ptr);
 }

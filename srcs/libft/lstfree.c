@@ -19,7 +19,7 @@ void	lstfree(t_cmd *lst)
 	while (lst->id != -1)
 	{
 		p = (lst)-> next;
-		fprintf(stderr, "free [%s] of id[%d]\n", lst->cmd, lst->id);
+		//fprintf(stderr, "free [%s] of id[%d]\n", lst->cmd, lst->id);
 		if ((lst->id == 9) && check_char(lst->saved, '$'))
 		 	free(lst->saved);
 		if (*lst->cmd)

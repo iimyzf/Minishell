@@ -101,7 +101,7 @@ t_token	*lexer_collect_env_string(t_lexer *lexer,t_data *data, int token)
 	lexer_advance(lexer, 1);
 	value = "";
 	if (lexer->c == '?')
-		data->saved = ft_strjoin(data->saved, "?");
+		data->saved = ft_strjoin2(data->saved, "?");
 	if (ft_isalnum(lexer->c) || lexer->c == '?')
 	{
 		if (lexer->c == '?')
@@ -128,7 +128,7 @@ char	*lexer_collect_env_value(t_lexer *lexer, t_data *data)
 	lexer_advance(lexer, 1);
 	value = "";
 	if (lexer->c == '?')
-		data->saved = ft_strjoin(data->saved, "?");
+		data->saved = ft_strjoin2(data->saved, "?");
 	if (ft_isalnum(lexer->c) || lexer->c == '?')
 	{
 		if (lexer->c == '?')

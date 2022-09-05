@@ -23,7 +23,7 @@ char	*check_env(t_data *data, char *cmd)
 	if (*cmd == '?')
 	{
 		value = ft_itoa(g_exit_code);
-		return (ft_strjoin(value, cmd + 1));
+		return (ft_strjoin2(value, cmd + 1));
 	}
 	while (data->env[i])
 	{

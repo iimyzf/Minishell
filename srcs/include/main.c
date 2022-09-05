@@ -89,8 +89,8 @@ void	ft_parce(t_data *data)
 					printf("minishell: %s: No such file or directory\n", data->full_cmd[0]);
 				else if (data->full_cmd[0])
 					printf("minishell: %s: command not found\n", data->full_cmd[0]);
-				else
-					printf("minishell:  : command not found\n");
+				// else
+				// 	printf("minishell:  : command not found\n");
 			}
 			if (data->cmd_list->id != -1)
 				data->cmd_list = data->cmd_list->next;
