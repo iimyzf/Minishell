@@ -6,7 +6,7 @@
 /*   By: yagnaou <yagnaou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 19:21:25 by azabir            #+#    #+#             */
-/*   Updated: 2022/09/04 15:58:58 by yagnaou          ###   ########.fr       */
+/*   Updated: 2022/09/04 21:04:25 by yagnaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,11 @@ int	check_syntax_unset(char *str)
 
 	i = 1;
 	if (ft_isdigit(str[0]) && str[0] != '_')
-	{
-		free(str);
 		return (0);
-	}
 	while (str[i])
 	{
 		if ((!ft_isalnum(str[i]) && str[i] != '_'))
-		{
-			free(str);
 			return (0);
-		}
 		i++;
 	}
 	return (1);
@@ -72,6 +66,7 @@ char	**delete_it(t_data *data, int index)
 		i++;
 	}
 	new[j] = NULL;
+	free_array(data->env);
 	return (new);
 }
 

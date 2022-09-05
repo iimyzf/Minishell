@@ -6,7 +6,7 @@
 /*   By: yagnaou <yagnaou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 19:21:07 by azabir            #+#    #+#             */
-/*   Updated: 2022/09/04 16:59:27 by yagnaou          ###   ########.fr       */
+/*   Updated: 2022/09/04 20:47:31 by yagnaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,19 +27,17 @@ int	check_if_exist(t_data *data, char *path)
 		env2 = ft_split(data->env[i], '=');
 		if (!ft_strcmp(env2[0], env_path[0]))
 		{
-			free(env_path[i]);
-			free(env2[i]);
 			free(data->env[i]);
 			data->env[i] = str;
+			free_array(env_path);
+			free_array(env2);
 			return (1);
 		}
-		//free(env_path[i]);
-		//free(env2[i]);
+		free_array(env2);
 		i++;
 	}
 	free(str);
 	free_array(env_path);
-	free_array(env2);
 	return (0);
 }
 
@@ -62,6 +60,7 @@ char	**add_to_list(t_data *data, char *str)
 	}
 	new_env[i] = string;
 	new_env[i + 1] = NULL;
+	free_array(data->env);
 	return (new_env);
 }
 

@@ -6,7 +6,7 @@
 /*   By: yagnaou <yagnaou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 19:20:57 by azabir            #+#    #+#             */
-/*   Updated: 2022/09/04 15:12:21 by yagnaou          ###   ########.fr       */
+/*   Updated: 2022/09/05 15:12:43 by yagnaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,8 @@ int	ft_pwd(t_data *data)
 		if (data->pwd != NULL)
 			free (data->pwd);
 		data->pwd = ft_strdup(path);
+		free(path);
 	}
 	printf("%s\n", data->pwd);
-	free(data->pwd);
-	free(path);
 	return (0);
 }

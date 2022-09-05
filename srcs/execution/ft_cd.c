@@ -6,7 +6,7 @@
 /*   By: yagnaou <yagnaou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 19:20:49 by azabir            #+#    #+#             */
-/*   Updated: 2022/09/04 14:56:45 by yagnaou          ###   ########.fr       */
+/*   Updated: 2022/09/05 15:10:16 by yagnaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,15 @@ void	set_old_pwd(t_data *data)
 		tmp2[0] = "OLDPWD=";
 		tmp2[1] = NULL;
 		ft_export(tmp2, data);
+		free_array(tmp2);
+		free(old_pwd);
 		index = return_index(data->env, "OLDPWD");
 	}
 	tmp = ft_strjoin("OLDPWD=", old_pwd);
-	//free(old_pwd);
+	free(data->env[index]);
 	data->env[index] = ft_strdup(tmp);
+	free(old_pwd);
+	free(tmp);
 }
 
 void	set_new_pwd(t_data *data)
@@ -49,11 +53,15 @@ void	set_new_pwd(t_data *data)
 		tmp2[0] = "PWD=";
 		tmp2[1] = NULL;
 		ft_export(tmp2, data);
+		free_array(tmp2);
+		free(new_pwd);
 		index = return_index(data->env, "PWD");
 	}
 	tmp = ft_strjoin("PWD=", new_pwd);
-	//free(new_pwd);
+	free(data->env[index]);
 	data->env[index] = ft_strdup(tmp);
+	free(new_pwd);
+	free(tmp);
 }
 
 char	*get_from_env(t_data *data, char *str, int size, int start)
