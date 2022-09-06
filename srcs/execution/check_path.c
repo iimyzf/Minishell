@@ -48,7 +48,8 @@ char	*path_checker(t_data *data, char *cmd, char **env)
 	i = 0;
 	if (!cmd || !*cmd)
 		return (NULL);
-	if (!access(cmd_path, F_OK) && access(cmd, W_OK) != 0)
+	//fprintf(stderr, "access = %d\n",access(cmd, X_OK));
+	if (!access(cmd, F_OK) && !access(cmd, X_OK))
 		return(ft_strjoin(cmd, ""));
 	while (env[i] && ft_strnstr(env[i], "PATH", 4) == 0)
 		i++;
