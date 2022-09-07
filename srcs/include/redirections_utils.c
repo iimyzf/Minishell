@@ -6,7 +6,7 @@
 /*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 22:01:42 by azabir            #+#    #+#             */
-/*   Updated: 2022/09/07 18:39:33 by azabir           ###   ########.fr       */
+/*   Updated: 2022/09/07 19:48:55 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ char	*collect_file_name(t_data *data)
 	name = NULL;
 	while (is_cmd(data->cmd_list->id))
 	{
-		name = ft_strjoin3(name, data->cmd_list->cmd);
+		if (data->cmd_list->cmd)
+			name = ft_strjoin3(name, data->cmd_list->cmd);
 		data->cmd_list = data->cmd_list->next;
 	}
 	return (name);

@@ -6,7 +6,7 @@
 /*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 10:38:45 by azabir            #+#    #+#             */
-/*   Updated: 2022/09/07 18:36:07 by azabir           ###   ########.fr       */
+/*   Updated: 2022/09/07 19:39:03 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ typedef struct s_data
 	char			**full_cmd;
 	char			**env;
 	int				counter;
+	int				status;
 	char			*saved;
 	char			**exp;
 	int				exit_code;
@@ -78,9 +79,12 @@ typedef struct s_lexer
 int	g_exit_code;
 
 t_lexer	*lexer_init(char *data);
+int		process(char *path, t_data *data);
 char	*ft_itoa(int r);
+void	parce_init(t_data *data);
 int		is_redirec(t_data *data);
 int		write_in(t_data *data, int append);
+int	proce_create(t_data *data, char *path, t_cmd *temp);
 int		read_from(t_data *data);
 void	ft_wait(t_data *data, t_cmd *temp);
 int		is_cmd(int id);
@@ -120,6 +124,7 @@ void	execution(char **lst);
 int		check_heredoc(t_data *data);
 int		ft_pwd(t_data *data);
 int		cmd_parts_count(t_cmd *cmd);
+void	path_errors(t_data *data);
 int		ft_echo(char **env);
 void	fill_data_list(t_data *data);
 int		ft_exit(t_data *data);
