@@ -1,9 +1,0 @@
-#    By: azabir <azabir@student.42.fr>              +#+  +:+       +#+         #
-	@echo Compiling...
-	@gcc $(CFLAGS) $(SRCS) -o $(NAME)
-	@echo "Done!"
-	@rm -rf $(OBJS)
-	@echo "Clean"
-	@rm -rf $(OBJS)
-	@rm -rf $(NAME)
-	@echo "Full Clean"
