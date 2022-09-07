@@ -23,8 +23,11 @@ void	join_cmd(t_data *data, int	*index)
 {
 	while (is_cmd(data->cmd_list->id))
 	{
+		if (data->cmd_list->cmd != NULL)
+		{
 			data->full_cmd[*index] =\
 				ft_strjoin3(data->full_cmd[*index], data->cmd_list->cmd);
+		}
 		data->cmd_list = data->cmd_list->next;
 	}
 	*index += 1;
@@ -45,7 +48,7 @@ int	cmd_create(t_data *data)
 	{
 		if (redirec( data->cmd_list->id))
 			status = is_redirec(data);
-		else if (is_cmd(data->cmd_list->id) && status)
+		else if (data->cmd_list->cmd && is_cmd(data->cmd_list->id) && status)
 			join_cmd(data, &index);
 		if (is_cmd(data->cmd_list->id) || data->cmd_list->id == 14)
 			data->cmd_list = data->cmd_list->next;

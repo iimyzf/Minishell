@@ -21,7 +21,7 @@ void	lstfree(t_cmd *lst)
 		p = (lst)-> next;
 		if ((lst->id == 9) && check_char(lst->saved, '$'))
 		 	free(lst->saved);
-		if (*lst->cmd)
+		if (lst->cmd && *lst->cmd)
 			free(lst->cmd);
 		free(lst);
 		lst = p;

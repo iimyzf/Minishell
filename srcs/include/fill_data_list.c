@@ -29,7 +29,7 @@ void	fill_list_from_env(t_data *data, char *value)
 		}
 	}
 	else if (value == NULL)
-		lstadd_back(&(data)->cmd_list, ft_lstnew("", 9, data->saved));
+		lstadd_back(&(data)->cmd_list, ft_lstnew(NULL, 9, data->saved));
 	else
 		lstadd_back(&(data)->cmd_list, ft_lstnew(value, 9, data->saved));
 }
@@ -50,9 +50,7 @@ void	fill_data_list(t_data *data)
 		else
 			lstadd_back(&(data)->cmd_list, ft_lstnew(token->value, token->type, \
 						data->saved));
-		//free(token->value);
 		free(token);
-		//free (data->saved);
 		token = lexer_get_next_token(lexer, data);
 	}
 	lstadd_back(&(data)->cmd_list, ft_lstnew("", -1, data->saved));
