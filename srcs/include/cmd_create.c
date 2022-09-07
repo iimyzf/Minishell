@@ -6,7 +6,7 @@
 /*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 21:02:25 by azabir            #+#    #+#             */
-/*   Updated: 2022/09/07 19:52:40 by azabir           ###   ########.fr       */
+/*   Updated: 2022/09/07 21:16:32 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,12 @@ void	join_cmd(t_data *data, int	*index)
 	*index += 1;
 }
 
+void	close_pipes(t_data *data)
+{
+	close(data->fd[0]);
+	close(data->fd[1]);
+}
+
 int	cmd_create(t_data *data)
 {
 	int		index;
@@ -54,5 +60,7 @@ int	cmd_create(t_data *data)
 			data->cmd_list = data->cmd_list->next;
 	}
 	data->full_cmd[index] = NULL;
+	if (!status)
+		close_pipes(data);
 	return (status);
 }

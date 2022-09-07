@@ -6,13 +6,13 @@
 /*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 09:46:02 by yagnaou           #+#    #+#             */
-/*   Updated: 2022/09/07 19:46:14 by azabir           ###   ########.fr       */
+/*   Updated: 2022/09/07 22:42:24 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	exuce_built(t_data *data,t_cmd *temp)
+void	exuce_built(t_data *data, t_cmd *temp)
 {
 	if (data->redirect)
 		dup2(data->out, STDOUT_FILENO);
@@ -85,7 +85,7 @@ void	ft_parce(t_data *data)
 	ft_wait(data, temp);
 }
 
-int main(int ac, char **av, char **env)
+int	main(int ac, char **av, char **env)
 {
 	t_data	data;
 
@@ -110,49 +110,3 @@ int main(int ac, char **av, char **env)
 	}
 	return (0);
 }
-
-
-
-/*  TO DO */
-
-/*
-	# removing Leaks from prcing --> testing
-	# echo "$USER$USER"
-	# removing Leaks from exuc
-	# permissions
-	# $xcvbghj ls --> done
-	# echo -n  bbb hello>>g (hhh)
-	# exit status
-	# test memory protections
-	# errors handle
-	# $PWD then $?
-	# remove forbiden funcs like ft_calloc and fprintf
-	# $PWD --> done
-	# readline + CTRL-C -- > done
-	# echo dd > "ff"ff (collect file name) --> done
-	# pwd | ls | ls -la | cat > $PWD | chokran ela had | echo "Hello| World" (ikhan) --> done
-	# protect open --> done
-	# '   gbghggh | ghgh ' (seg) --> done
-	# '' or "" should print cmd not found! --> done
-	# echo ">>" ''| ls >> l (hhhhhhhhh) --> HAHAHA DONE
-	# cat<<$USER"" (expand in heredoc) --> done
-	#  echo $USER$USER$USER --> done
-	# unclosed qoutes protect --> done
-	# remove unused TOKENS --> done
-	# empty cmd handle --> done
-	# complete isalnum --> done
-	# handel dollar sign in lexer --> done
-	# fix path checking (check from env) --> done
-	# $cmd --> done
-	# path protect  --> done
-	# echo "hello">"gg" --> done
-	# remove split --> done
-	# << << error  --> done
-	# signal should close heredoc --> done
-	# $ sign protect --> done
-	# grep not woking --> done
-	# handel last pipewith no cmd --> done
-	# handel error syntax (special carrachters with no options) --> done
-	# exuce minishell in  minishell --> done 
-	# (ls | top) hang --> done
-*/

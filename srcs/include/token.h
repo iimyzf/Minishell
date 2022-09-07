@@ -6,7 +6,7 @@
 /*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 16:13:49 by yagnaou           #+#    #+#             */
-/*   Updated: 2022/08/15 07:15:45 by azabir           ###   ########.fr       */
+/*   Updated: 2022/09/07 22:29:26 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,21 +15,21 @@
 
 typedef enum e_mun
 {
-	TOKEN_ID,
-	TOKEN_LOPERATOR,
-	TOKEN_ROPERATOR,
-	TOKEN_APPEND,
-	TOKEN_HEREDOC,
-	TOKEN_STRING,
-	TOKEN_DQUOTES,
-	TOKEN_SQUOTES,
-	TOKEN_PIPE,
-	TOKEN_DOLLAR,
-	TOKEN_AND,
-	TOKEN_OR,
-	TOKEN_LPARAN,
-	TOKEN_RPARAN,
-	TOKEN_SPACE
+	TKN_ID,
+	TKN_LOPERATOR,
+	TKN_ROPERATOR,
+	TKN_APPEND,
+	TKN_HEREDOC,
+	TKN_STRING,
+	TKN_DQUOTES,
+	TKN_SQUOTES,
+	TKN_PIPE,
+	TKN_DOLLAR,
+	TKN_AND,
+	TKN_OR,
+	TKN_LPARAN,
+	TKN_RPARAN,
+	TKN_SPACE
 }	t_num;
 
 typedef struct s_token
@@ -38,6 +38,6 @@ typedef struct s_token
 	char	*value;
 }	t_token;
 
-t_token	*token_init(int type, char *value);
+t_token	*tkn_init(int type, char *value);
 
 #endif

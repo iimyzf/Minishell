@@ -6,7 +6,7 @@
 /*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 10:38:45 by azabir            #+#    #+#             */
-/*   Updated: 2022/09/07 19:39:03 by azabir           ###   ########.fr       */
+/*   Updated: 2022/09/07 22:30:21 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,21 +84,21 @@ char	*ft_itoa(int r);
 void	parce_init(t_data *data);
 int		is_redirec(t_data *data);
 int		write_in(t_data *data, int append);
-int	proce_create(t_data *data, char *path, t_cmd *temp);
+int		proce_create(t_data *data, char *path, t_cmd *temp);
 int		read_from(t_data *data);
 void	ft_wait(t_data *data, t_cmd *temp);
 int		is_cmd(int id);
 char	*lexer_collect_env_value(t_lexer *lexer, t_data *data);
 int		redirec(int id);
 int		read_from_here(t_data *data);
-t_token	*lexer_get_next_token(t_lexer *lexer, t_data *data);
-t_token	*lexer_collect_string(t_lexer *lexer, char c, int token);
-t_token	*lexer_collect_dq_string(t_lexer *lexer, char c, t_data *data, int token);
-t_token	*lexer_collect_id(t_lexer *lexer, t_data *data);
-t_token	*lexer_advance_with_token(t_lexer *lexer, t_token *token, int count);
-t_token	*lexer_collect_env_string(t_lexer *lexer, t_data *data, int token);
-char	*lexer_get_current_char_as_string(t_lexer *lexer);
-char	*lexer_get_current_char_as_two_strings(t_lexer *lexer);
+t_token	*next_tkn(t_lexer *lexer, t_data *data);
+t_token	*clct_str(t_lexer *lexer, char c, int token);
+t_token	*clct_dq_string(t_lexer *lexer, char c, t_data *data, int token);
+t_token	*clct_id(t_lexer *lexer, t_data *data);
+t_token	*nxt_tkn(t_lexer *lexer, t_token *token, int count);
+t_token	*clct_env_str(t_lexer *lexer, t_data *data, int token);
+char	*to_str(t_lexer *lexer);
+char	*to_dstr(t_lexer *lexer);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 void	lexer_advance(t_lexer *lexer, int count);
 int		cmd_create(t_data *data);

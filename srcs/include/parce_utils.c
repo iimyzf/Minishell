@@ -6,7 +6,7 @@
 /*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 19:37:34 by azabir            #+#    #+#             */
-/*   Updated: 2022/09/07 19:44:04 by azabir           ###   ########.fr       */
+/*   Updated: 2022/09/07 21:11:37 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,8 @@ void	path_errors(t_data *data)
 			printf("minishell: %s: is a directory\n", data->full_cmd[0]);
 		}
 		else
-			printf("minishell: %s: No such file or directory\n", data->full_cmd[0]);
+			printf("minishell: %s: No such file or directory\n", \
+				data->full_cmd[0]);
 	}
 	else if (data->full_cmd[0])
 		printf("minishell: %s: command not found\n", data->full_cmd[0]);
