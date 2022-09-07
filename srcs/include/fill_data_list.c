@@ -6,7 +6,7 @@
 /*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/31 21:56:16 by azabir            #+#    #+#             */
-/*   Updated: 2022/08/26 22:16:43 by azabir           ###   ########.fr       */
+/*   Updated: 2022/09/07 18:35:06 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,6 @@ void	fill_data_list(t_data *data)
 	}
 	lstadd_back(&(data)->cmd_list, ft_lstnew("", -1, data->saved));
 	temp = (data)->cmd_list;
-	// while (temp)
-	// {
-	// 	fprintf(stderr, "check [%s] of id[%d]\n", temp->cmd, temp->id);
-	// 	temp = temp->next;
-	// }
-	//temp = data->cmd_list;
 	free(lexer);
 	free (token);
 }

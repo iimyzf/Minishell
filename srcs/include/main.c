@@ -156,7 +156,7 @@ int main(int ac, char **av, char **env)
 	# echo "$USER$USER"
 	# removing Leaks from exuc
 	# permissions
-	# $xcvbghj ls
+	# $xcvbghj ls --> done
 	# echo -n  bbb hello>>g (hhh)
 	# exit status
 	# test memory protections

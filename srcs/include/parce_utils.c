@@ -6,7 +6,7 @@
 /*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 19:37:34 by azabir            #+#    #+#             */
-/*   Updated: 2022/08/31 19:37:39 by azabir           ###   ########.fr       */
+/*   Updated: 2022/09/07 18:36:37 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	ft_wait(t_data *data, t_cmd *temp)
 {
 	int	status;
 
-	while(data->active_proc > 0)
+	while (data->active_proc > 0)
 	{
 		waitpid(-1, &status, 0);
 		data->active_proc --;
@@ -34,7 +34,7 @@ void	ft_wait(t_data *data, t_cmd *temp)
 
 int	is_cmd(int id)
 {
-	if((id == 0 || id == 6 || id == 9 || id == 7))
+	if ((id == 0 || id == 6 || id == 9 || id == 7))
 		return (1);
 	return (0);
 }

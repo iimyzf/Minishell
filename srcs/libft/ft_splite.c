@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_splite.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yagnaou <yagnaou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 18:45:38 by azabir            #+#    #+#             */
-/*   Updated: 2022/07/28 17:37:40 by yagnaou          ###   ########.fr       */
+/*   Updated: 2022/09/07 18:22:24 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
 
 static int	ft_strcount(char *l, char c)
 {
@@ -27,7 +26,7 @@ static int	ft_strcount(char *l, char c)
 			if (l[i] != c)
 				j++;
 			while (l[i] != c && l[i] != '\0')
-			 	i++;
+				i++;
 			while (l[i] == c)
 				i++;
 		}
