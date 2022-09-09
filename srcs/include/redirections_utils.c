@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
+/*   By: yagnaou <yagnaou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 22:01:42 by azabir            #+#    #+#             */
-/*   Updated: 2022/09/07 19:48:55 by azabir           ###   ########.fr       */
+/*   Updated: 2022/09/09 23:14:17 by yagnaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,10 @@ int	read_from_here(t_data *data)
 	if (data->cmd_list->next->id == 14)
 		data->cmd_list = data->cmd_list->next;
 	if (is_last_heredoc(data->cmd_list))
+	{
 		dup2(data->cmd_list->in, STDIN_FILENO);
+		close(data->cmd_list->in);
+	}
 	data->cmd_list = data->cmd_list->next;
 	while (!(data->cmd_list->id >= 1 && data->cmd_list->id <= 4)
 		&& data->cmd_list->id != -1 && data->cmd_list->id != 14)

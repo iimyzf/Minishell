@@ -6,7 +6,7 @@
 /*   By: yagnaou <yagnaou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 19:21:07 by azabir            #+#    #+#             */
-/*   Updated: 2022/09/09 18:23:29 by yagnaou          ###   ########.fr       */
+/*   Updated: 2022/09/09 23:11:26 by yagnaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,10 @@ void	ft_export(char **path, t_data *data)
 	while (path[i])
 	{
 		if (!check_syntax(path[i]))
+		{
 			printf("error occured! check the syntax again!\n");
+			g_exit_code = 1;
+		}
 		else
 		{
 			if (!check_if_exist(data, path[i]))
@@ -117,5 +120,6 @@ void	ft_export(char **path, t_data *data)
 		}
 		i++;
 	}
-	g_exit_code = 0;
 }
+
+// g_exit_code to 1

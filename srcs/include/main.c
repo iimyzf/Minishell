@@ -6,7 +6,7 @@
 /*   By: yagnaou <yagnaou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 09:46:02 by yagnaou           #+#    #+#             */
-/*   Updated: 2022/09/09 18:49:51 by yagnaou          ###   ########.fr       */
+/*   Updated: 2022/09/09 23:16:14 by yagnaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ void	exuce_built(t_data *data, t_cmd *temp)
 {
 	if (data->redirect)
 		dup2(data->out, STDOUT_FILENO);
-	ft_execve(data, NULL);
 	g_exit_code = 0;
+	ft_execve(data, NULL);
 	close(data->in);
 	close(data->out);
 	free_array(data->full_cmd);
@@ -101,7 +101,7 @@ int	main(int ac, char **av, char **env)
 	{
 		data.input = readline(av[0]);
 		if (!data.input)
-			exit(0);
+			exit(g_exit_code);
 		if (data.input[0] && !unclosed_quotes(data.input))
 		{
 			add_history(data.input);
