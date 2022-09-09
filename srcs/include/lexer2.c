@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
+/*   By: yagnaou <yagnaou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 22:09:20 by azabir            #+#    #+#             */
-/*   Updated: 2022/09/07 22:41:13 by azabir           ###   ########.fr       */
+/*   Updated: 2022/09/08 17:11:26 by yagnaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,8 @@ char	*get_str(int *token, t_lexer *lexer, t_data *data, char **saved)
 
 	if (lexer->c == '$' && (ft_isalnum(lexer->next_c) || lexer->next_c == '?'))
 	{
-		*saved = ft_calloc(sizeof(char), 1);
 		*token = TKN_DOLLAR;
+		data->dollar = 1;
 		str = lexer_collect_env_value(lexer, data);
 		*saved = ft_strjoin3(*saved, data->saved);
 		free (data->saved);
@@ -95,6 +95,8 @@ t_token	*clct_dq_string(t_lexer *lexer, char c, t_data *data, int token)
 
 	lexer_advance(lexer, 1);
 	value = "";
+	saved = ft_calloc(sizeof(char), 1);
+	data->dollar = 0;
 	while (lexer->c != c && lexer->c != '\0' && lexer->c != '\n')
 	{
 		str = get_str(&token, lexer, data, &saved);
@@ -105,7 +107,10 @@ t_token	*clct_dq_string(t_lexer *lexer, char c, t_data *data, int token)
 		free(str);
 		value = tmp;
 	}
-	data->saved = saved;
+	if (data->dollar)
+		data->saved = saved;
+	else
+		free(saved);
 	lexer_advance(lexer, 1);
 	return (tkn_init(token, value));
 }

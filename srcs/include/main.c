@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
+/*   By: yagnaou <yagnaou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 09:46:02 by yagnaou           #+#    #+#             */
-/*   Updated: 2022/09/07 22:42:24 by azabir           ###   ########.fr       */
+/*   Updated: 2022/09/09 18:49:51 by yagnaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	exuce_built(t_data *data, t_cmd *temp)
 	if (data->redirect)
 		dup2(data->out, STDOUT_FILENO);
 	ft_execve(data, NULL);
+	g_exit_code = 0;
 	close(data->in);
 	close(data->out);
 	free_array(data->full_cmd);
@@ -56,12 +57,12 @@ void	ft_pipe(t_data *data)
 	data->in = data->fd[0];
 }
 
-void	ft_parce(t_data *data)
+void	ft_parce(t_data *data, char *path)
 {
 	t_cmd	*temp;
-	char	*path;
 
-	parce_init(data);
+	if (!parce_init(data))
+		return ;
 	temp = (data)->cmd_list;
 	while (data->cmd_list && (data->cmd_list->id != -1))
 	{
@@ -91,9 +92,9 @@ int	main(int ac, char **av, char **env)
 
 	if (ac != 1)
 		return (1);
+	g_exit_code = 0;
 	av[0] = "minishell-1.0$ ";
 	data.env = cpy_env(env);
-	g_exit_code = 0;
 	signal(SIGINT, sighandl);
 	signal(SIGQUIT, SIG_IGN);
 	while (1)
@@ -104,7 +105,7 @@ int	main(int ac, char **av, char **env)
 		if (data.input[0] && !unclosed_quotes(data.input))
 		{
 			add_history(data.input);
-			ft_parce(&data);
+			ft_parce(&data, NULL);
 		}
 		free (data.input);
 	}

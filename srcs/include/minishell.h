@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
+/*   By: yagnaou <yagnaou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 10:38:45 by azabir            #+#    #+#             */
-/*   Updated: 2022/09/07 22:30:21 by azabir           ###   ########.fr       */
+/*   Updated: 2022/09/08 17:10:26 by yagnaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ typedef struct s_data
 	char			**full_cmd;
 	char			**env;
 	int				counter;
+	int				dollar;
 	int				status;
 	char			*saved;
 	char			**exp;
@@ -81,7 +82,7 @@ int	g_exit_code;
 t_lexer	*lexer_init(char *data);
 int		process(char *path, t_data *data);
 char	*ft_itoa(int r);
-void	parce_init(t_data *data);
+int		parce_init(t_data *data);
 int		is_redirec(t_data *data);
 int		write_in(t_data *data, int append);
 int		proce_create(t_data *data, char *path, t_cmd *temp);
@@ -103,6 +104,7 @@ int		ft_strncmp(const char *s1, const char *s2, size_t n);
 void	lexer_advance(t_lexer *lexer, int count);
 int		cmd_create(t_data *data);
 void	lexer_skip_white_spaces(t_lexer *lexer);
+void	ft_strswap(char **str1, char **str2);
 void	free_all(t_lexer *lexer);
 char	*ft_strjoin(char const *s1, char const *s2);
 char	*path_checker(t_data *data, char *cmd, char **env);

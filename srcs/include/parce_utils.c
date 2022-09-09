@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parce_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
+/*   By: yagnaou <yagnaou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 19:37:34 by azabir            #+#    #+#             */
-/*   Updated: 2022/09/07 21:11:37 by azabir           ###   ########.fr       */
+/*   Updated: 2022/09/09 18:35:00 by yagnaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	path_errors(t_data *data)
 	close (data->out);
 }
 
-void	parce_init(t_data *data)
+int	parce_init(t_data *data)
 {
 	t_cmd	*temp;
 
@@ -68,16 +68,18 @@ void	parce_init(t_data *data)
 	if (!syntax_checker((data)->cmd_list, 0) || !check_heredoc(data))
 	{
 		lstfree(temp);
-		return ;
+		return (0);
 	}
 	data->saved_out = dup(STDOUT_FILENO);
 	data->saved_in = dup(STDIN_FILENO);
 	data->active_proc = 0;
 	data->status = -1;
+	return (1);
 }
 
 int	proce_create(t_data *data, char *path, t_cmd *temp)
 {
+	g_exit_code = 0;
 	if (data->full_cmd[0] == NULL)
 		return (1);
 	if (data->cmd_list->id != -1)
