@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
+/*   By: yagnaou <yagnaou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/29 13:29:16 by yagnaou           #+#    #+#             */
-/*   Updated: 2022/09/04 14:49:35 by azabir           ###   ########.fr       */
+/*   Updated: 2022/09/09 17:52:14 by yagnaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,5 +35,6 @@ t_lst	*ft_lstnew_new(char *content);
 int		ft_isdigit(int c);
 int		ft_isalnum2(char c);
 char	*ft_strdup(const char	*src);
+char	**ft_divide(char *str, char c);
 
 #endif
