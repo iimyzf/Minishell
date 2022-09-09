@@ -6,20 +6,11 @@
 /*   By: yagnaou <yagnaou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/22 12:14:54 by yagnaou           #+#    #+#             */
-/*   Updated: 2022/09/04 20:48:52 by yagnaou          ###   ########.fr       */
+/*   Updated: 2022/09/08 13:54:43 by yagnaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-void	ft_strswap(char **str1, char **str2)
-{
-	char	*tmp;
-
-	tmp = *str1;
-	*str1 = *str2;
-	*str2 = tmp;
-}
 
 char	**cpy_env(char **env)
 {

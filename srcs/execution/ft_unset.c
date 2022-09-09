@@ -6,7 +6,7 @@
 /*   By: yagnaou <yagnaou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 19:21:25 by azabir            #+#    #+#             */
-/*   Updated: 2022/09/04 21:04:25 by yagnaou          ###   ########.fr       */
+/*   Updated: 2022/09/09 18:48:07 by yagnaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,20 @@ int	check_syntax_unset(char *str)
 
 int	return_index(char **env, char *str)
 {
-	int	i;
+	int		i;
+	char	**tmp;
 
 	i = 0;
 	while (env[i])
 	{
-		if (ft_strncmp(env[i], str, ft_strlen(str)) == 0)
+		tmp = ft_divide(env[i], '=');
+		if (ft_strcmp(tmp[0], str) == 0)
+		{
+			free_array(tmp);
 			return (i);
+		}
 		i++;
+		free_array(tmp);
 	}
 	return (-1);
 }

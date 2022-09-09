@@ -6,7 +6,7 @@
 /*   By: yagnaou <yagnaou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 19:21:07 by azabir            #+#    #+#             */
-/*   Updated: 2022/09/04 20:47:31 by yagnaou          ###   ########.fr       */
+/*   Updated: 2022/09/09 18:23:29 by yagnaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@ int	check_if_exist(t_data *data, char *path)
 
 	i = 0;
 	str = ft_strdup(path);
-	env_path = ft_split(str, '=');
+	env_path = ft_divide(str, '=');
 	while (data->env[i])
 	{
-		env2 = ft_split(data->env[i], '=');
+		env2 = ft_divide(data->env[i], '=');
 		if (!ft_strcmp(env2[0], env_path[0]))
 		{
 			free(data->env[i]);
@@ -64,21 +64,28 @@ char	**add_to_list(t_data *data, char *str)
 	return (new_env);
 }
 
+int	ft_check(char c)
+{
+	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))
+		return (1);
+	return (0);
+}
+
 int	check_syntax(char *str)
 {
 	char	**string;
 	int		i;
 
 	i = 1;
-	string = ft_split(str, '=');
-	if (string[0] == NULL || (ft_isdigit(string[0][0]) && string[0][0] != '_'))
+	string = ft_divide(str, '=');
+	if (string[0] == NULL || !(ft_check(string[0][0]) || string[0][0] == '_'))
 	{
 		free_array(string);
 		return (0);
 	}
 	while (string[0][i])
 	{
-		if ((!ft_isalnum(string[0][i]) && string[0][i] != '_'))
+		if (!(ft_isalnum(string[0][i]) && string[0][i] != '_'))
 		{
 			free_array(string);
 			return (0);
@@ -110,4 +117,5 @@ void	ft_export(char **path, t_data *data)
 		}
 		i++;
 	}
+	g_exit_code = 0;
 }
