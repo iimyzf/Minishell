@@ -6,7 +6,7 @@
 /*   By: yagnaou <yagnaou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 19:21:07 by azabir            #+#    #+#             */
-/*   Updated: 2022/09/09 23:11:26 by yagnaou          ###   ########.fr       */
+/*   Updated: 2022/09/10 20:58:47 by yagnaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int	check_syntax(char *str)
 	}
 	while (string[0][i])
 	{
-		if (!(ft_isalnum(string[0][i]) && string[0][i] != '_'))
+		if (!(ft_isalnum(string[0][i])) && (string[0][i] != '_'))
 		{
 			free_array(string);
 			return (0);
@@ -121,5 +121,3 @@ void	ft_export(char **path, t_data *data)
 		i++;
 	}
 }
-
-// g_exit_code to 1

@@ -6,7 +6,7 @@
 /*   By: yagnaou <yagnaou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 19:20:49 by azabir            #+#    #+#             */
-/*   Updated: 2022/09/09 23:17:12 by yagnaou          ###   ########.fr       */
+/*   Updated: 2022/09/10 21:08:04 by yagnaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ void	ft_cd(t_data *data, char *path)
 		if (!env)
 		{
 			printf("minishell: cd: HOME not set\n");
+			g_exit_code = 1;
 			return ;
 		}
 		if (env && !env[0])

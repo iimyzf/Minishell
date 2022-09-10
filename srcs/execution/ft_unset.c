@@ -6,7 +6,7 @@
 /*   By: yagnaou <yagnaou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 19:21:25 by azabir            #+#    #+#             */
-/*   Updated: 2022/09/09 18:48:07 by yagnaou          ###   ########.fr       */
+/*   Updated: 2022/09/10 21:06:19 by yagnaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,10 @@ void	ft_unset(t_data *data, char **str)
 		while (str[i])
 		{
 			if (!check_syntax_unset(str[i]))
+			{
 				printf("error occured! check the syntax again!\n");
+				g_exit_code = 1;
+			}
 			else
 			{
 				j = return_index(data->env, str[i]);
