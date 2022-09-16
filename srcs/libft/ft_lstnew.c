@@ -6,7 +6,7 @@
 /*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 17:58:00 by azabir            #+#    #+#             */
-/*   Updated: 2022/08/26 22:17:38 by azabir           ###   ########.fr       */
+/*   Updated: 2022/09/07 18:21:31 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@ t_cmd	*ft_lstnew(char	*value, int id, char *saved)
 		return (0);
 	head->cmd = value;
 	head->id = id;
-	if (id == 9 || (id == 6 && *saved))
+	if (id == 9)
 		head->saved = saved;
 	else
-	 	head->saved = value;
+		head->saved = value;
 	head -> next = NULL;
 	return (head);
 }

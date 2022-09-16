@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dollar.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
+/*   By: yagnaou <yagnaou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 17:11:22 by azabir            #+#    #+#             */
-/*   Updated: 2022/08/30 22:21:45 by azabir           ###   ########.fr       */
+/*   Updated: 2022/09/09 17:53:09 by yagnaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,11 @@ char	*check_env(t_data *data, char *cmd)
 	if (*cmd == '?')
 	{
 		value = ft_itoa(g_exit_code);
-		return (ft_strjoin(value, cmd + 1));
+		return (ft_strjoin2(value, cmd + 1));
 	}
 	while (data->env[i])
 	{
-		env2 = ft_split(data->env[i], '=');
+		env2 = ft_divide(data->env[i], '=');
 		if (!ft_strcmp(env2[0], cmd))
 		{
 			value = ft_strdup(env2[1]);

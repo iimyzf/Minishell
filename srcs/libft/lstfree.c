@@ -6,7 +6,7 @@
 /*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 19:04:28 by azabir            #+#    #+#             */
-/*   Updated: 2022/08/07 14:46:51 by azabir           ###   ########.fr       */
+/*   Updated: 2022/09/07 18:27:08 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,10 @@ void	lstfree(t_cmd *lst)
 	while (lst->id != -1)
 	{
 		p = (lst)-> next;
-		fprintf(stderr, "free [%s] of id[%d]\n", lst->cmd, lst->id);
-		if ((lst->id == 9 && *(lst->saved)) || (lst->id == 6 && *(lst->saved)))
-		 	free(lst->saved);
-		if (*lst->cmd)
-			free(lst->cmd);
+		if ((lst->id == 9) && check_char(lst->saved, '$'))
+			free(lst->saved);
+		if (lst->cmd && *lst->cmd)
+			free (lst->cmd);
 		free(lst);
 		lst = p;
 	}

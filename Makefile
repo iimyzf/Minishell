@@ -3,22 +3,107 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: azabir <azabir@student.42.fr>              +#+  +:+       +#+         #
+#    By: yagnaou <yagnaou@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/27 11:27:39 by yagnaou           #+#    #+#              #
-#    Updated: 2022/08/26 23:04:17 by azabir           ###   ########.fr        #
+#    Updated: 2022/09/10 21:03:31 by yagnaou          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = minishell
+# =============================================================================
+# Color Variables
+# =============================================================================
 
-CFLAGS = -Wall -Werror -Wextra -lreadline -L /Users/azabir/.brew/Cellar/readline/8.1.2/lib -I /Users/azabir/.brew/Cellar/readline/8.1.2/include #-fsanitize=address -g3 
+BLACK		=	"\033[1;30m"
+GRAY		=	"\033[1;30m"
+RED			=	"\033[1;31m"
+GREEN		=	"\033[1;32m"
+YELLOW		=	"\033[1;33m"
+PURPLE		=	"\033[1;35m"
+CYAN		=	"\033[1;36m"
 
-SRCS =	srcs/include/*.c\
-		srcs/libft/*.c\
-		srcs/execution/*.c
+# =============================================================================
+# GCC & Flags Variables
+# =============================================================================
 
-OBJS = $(SRCS:.c=.o)
+CC			=	gcc
+CFLAGS		=	-Wall -Werror -Wextra
+READLINE	=	-lreadline -L /Users/yagnaou/goinfre/.brew/Cellar/readline/8.1.2/lib -I /Users/yagnaou/goinfre/.brew/Cellar/readline/8.1.2/include
+
+
+# =============================================================================
+# Name & File Names Variables
+# =============================================================================
+
+NAME		=	minishell
+EXECUTION	=	srcs/execution/
+INCLUDE		=	srcs/include/
+LIBFT		=	srcs/libft/
+
+SRCS		=	${EXECUTION}check_path.c		\
+				${EXECUTION}ft_cd.c				\
+				${EXECUTION}ft_echo.c			\
+				${EXECUTION}ft_env.c			\
+				${EXECUTION}ft_execve.c			\
+				${EXECUTION}ft_exit.c			\
+				${EXECUTION}ft_export.c			\
+				${EXECUTION}ft_pwd.c			\
+				${EXECUTION}ft_unset.c			\
+				${EXECUTION}heredoc.c			\
+				${EXECUTION}is_last_heredoc.c	\
+				${EXECUTION}utils.c				\
+				${INCLUDE}check_char.c			\
+				${INCLUDE}check_heredoc.c		\
+				${INCLUDE}check_last.c			\
+				${INCLUDE}childs_sighand.c		\
+				${INCLUDE}cmd_array_join.c		\
+				${INCLUDE}cmd_create.c			\
+				${INCLUDE}dollar.c				\
+				${INCLUDE}fill_data_list.c		\
+				${INCLUDE}lexer.c				\
+				${INCLUDE}lexer1.c				\
+				${INCLUDE}lexer2.c				\
+				${INCLUDE}main.c				\
+				${INCLUDE}parce_utils.c			\
+				${INCLUDE}redirections_utils.c	\
+				${INCLUDE}sighandl.c			\
+				${INCLUDE}syntax_checker.c		\
+				${INCLUDE}token.c				\
+				${LIBFT}cmds_count.c			\
+				${LIBFT}free_array.c			\
+				${LIBFT}ft_calloc.c				\
+				${LIBFT}ft_divide.c				\
+				${LIBFT}ft_isalnum.c			\
+				${LIBFT}ft_isdigit.c			\
+				${LIBFT}ft_itoa.c				\
+				${LIBFT}ft_lstadd_back_new.c	\
+				${LIBFT}ft_lstadd_back.c		\
+				${LIBFT}ft_lstnew_new.c			\
+				${LIBFT}ft_lstnew.c				\
+				${LIBFT}ft_putendl_fd.c			\
+				${LIBFT}ft_splite.c				\
+				${LIBFT}ft_strcat.c				\
+				${LIBFT}ft_strchr.c				\
+				${LIBFT}ft_strcmp.c				\
+				${LIBFT}ft_strdup.c				\
+				${LIBFT}ft_strjoin.c			\
+				${LIBFT}ft_strjoin3.c			\
+				${LIBFT}ft_strlen.c				\
+				${LIBFT}ft_strncmp.c			\
+				${LIBFT}ft_strnstr.c			\
+				${LIBFT}get_next_char.c			\
+				${LIBFT}is_buildin.c			\
+				${LIBFT}is_special.c			\
+				${LIBFT}lstfree.c				\
+				${LIBFT}make_str.c				\
+				${LIBFT}strjoin2.c				\
+				${LIBFT}unclosed_quotes.c		\
+
+OBJS		=	$(SRCS:.c=.o)
+
+# =============================================================================
+# Drawing o Dakchi Hahahahaha
+# =============================================================================
 
 define HEADER
          _                                                                      
@@ -36,21 +121,26 @@ endef
 
 export HEADER
 
-all : $(NAME)
+# =============================================================================
+# Rules
+# =============================================================================
 
-$(NAME) : $(SRCS)
-	@echo "\033[0;32m$$HEADER\033[0m\n"
-	@echo Compiling...
-	@gcc $(CFLAGS) $(SRCS) -o $(NAME)
-	@echo "Done!"
+all			:	$(NAME)
 
-clean :
-	@rm -rf $(OBJS)
-	@echo "Clean"
+$(NAME)		:	$(SRCS)
+				@echo ${YELLOW}"---> Compiling \n$${HEADER}"
+				@${CC} $(CFLAGS) ${READLINE} $(SRCS) -o $(NAME)
+				@echo ${GREEN}"---> Compilation done."
 
-fclean :
-	@rm -rf $(OBJS)
-	@rm -rf $(NAME)
-	@echo "Full Clean"
+clean		:
+				@rm -rf $(OBJS)
+				@echo ${PURPLE}"---> Cleaning object files..."
+				@echo ${PURPLE}"---> Cleaned!"
 
-re : fclean all
+fclean		:
+				@rm -rf $(OBJS)
+				@rm -rf $(NAME)
+				@echo ${RED}"---> Cleaning ${NAME} with it's object files..."
+				@echo ${RED}"---> All cleaned!"
+
+re			:	fclean all

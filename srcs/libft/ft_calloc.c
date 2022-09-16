@@ -1,20 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isalnum2.c                                      :+:      :+:    :+:   */
+/*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yagnaou <yagnaou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/28 17:36:42 by yagnaou           #+#    #+#             */
-/*   Updated: 2022/07/28 17:36:52 by yagnaou          ###   ########.fr       */
+/*   Created: 2022/09/07 18:17:45 by azabir            #+#    #+#             */
+/*   Updated: 2022/09/07 18:17:45 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_isalnum2(char c)
+void	*ft_calloc(int i, int s)
 {
-	if (((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9')))
-		return (1);
-	return (0);
+	char	*p;
+	int		j;
+
+	p = (char *)malloc(i * s);
+	if (!p)
+		return (NULL);
+	j = 0;
+	while (j < i * s)
+	{
+		p[j] = 0;
+		j++;
+	}
+	return (p);
 }

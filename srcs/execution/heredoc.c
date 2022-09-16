@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
+/*   By: yagnaou <yagnaou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/17 15:24:16 by azabir            #+#    #+#             */
-/*   Updated: 2022/08/30 22:03:48 by azabir           ###   ########.fr       */
+/*   Updated: 2022/09/08 13:57:42 by yagnaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ char	*make_alnume(char *str, int	*i)
 {
 	char	*cmd;
 	int		j;
-	
+
 	j = *i;
 	while (str[j] && ft_isalnum(str[j]))
 		j++;
@@ -30,6 +30,19 @@ char	*make_alnume(char *str, int	*i)
 	}
 	cmd[j] = 0;
 	return (cmd);
+}
+
+void	put_cmd(t_data *data, char *cmd)
+{
+	int	i;
+
+	i = 0;
+	while (cmd && cmd[i])
+	{
+		write(data->here_fd[1], &(cmd[i]), 1);
+		i++;
+	}
+	free(cmd);
 }
 
 void	ft_putchar(t_data *data, char *input, int exp)
@@ -47,20 +60,18 @@ void	ft_putchar(t_data *data, char *input, int exp)
 			str = make_alnume(input, &i);
 			cmd = check_env(data, str);
 			free(str);
-			while(cmd && *cmd)
-			{
-				write(data->here_fd[1], &(*cmd), 1);
-				cmd++;
-			}
+			if (cmd != NULL)
+				put_cmd(data, cmd);
 		}
 		write(data->here_fd[1], &input[i], 1);
 		if (input[i])
 			i++;
 	}
 	write(data->here_fd[1], "\n", 1);
+	free(input);
 }
 
-void	heredoc(char *cmd, t_data *data, int exp,int is_last_here)
+void	heredoc(char *cmd, t_data *data, int exp, int is_last_here)
 {
 	char	*input;
 	int		pid;
@@ -68,7 +79,6 @@ void	heredoc(char *cmd, t_data *data, int exp,int is_last_here)
 	pid = fork();
 	if (pid == 0)
 	{
-		//fprintf(stderr, "cmd = [%s]\n", cmd);
 		signal(SIGINT, child_sighand);
 		while (1)
 		{

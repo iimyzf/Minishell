@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   is_last_heredoc.c                                       :+:      :+:    :+:   */
+/*   is_last_heredoc.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: azabir <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: yagnaou <yagnaou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/17 16:37:04 by azabir            #+#    #+#             */
-/*   Updated: 2022/07/17 16:37:07 by azabir           ###   ########.fr       */
+/*   Updated: 2022/09/08 13:56:59 by yagnaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,16 @@ int	is_last_heredoc(t_cmd	*cmd)
 	{	
 		temp = temp->next;
 		if (temp->id == 4)
-			return(0);
+			return (0);
 	}
-	return(1);
+	return (1);
+}
+
+void	ft_strswap(char **str1, char **str2)
+{
+	char	*tmp;
+
+	tmp = *str1;
+	*str1 = *str2;
+	*str2 = tmp;
 }

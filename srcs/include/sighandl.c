@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sighandl.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
+/*   By: yagnaou <yagnaou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 01:36:45 by azabir            #+#    #+#             */
-/*   Updated: 2022/08/24 19:04:28 by azabir           ###   ########.fr       */
+/*   Updated: 2022/09/10 21:03:41 by yagnaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	sighandl(int sig)
 {
 	if (sig == SIGINT)
 	{
-		//fprintf(stderr, "from main %d\n", getpid());
+		g_exit_code = 1;
 		write(1, "\n", 1);
 		rl_replace_line("", 0);
 		rl_on_new_line();

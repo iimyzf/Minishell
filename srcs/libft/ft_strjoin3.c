@@ -6,7 +6,7 @@
 /*   By: azabir <azabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 02:16:37 by azabir            #+#    #+#             */
-/*   Updated: 2022/08/30 21:36:09 by azabir           ###   ########.fr       */
+/*   Updated: 2022/09/07 21:43:24 by azabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ char	*ft_strjoin3(char *s1, char *s2)
 	char	*ptr;
 	size_t	j;
 
-	if (!s1 || *s1 == 0)
+	if (!s1)
 	{
 		s1 = malloc(sizeof(char) * 1);
 		s1[0] = 0;
@@ -34,10 +34,9 @@ char	*ft_strjoin3(char *s1, char *s2)
 		ptr[j] = s1[j];
 		j++;
 	}
-	//ptr[j++] = '	';
 	while (*s2)
 		ptr[j++] = *s2++;
 	ptr[j] = '\0';
-	//free (s1);
+	free (s1);
 	return (ptr);
 }

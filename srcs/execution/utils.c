@@ -6,20 +6,15 @@
 /*   By: yagnaou <yagnaou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/22 12:14:54 by yagnaou           #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2022/09/04 16:27:44 by yagnaou          ###   ########.fr       */
+=======
+/*   Updated: 2022/09/08 13:54:43 by yagnaou          ###   ########.fr       */
+>>>>>>> master
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-void	ft_strswap(char **str1, char **str2)
-{
-	char	*tmp;
-
-	tmp = *str1;
-	*str1 = *str2;
-	*str2 = tmp;
-}
 
 char	**cpy_env(char **env)
 {
@@ -72,7 +67,10 @@ void	add_print_declare(char **env)
 			printf("declare -x %s\n", env[i]);
 		else
 			add_print_qoutes(env, i);
+<<<<<<< HEAD
 		free(env[i]);
+=======
+>>>>>>> master
 		i++;
 	}
 }
@@ -95,6 +93,10 @@ void	sort_this(char **tab)
 		i++;
 	}
 	add_print_declare(tab);
+<<<<<<< HEAD
+=======
+	free_array(tab);
+>>>>>>> master
 }
 
 void	ft_print_sorted_env(char **env)
